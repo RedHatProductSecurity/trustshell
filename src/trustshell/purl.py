@@ -1,7 +1,6 @@
 import click
 import httpx
 import logging
-import urllib
 
 from packageurl import PackageURL
 from rich.console import Console
@@ -17,7 +16,7 @@ from univers.versions import (
     Version,
 )
 
-from trustshell import TRUSTIFY_URL, print_version, config_logging
+from trustshell import TRUSTIFY_URL, get_tag_from_purl, print_version, config_logging, urlencoded
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
 console = Console(color_system="auto", theme=custom_theme)
@@ -126,7 +125,7 @@ def _get_package_versions(base_purl: str) -> set[str]:
     if purl.type == "oci":
         for version in purl_versions["versions"]:
             for version_purl in version.get("purls", []):
-                tag = _get_tag_from_purl(PackageURL.from_string(version_purl["purl"]))
+                tag = get_tag_from_purl(PackageURL.from_string(version_purl["purl"]))
                 if tag:
                     versions.add(tag)
     else:
@@ -136,7 +135,7 @@ def _get_package_versions(base_purl: str) -> set[str]:
 
 def _lookup_base_purl(base_purl: str) -> dict[str, Any]:
     """Get the details of a base purl from Atlas"""
-    encoded_base_purl = _urlencoded(base_purl)
+    encoded_base_purl = urlencoded(base_purl)
     # TODO use asyncio
     base_purl_response = httpx.get(f"{PURL_BASE_ENDPOINT}/{encoded_base_purl}")
     base_purl_response.raise_for_status()

@@ -1,8 +1,9 @@
 name: TrustShell Tests
+on: [push]
 
 jobs:
   lint:
-    name: python
+    name: ruff
     runs-on: ubuntu-latest
 
     steps:
