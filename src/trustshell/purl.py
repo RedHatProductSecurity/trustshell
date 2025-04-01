@@ -25,6 +25,7 @@ logger = logging.getLogger("trustshell")
 
 PURL_BASE_ENDPOINT = f"{TRUSTIFY_URL}purl/base"
 
+
 @click.command()
 @click.option(
     "--version",
@@ -50,13 +51,16 @@ def search(component: str, latest_version: bool, debug: bool):
     purls = _query_trustify_packages(component)
     if latest_version:
         purls_with_version = _latest_package_versions(purls)
-        console.print("Found these matching packages in Trustify, including the highest version found:")
+        console.print(
+            "Found these matching packages in Trustify, including the highest version found:"
+        )
         for package_summary, package_details in purls_with_version.items():
             console.print(f"{package_summary}@{package_details[0].string}")
     else:
         console.print("Found these matching packages in Trustify:")
         for purl in purls:
             console.print(purl)
+
 
 def _query_trustify_packages(component: str) -> list[str]:
     """
@@ -74,7 +78,9 @@ def _query_trustify_packages(component: str) -> list[str]:
     return [item["purl"] for item in package_result["items"]]
 
 
-def _latest_package_versions(base_purls: list[str]) -> dict[str, tuple[Version, PackageURL]]:
+def _latest_package_versions(
+    base_purls: list[str],
+) -> dict[str, tuple[Version, PackageURL]]:
     """Get the latest version from a list of purls"""
     packages: dict[str, tuple[Version, PackageURL]] = {}
     for base_purl in base_purls:
@@ -104,6 +110,7 @@ def _latest_package_versions(base_purls: list[str]) -> dict[str, tuple[Version, 
 
     return packages
 
+
 def _get_package_versions(base_purl: str) -> set[str]:
     """
     If an OCI base_purl is passed in, get it's version from purl tags. Otherwise return the
@@ -125,6 +132,7 @@ def _get_package_versions(base_purl: str) -> set[str]:
     else:
         versions = {v["version"] for v in purl_versions["versions"]}
     return versions
+
 
 def _lookup_base_purl(base_purl: str) -> dict[str, Any]:
     """Get the details of a base purl from Atlas"""

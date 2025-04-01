@@ -15,11 +15,13 @@ console = Console(color_system="auto", theme=custom_theme)
 version = importlib.metadata.version("trustshell")
 logger = logging.getLogger("trustshell")
 
+
 def print_version(ctx, param, value):
     if not value or ctx.resilient_parsing:
         return
     console.print(f"Current version: {version}")
     ctx.exit()
+
 
 def config_logging(level="INFO"):
     message_format = "%(asctime)s %(name)s %(levelname)s %(message)s"
@@ -34,6 +36,7 @@ def config_logging(level="INFO"):
     if level == "DEBUG":
         httpx_logger.setLevel("INFO")
         httpcore_logger.setLevel("INFO")
+
 
 def urlencoded(base_purl: str) -> str:
     """urlencode a string, excluding the slash character"""

@@ -10,7 +10,13 @@ from rich.console import Console
 from rich.theme import Theme
 from typing import Any, Optional
 from univers.versions import RpmVersion
-from trustshell import TRUSTIFY_URL, config_logging, get_tag_from_purl, print_version, urlencoded
+from trustshell import (
+    TRUSTIFY_URL,
+    config_logging,
+    get_tag_from_purl,
+    print_version,
+    urlencoded,
+)
 
 ANALYSIS_ENDPOINT = f"{TRUSTIFY_URL}analysis/component"
 MAX_I64 = 2**63 - 1
@@ -18,6 +24,7 @@ MAX_I64 = 2**63 - 1
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
 console = Console(color_system="auto", theme=custom_theme)
 logger = logging.getLogger("trustshell")
+
 
 @click.command()
 @click.option(
@@ -49,6 +56,7 @@ def search(component: str, debug: bool):
     ancestor_tree = _get_roots(component)
     _render_tree(ancestor_tree)
 
+
 def _render_tree(root: Node):
     """Pretty print a tree using name only"""
     if root:
@@ -57,18 +65,20 @@ def _render_tree(root: Node):
     else:
         console.print("No results")
 
+
 def _get_roots(base_purl: str):
     """Lookup base_purl ancestors in Trustify"""
-    # TODO if a purl does not have a namespace add another '/', see 
+    # TODO if a purl does not have a namespace add another '/', see
     # https://github.com/trustification/trustify/issues/1440
     # TODO change back to purl~ (like) query?
     request_url = (
-        f"{ANALYSIS_ENDPOINT}" f"?ancestors={MAX_I64}" f"&q={urlencoded(f'{base_purl}@')}"
+        f"{ANALYSIS_ENDPOINT}?ancestors={MAX_I64}&q={urlencoded(f'{base_purl}@')}"
     )
     ancestors_response = httpx.get(request_url)
     ancestors_response.raise_for_status()
     ancestors = ancestors_response.json()
     return _build_root_tree(base_purl, ancestors)
+
 
 def _build_root_tree(base_name, ancestor_data: dict[str, Any]) -> Node:
     """Builds a tree of ancestors with a target component root"""
@@ -78,6 +88,7 @@ def _build_root_tree(base_name, ancestor_data: dict[str, Any]) -> Node:
     build_ancestor_tree(base_node, ancestor_data["items"])
     base_node = _consolidate_duplicate_nodes(base_node)
     return base_node
+
 
 def build_ancestor_tree(parent: Node, ancestors):
     """
@@ -141,6 +152,7 @@ def _consolidate_duplicate_nodes(root):
 
     return root
 
+
 def _build_node_purl(purls: list[str]) -> Optional[PackageURL]:
     """
     Generate a base purl with a version or tag qualifier from a list of purls with homogenous
@@ -162,11 +174,14 @@ def _build_node_purl(purls: list[str]) -> Optional[PackageURL]:
                 qualifiers = purl.qualifiers
                 if qualifiers and isinstance(qualifiers, dict) and "tag" in qualifiers:
                     purl_tags[qualifiers["tag"]] = purl
-            sorted_purls = sorted(purl_tags.keys(), key=lambda x: RpmVersion(x), reverse=True)
+            sorted_purls = sorted(
+                purl_tags.keys(), key=lambda x: RpmVersion(x), reverse=True
+            )
             return purl_tags[sorted_purls[0]]
         else:
             console.print(f"multiple node purls found: {node_purls}", style="warning")
     return node_purls.pop()
+
 
 def _build_node_names_by_type(purls: list[str]) -> tuple[set[PackageURL], str]:
     """
