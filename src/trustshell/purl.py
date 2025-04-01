@@ -1,8 +1,21 @@
 import click
 import httpx
 import logging
+import urllib
+
+from packageurl import PackageURL
 from rich.console import Console
 from rich.theme import Theme
+from typing import Any
+from univers.versions import (
+    GenericVersion,
+    GolangVersion,
+    MavenVersion,
+    PypiVersion,
+    RpmVersion,
+    SemverVersion,
+    Version,
+)
 
 from trustshell import print_version, config_logging
 
@@ -26,11 +39,12 @@ MAX_I64 = 2**63 - 1
     is_eager=True,
 )
 @click.option("--debug", "-d", is_flag=True, help="Debug log level.")
+@click.option("--latest_version", "-l", is_flag=True, help="Include latest versions")
 @click.argument(
     "component",
     type=click.STRING,
 )
-def search(component: str, debug: bool):
+def search(component: str, latest_version: bool, debug: bool):
     """Search for a component in Trustify"""
     if not debug:
         config_logging(level="INFO")
@@ -38,7 +52,15 @@ def search(component: str, debug: bool):
         config_logging(level="DEBUG")
 
     purls = _query_trustify_packages(component)
-    console.print(purls)
+    if latest_version:
+        purls_with_version = _latest_package_versions(purls)
+        console.print("Found these matching packages in Trustify, including the highest version found:")
+        for package_summary, package_details in purls_with_version.items():
+            console.print(f"{package_summary}@{package_details[0].string}")
+    else:
+        console.print("Found these matching packages in Trustify:")
+        for purl in purls:
+            console.print(purl)
 
 def _query_trustify_packages(component: str) -> list[str]:
     """
@@ -54,3 +76,79 @@ def _query_trustify_packages(component: str) -> list[str]:
     if len(package_result["items"]) == 0:
         console.print(f"No packages found for {component}")
     return [item["purl"] for item in package_result["items"]]
+
+
+def _latest_package_versions(base_purls: list[str]) -> dict[str, tuple[Version, PackageURL]]:
+    """Get the latest version from a list of purls"""
+    packages: dict[str, tuple[Version, PackageURL]] = {}
+    for base_purl in base_purls:
+        versions = _get_package_versions(base_purl)
+        purl = PackageURL.from_string(base_purl)
+        for version in versions:
+            # Use lexicographic ordering for OCI once KONFLUX-6210 is resolved
+            if purl.type in ("rpm", "oci"):
+                typed_version = RpmVersion(version)
+            elif purl.type == "maven":
+                typed_version = MavenVersion(version)
+            elif purl.type == "go":
+                typed_version = GolangVersion(version)
+            elif purl.type == "npm":
+                typed_version = SemverVersion(version)
+            elif purl.type == "pypi":
+                typed_version = PypiVersion(version)
+            else:
+                typed_version = GenericVersion(version)
+
+            if base_purl in packages:
+                current_version = packages[base_purl][0]
+                if current_version < typed_version:
+                    packages[base_purl] = typed_version, purl
+            else:
+                packages[base_purl] = typed_version, purl
+
+    return packages
+
+def _get_package_versions(base_purl: str) -> set[str]:
+    """
+    If an OCI base_purl is passed in, get it's version from purl tags. Otherwise return the
+    purl versions reported by Trustify
+    """
+
+    logger.debug(f"Finding versions for {base_purl}")
+    purl = PackageURL.from_string(base_purl)
+    purl_versions = _lookup_base_purl(base_purl)
+    versions: set[str] = set()
+    if "versions" not in purl_versions:
+        return versions
+    if purl.type == "oci":
+        for version in purl_versions["versions"]:
+            for version_purl in version.get("purls", []):
+                tag = _get_tag_from_purl(PackageURL.from_string(version_purl["purl"]))
+                if tag:
+                    versions.add(tag)
+    else:
+        versions = {v["version"] for v in purl_versions["versions"]}
+    return versions
+
+def _lookup_base_purl(base_purl: str) -> dict[str, Any]:
+    """Get the details of a base purl from Atlas"""
+    encoded_base_purl = _urlencoded(base_purl)
+    base_purl_response = httpx.get(f"{PURL_BASE_ENDPOINT}/{encoded_base_purl}")
+    base_purl_response.raise_for_status()
+    return base_purl_response.json()
+
+def _get_tag_from_purl(purl: PackageURL) -> str:
+    """Extract tag from OCI purl"""
+    tag = ""
+    if purl.type != "oci":
+        return tag
+    qualifiers = purl.qualifiers
+    if isinstance(qualifiers, dict) and "tag" in qualifiers:
+        tag = qualifiers["tag"]
+    else:
+        logger.debug(f"Did not find tag qualifier in {purl.to_string()}")
+    return tag
+
+def _urlencoded(base_purl: str) -> str:
+    """urlencode a string, excluding the slash character"""
+    return urllib.parse.quote(base_purl, safe="")
