@@ -1,10 +1,19 @@
 import importlib.metadata
 import logging
+import urllib
+
+from packageurl import PackageURL
 from rich.console import Console
 from rich.logging import RichHandler
+from rich.theme import Theme
 
-console = Console(color_system="auto")
+
+TRUSTIFY_URL = "http://localhost:8080/api/v2/"
+
+custom_theme = Theme({"warning": "magenta", "error": "bold red"})
+console = Console(color_system="auto", theme=custom_theme)
 version = importlib.metadata.version("trustshell")
+logger = logging.getLogger("trustshell")
 
 def print_version(ctx, param, value):
     if not value or ctx.resilient_parsing:
@@ -26,5 +35,19 @@ def config_logging(level="INFO"):
         httpx_logger.setLevel("INFO")
         httpcore_logger.setLevel("INFO")
 
+def urlencoded(base_purl: str) -> str:
+    """urlencode a string, excluding the slash character"""
+    return urllib.parse.quote(base_purl, safe="")
 
 
+def get_tag_from_purl(purl: PackageURL) -> str:
+    """Extract tag from OCI purl"""
+    tag = ""
+    if purl.type != "oci":
+        return tag
+    qualifiers = purl.qualifiers
+    if isinstance(qualifiers, dict) and "tag" in qualifiers:
+        tag = qualifiers["tag"]
+    else:
+        logger.debug(f"Did not find tag qualifier in {purl.to_string()}")
+    return tag
