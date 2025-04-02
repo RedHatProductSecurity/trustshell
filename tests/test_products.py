@@ -3,11 +3,37 @@ import json
 from anytree import Node
 
 from trustshell.products import (
+    _build_node_purl,
     _build_root_tree,
     _consolidate_duplicate_nodes,
     _render_tree,
 )
 
+def test_build_node_purl_rpm():
+    purls = [
+        "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstrea"
+        "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-appstrea"
+        "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstrea"
+        "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-s390x-appstream-"
+        "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-s390x-appstream-"
+        "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-appstrea"
+        "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream"
+        "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream"
+    ]
+    result = _build_node_purl(purls).to_string()
+    assert result == "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9"
+
+
+def test_build_node_purl_oci():
+    purls = [
+        "pkg:oci/quay@sha256:9",
+        "pkg:oci/quay@sha256:9?repo_url=x.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12.8-1",
+        "pkg:oci/quay@sha256:9?repo_url=x.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12.8",
+        "pkg:oci/quay@sha256:9?repo_url=x.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12",
+    ]
+    result = _build_node_purl(purls).to_string()
+    print(result)
+    assert result == "pkg:oci/quay?tag=v3.12.8-1"
 
 def test_build_root_tree_srpm():
     base_purl = "pkg:rpm/redhat/openssl"
