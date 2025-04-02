@@ -1,10 +1,8 @@
 import json
-from unittest.mock import patch
 
 from anytree import Node
 
 from trustshell.products import (
-    _build_node_purl,
     _build_root_tree,
     _consolidate_duplicate_nodes,
     _render_tree,
