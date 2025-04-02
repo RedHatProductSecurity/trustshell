@@ -1,0 +1,291 @@
+{
+    "items": [
+      {
+        "sbom_id": "0195f399-c6b1-78b2-9a8e-02f00c7cd942",
+        "node_id": "SPDXRef-Package-dotnet-NGX-9771880ff96d2793",
+        "purl": [
+          "pkg:nuget/NGX@31.0.15.5356"
+        ],
+        "cpe": [],
+        "name": "NGX",
+        "version": "31.0.15.5356",
+        "published": "2025-03-27 15:35:27+00",
+        "document_id": "https://anchore.com/syft/dir/var/workdir/source-acf734d0-7b97-4050-8580-c588d2ca6eb5",
+        "product_name": "nvidia-bootc-1-4",
+        "product_version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+        "ancestors": [
+          {
+            "sbom_id": "0195f399-c6b1-78b2-9a8e-02f00c7cd942",
+            "node_id": "SPDXRef-image-binary",
+            "purl": [
+              "pkg:oci/bootc-nvidia-rhel9@sha256:2b494fd0c17ddb5ba3f0e805c7e9a3e2699f9bc51cd15aba7ec708b4eff8758a?arch=amd64&repository_url=registry.redhat.io/rhelai1&tag=1.4.3-1743086940"
+            ],
+            "cpe": [],
+            "name": "nvidia-bootc-1-4",
+            "version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+            "published": "2025-03-27 15:35:27+00",
+            "document_id": "https://anchore.com/syft/dir/var/workdir/source-acf734d0-7b97-4050-8580-c588d2ca6eb5",
+            "product_name": "nvidia-bootc-1-4",
+            "product_version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+            "relationship": "contains",
+            "ancestors": [
+              {
+                "sbom_id": "0195f399-c6b1-78b2-9a8e-02f00c7cd942",
+                "node_id": "SPDXRef-DOCUMENT",
+                "purl": [],
+                "cpe": [],
+                "name": "registry.redhat.io/rhelai1@sha256:2b494fd0c17ddb5ba3f0e805c7e9a3e2699f9bc51cd15aba7ec708b4eff8758a",
+                "version": "",
+                "published": "2025-03-27 15:35:27+00",
+                "document_id": "https://anchore.com/syft/dir/var/workdir/source-acf734d0-7b97-4050-8580-c588d2ca6eb5",
+                "product_name": "nvidia-bootc-1-4",
+                "product_version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+                "relationship": "describes",
+                "ancestors": []
+              },
+              {
+                "sbom_id": "0195f399-c6b1-78b2-9a8e-02e11386820c",
+                "node_id": "SPDXRef-image-binary",
+                "purl": [
+                  "pkg:oci/bootc-nvidia-rhel9@sha256:2b494fd0c17ddb5ba3f0e805c7e9a3e2699f9bc51cd15aba7ec708b4eff8758a?arch=amd64&repository_url=registry.redhat.io/rhelai1&tag=1.4.3-1743086940"
+                ],
+                "cpe": [],
+                "name": "nvidia-bootc-1-4",
+                "version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+                "published": "2025-03-19 10:19:32+00",
+                "document_id": "https://konflux-ci.dev/spdxdocs/demo-on-pr-c91a8608fdf4eff697652f37ee0cf21bc490858e-68afdb3a-d057-4acd-bcdb-f32225ddaa9a",
+                "product_name": "nvidia-bootc-1-4",
+                "product_version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+                "relationship": "package",
+                "ancestors": [
+                  {
+                    "sbom_id": "0195f399-c6b1-78b2-9a8e-02e11386820c",
+                    "node_id": "SPDXRef-image-index",
+                    "purl": [
+                      "pkg:oci/bootc-nvidia-rhel9@sha256:fae7e52c95ee8d24ad9e64b54e693047b94e1b1ef98be3e3b4b9859f986e5b1d?repository_url=registry.redhat.io/rhelai1&tag=1.4.3-1743086940"
+                    ],
+                    "cpe": [],
+                    "name": "nvidia-bootc-1-4",
+                    "version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+                    "published": "2025-03-19 10:19:32+00",
+                    "document_id": "https://konflux-ci.dev/spdxdocs/demo-on-pr-c91a8608fdf4eff697652f37ee0cf21bc490858e-68afdb3a-d057-4acd-bcdb-f32225ddaa9a",
+                    "product_name": "nvidia-bootc-1-4",
+                    "product_version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+                    "relationship": "variant",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0195f399-c6b1-78b2-9a8e-02e11386820c",
+                        "node_id": "SPDXRef-DOCUMENT",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "registry.redhat.io/rhelai1@sha256:fae7e52c95ee8d24ad9e64b54e693047b94e1b1ef98be3e3b4b9859f986e5b1d",
+                        "version": "",
+                        "published": "2025-03-19 10:19:32+00",
+                        "document_id": "https://konflux-ci.dev/spdxdocs/demo-on-pr-c91a8608fdf4eff697652f37ee0cf21bc490858e-68afdb3a-d057-4acd-bcdb-f32225ddaa9a",
+                        "product_name": "nvidia-bootc-1-4",
+                        "product_version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+                        "relationship": "describes",
+                        "ancestors": []
+                      },
+                      {
+                        "sbom_id": "0195f399-c6b1-78b2-9a8e-02d9a1bda9ab",
+                        "node_id": "SPDXRef-image-index",
+                        "purl": [
+                          "pkg:oci/bootc-nvidia-rhel9@sha256:fae7e52c95ee8d24ad9e64b54e693047b94e1b1ef98be3e3b4b9859f986e5b1d?repository_url=registry.redhat.io/rhelai1&tag=1.4.3-1743086940"
+                        ],
+                        "cpe": [],
+                        "name": "nvidia-bootc-1-4",
+                        "version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+                        "published": "2025-03-27 17:50:08+00",
+                        "document_id": "https://redhat.com/c845eb1a-9d78-4b3d-96f5-12dde26145ca.spdx.json",
+                        "product_name": "Red Hat Enterprise Linux AI",
+                        "product_version": "1.4.3",
+                        "relationship": "package",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0195f399-c6b1-78b2-9a8e-02d9a1bda9ab",
+                            "node_id": "SPDXRef-product",
+                            "purl": [],
+                            "cpe": [
+                              "cpe:/a:redhat:enterprise_linux_ai:1.4:*:el9:*"
+                            ],
+                            "name": "Red Hat Enterprise Linux AI",
+                            "version": "1.4.3",
+                            "published": "2025-03-27 17:50:08+00",
+                            "document_id": "https://redhat.com/c845eb1a-9d78-4b3d-96f5-12dde26145ca.spdx.json",
+                            "product_name": "Red Hat Enterprise Linux AI",
+                            "product_version": "1.4.3",
+                            "relationship": "package",
+                            "ancestors": [
+                              {
+                                "sbom_id": "0195f399-c6b1-78b2-9a8e-02d9a1bda9ab",
+                                "node_id": "SPDXRef-DOCUMENT",
+                                "purl": [],
+                                "cpe": [],
+                                "name": "Red Hat Enterprise Linux AI 1.4.3",
+                                "version": "",
+                                "published": "2025-03-27 17:50:08+00",
+                                "document_id": "https://redhat.com/c845eb1a-9d78-4b3d-96f5-12dde26145ca.spdx.json",
+                                "product_name": "Red Hat Enterprise Linux AI",
+                                "product_version": "1.4.3",
+                                "relationship": "describes",
+                                "ancestors": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195f399-c6b1-78b2-9a8e-02f00c7cd942",
+        "node_id": "SPDXRef-Package-dotnet-NGX-9771880ff96d2793",
+        "purl": [
+          "pkg:nuget/NGX@31.0.15.5356"
+        ],
+        "cpe": [],
+        "name": "NGX",
+        "version": "31.0.15.5356",
+        "published": "2025-03-27 15:35:27+00",
+        "document_id": "https://anchore.com/syft/dir/var/workdir/source-acf734d0-7b97-4050-8580-c588d2ca6eb5",
+        "product_name": "nvidia-bootc-1-4",
+        "product_version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+        "ancestors": [
+          {
+            "sbom_id": "0195f399-c6b1-78b2-9a8e-02f00c7cd942",
+            "node_id": "SPDXRef-image-binary",
+            "purl": [
+              "pkg:oci/bootc-nvidia-rhel9@sha256:2b494fd0c17ddb5ba3f0e805c7e9a3e2699f9bc51cd15aba7ec708b4eff8758a?arch=amd64&repository_url=registry.redhat.io/rhelai1&tag=1.4.3-1743086940"
+            ],
+            "cpe": [],
+            "name": "nvidia-bootc-1-4",
+            "version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+            "published": "2025-03-27 15:35:27+00",
+            "document_id": "https://anchore.com/syft/dir/var/workdir/source-acf734d0-7b97-4050-8580-c588d2ca6eb5",
+            "product_name": "nvidia-bootc-1-4",
+            "product_version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+            "relationship": "contains",
+            "ancestors": [
+              {
+                "sbom_id": "0195f399-c6b1-78b2-9a8e-02f00c7cd942",
+                "node_id": "SPDXRef-DOCUMENT",
+                "purl": [],
+                "cpe": [],
+                "name": "registry.redhat.io/rhelai1@sha256:2b494fd0c17ddb5ba3f0e805c7e9a3e2699f9bc51cd15aba7ec708b4eff8758a",
+                "version": "",
+                "published": "2025-03-27 15:35:27+00",
+                "document_id": "https://anchore.com/syft/dir/var/workdir/source-acf734d0-7b97-4050-8580-c588d2ca6eb5",
+                "product_name": "nvidia-bootc-1-4",
+                "product_version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+                "relationship": "describes",
+                "ancestors": []
+              },
+              {
+                "sbom_id": "0195f399-c6b1-78b2-9a8e-02e11386820c",
+                "node_id": "SPDXRef-image-binary",
+                "purl": [
+                  "pkg:oci/bootc-nvidia-rhel9@sha256:2b494fd0c17ddb5ba3f0e805c7e9a3e2699f9bc51cd15aba7ec708b4eff8758a?arch=amd64&repository_url=registry.redhat.io/rhelai1&tag=1.4.3-1743086940"
+                ],
+                "cpe": [],
+                "name": "nvidia-bootc-1-4",
+                "version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+                "published": "2025-03-19 10:19:32+00",
+                "document_id": "https://konflux-ci.dev/spdxdocs/demo-on-pr-c91a8608fdf4eff697652f37ee0cf21bc490858e-68afdb3a-d057-4acd-bcdb-f32225ddaa9a",
+                "product_name": "nvidia-bootc-1-4",
+                "product_version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+                "relationship": "package",
+                "ancestors": [
+                  {
+                    "sbom_id": "0195f399-c6b1-78b2-9a8e-02e11386820c",
+                    "node_id": "SPDXRef-image-index",
+                    "purl": [
+                      "pkg:oci/bootc-nvidia-rhel9@sha256:fae7e52c95ee8d24ad9e64b54e693047b94e1b1ef98be3e3b4b9859f986e5b1d?repository_url=registry.redhat.io/rhelai1&tag=1.4.3-1743086940"
+                    ],
+                    "cpe": [],
+                    "name": "nvidia-bootc-1-4",
+                    "version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+                    "published": "2025-03-19 10:19:32+00",
+                    "document_id": "https://konflux-ci.dev/spdxdocs/demo-on-pr-c91a8608fdf4eff697652f37ee0cf21bc490858e-68afdb3a-d057-4acd-bcdb-f32225ddaa9a",
+                    "product_name": "nvidia-bootc-1-4",
+                    "product_version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+                    "relationship": "variant",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0195f399-c6b1-78b2-9a8e-02e11386820c",
+                        "node_id": "SPDXRef-DOCUMENT",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "registry.redhat.io/rhelai1@sha256:fae7e52c95ee8d24ad9e64b54e693047b94e1b1ef98be3e3b4b9859f986e5b1d",
+                        "version": "",
+                        "published": "2025-03-19 10:19:32+00",
+                        "document_id": "https://konflux-ci.dev/spdxdocs/demo-on-pr-c91a8608fdf4eff697652f37ee0cf21bc490858e-68afdb3a-d057-4acd-bcdb-f32225ddaa9a",
+                        "product_name": "nvidia-bootc-1-4",
+                        "product_version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+                        "relationship": "describes",
+                        "ancestors": []
+                      },
+                      {
+                        "sbom_id": "0195f399-c6b1-78b2-9a8e-02d9a1bda9ab",
+                        "node_id": "SPDXRef-image-index",
+                        "purl": [
+                          "pkg:oci/bootc-nvidia-rhel9@sha256:fae7e52c95ee8d24ad9e64b54e693047b94e1b1ef98be3e3b4b9859f986e5b1d?repository_url=registry.redhat.io/rhelai1&tag=1.4.3-1743086940"
+                        ],
+                        "cpe": [],
+                        "name": "nvidia-bootc-1-4",
+                        "version": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+                        "published": "2025-03-27 17:50:08+00",
+                        "document_id": "https://redhat.com/c845eb1a-9d78-4b3d-96f5-12dde26145ca.spdx.json",
+                        "product_name": "Red Hat Enterprise Linux AI",
+                        "product_version": "1.4.3",
+                        "relationship": "package",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0195f399-c6b1-78b2-9a8e-02d9a1bda9ab",
+                            "node_id": "SPDXRef-product",
+                            "purl": [],
+                            "cpe": [
+                              "cpe:/a:redhat:enterprise_linux_ai:1.4:*:el9:*"
+                            ],
+                            "name": "Red Hat Enterprise Linux AI",
+                            "version": "1.4.3",
+                            "published": "2025-03-27 17:50:08+00",
+                            "document_id": "https://redhat.com/c845eb1a-9d78-4b3d-96f5-12dde26145ca.spdx.json",
+                            "product_name": "Red Hat Enterprise Linux AI",
+                            "product_version": "1.4.3",
+                            "relationship": "package",
+                            "ancestors": [
+                              {
+                                "sbom_id": "0195f399-c6b1-78b2-9a8e-02d9a1bda9ab",
+                                "node_id": "SPDXRef-DOCUMENT",
+                                "purl": [],
+                                "cpe": [],
+                                "name": "Red Hat Enterprise Linux AI 1.4.3",
+                                "version": "",
+                                "published": "2025-03-27 17:50:08+00",
+                                "document_id": "https://redhat.com/c845eb1a-9d78-4b3d-96f5-12dde26145ca.spdx.json",
+                                "product_name": "Red Hat Enterprise Linux AI",
+                                "product_version": "1.4.3",
+                                "relationship": "describes",
+                                "ancestors": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "total": 2
+  }

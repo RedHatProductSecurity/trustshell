@@ -1,0 +1,86 @@
+{
+    "uuid": "627b2554-4431-5702-8ba6-cf26a23c88e7",
+    "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8",
+    "versions": [
+      {
+        "uuid": "1538606e-0e0a-59db-b776-e7107dc03d6d",
+        "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:919b1253db42d62050efd9b26679edbb3a76c0d4729188b6ce3139b8a2958c41",
+        "version": "sha256:919b1253db42d62050efd9b26679edbb3a76c0d4729188b6ce3139b8a2958c41",
+        "base": {
+          "uuid": "627b2554-4431-5702-8ba6-cf26a23c88e7",
+          "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8"
+        },
+        "purls": [
+          {
+            "uuid": "1538606e-0e0a-59db-b776-e7107dc03d6d",
+            "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:919b1253db42d62050efd9b26679edbb3a76c0d4729188b6ce3139b8a2958c41"
+          },
+          {
+            "uuid": "2f7e1df7-75f4-547a-92c2-dc0545516832",
+            "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:919b1253db42d62050efd9b26679edbb3a76c0d4729188b6ce3139b8a2958c41?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12"
+          },
+          {
+            "uuid": "6160aed3-7768-5cc8-b5c7-0bbc25fc9ab4",
+            "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:919b1253db42d62050efd9b26679edbb3a76c0d4729188b6ce3139b8a2958c41?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12.8-1"
+          },
+          {
+            "uuid": "bd3e90dc-bf7b-581f-92e6-5b27f8830ef3",
+            "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:919b1253db42d62050efd9b26679edbb3a76c0d4729188b6ce3139b8a2958c41?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12.8"
+          }
+        ]
+      },
+      {
+        "uuid": "992f8724-e5fd-5ca5-8b98-328633be197a",
+        "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:b91aec3d3f9cf8a4204e6e13e27035802693a8517b14e59db2535fe789e7a33e",
+        "version": "sha256:b91aec3d3f9cf8a4204e6e13e27035802693a8517b14e59db2535fe789e7a33e",
+        "base": {
+          "uuid": "627b2554-4431-5702-8ba6-cf26a23c88e7",
+          "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8"
+        },
+        "purls": [
+          {
+            "uuid": "54791d5f-a390-55ae-a1a4-44a9f8df2d32",
+            "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:b91aec3d3f9cf8a4204e6e13e27035802693a8517b14e59db2535fe789e7a33e?arch=ppc64le&os=linux&repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12.8-1"
+          }
+        ]
+      },
+      {
+        "uuid": "c28671ea-df7c-59ff-82b5-f2efc0468b6b",
+        "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:af6a7a92aa23a114da79903c205499c3843de181c8fab0195fb6c5d493fa1168",
+        "version": "sha256:af6a7a92aa23a114da79903c205499c3843de181c8fab0195fb6c5d493fa1168",
+        "base": {
+          "uuid": "627b2554-4431-5702-8ba6-cf26a23c88e7",
+          "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8"
+        },
+        "purls": [
+          {
+            "uuid": "e20efeab-9c62-5edb-af97-014df0a6cb80",
+            "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:af6a7a92aa23a114da79903c205499c3843de181c8fab0195fb6c5d493fa1168?arch=amd64&os=linux&repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12.8-1"
+          },
+          {
+            "uuid": "bff7b4d1-b966-546e-9b38-cfb04ff6423d",
+            "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:af6a7a92aa23a114da79903c205499c3843de181c8fab0195fb6c5d493fa1168?arch=amd64&os=linux&repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12.8"
+          },
+          {
+            "uuid": "fc8dee3d-509e-5310-9545-89908fbaca93",
+            "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:af6a7a92aa23a114da79903c205499c3843de181c8fab0195fb6c5d493fa1168?arch=amd64&os=linux&repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12"
+          }
+        ]
+      },
+      {
+        "uuid": "f8c700e6-966c-55c8-830c-1dfa04cff195",
+        "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:bfc9435099f0b0cde9b43df3982b6164e08bdf7dc0691af197555f029cf78563",
+        "version": "sha256:bfc9435099f0b0cde9b43df3982b6164e08bdf7dc0691af197555f029cf78563",
+        "base": {
+          "uuid": "627b2554-4431-5702-8ba6-cf26a23c88e7",
+          "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8"
+        },
+        "purls": [
+          {
+            "uuid": "8932eb5b-d2e0-52da-a616-63759c835a19",
+            "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:bfc9435099f0b0cde9b43df3982b6164e08bdf7dc0691af197555f029cf78563?arch=s390x&os=linux&repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12.8-1"
+          }
+        ]
+      }
+    ]
+  }
