@@ -16,7 +16,13 @@ from univers.versions import (
     Version,
 )
 
-from trustshell import TRUSTIFY_URL, get_tag_from_purl, print_version, config_logging, urlencoded
+from trustshell import (
+    TRUSTIFY_URL,
+    get_tag_from_purl,
+    print_version,
+    config_logging,
+    urlencoded,
+)
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
 console = Console(color_system="auto", theme=custom_theme)

@@ -2,6 +2,7 @@ import json
 from unittest.mock import patch
 from trustshell.purl import _get_package_versions
 
+
 @patch("trustshell.purl._lookup_base_purl")
 def test_package_versions(mock_lookup):
     base_purl = "pkg:oci/quay-builder-qemu-rhcos-rhel-8"
