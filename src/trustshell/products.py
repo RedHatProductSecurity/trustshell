@@ -68,8 +68,6 @@ def _render_tree(root: Node):
 
 def _get_roots(base_purl: str):
     """Lookup base_purl ancestors in Trustify"""
-    # TODO if a purl does not have a namespace add another '/', see
-    # https://github.com/trustification/trustify/issues/1440
     # TODO change back to purl~ (like) query?
     request_url = (
         f"{ANALYSIS_ENDPOINT}?ancestors={MAX_I64}&q={urlencoded(f'{base_purl}@')}"
@@ -86,6 +84,7 @@ def _build_root_tree(base_name, ancestor_data: dict[str, Any]) -> Node:
         return
     base_node = Node(base_name)
     build_ancestor_tree(base_node, ancestor_data["items"])
+    _render_tree(base_node)
     base_node = _consolidate_duplicate_nodes(base_node)
     return base_node
 
@@ -97,17 +96,17 @@ def build_ancestor_tree(parent: Node, ancestors):
     """
     for component in ancestors:
         base_purl = _build_node_purl(component["purl"])
-        if base_purl:
-            node = Node(base_purl.to_string(), parent=parent)
-            build_ancestor_tree(node, component["ancestors"])
-        else:
+        if not base_purl:
             # Top level product components don't have purls, but might have multiples CPEs
             cpes = component["cpe"]
             if not cpes:
-                # Reached the top of the tree
-                return
+                # Try the next ancestor
+                continue
             for cpe in cpes:
                 Node(cpe, parent=parent)
+        else:
+            node = Node(base_purl.to_string(), parent=parent)
+            build_ancestor_tree(node, component["ancestors"])
 
 
 def _consolidate_duplicate_nodes(root):

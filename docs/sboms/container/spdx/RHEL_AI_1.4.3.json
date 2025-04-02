@@ -1,0 +1,63 @@
+{
+    "spdxVersion": "SPDX-2.3",
+    "SPDXID": "SPDXRef-DOCUMENT",
+    "dataLicense": "CC-BY-4.0",
+    "documentNamespace": "https://redhat.com/c845eb1a-9d78-4b3d-96f5-12dde26145ca.spdx.json",
+    "creationInfo": {
+        "created": "2025-03-27T17:50:08+00:00",
+        "creators": [
+            "Organization: Red Hat",
+            "Tool: Konflux CI"
+        ]
+    },
+    "name": "Red Hat Enterprise Linux AI 1.4.3",
+    "packages": [
+        {
+            "SPDXID": "SPDXRef-product",
+            "name": "Red Hat Enterprise Linux AI",
+            "versionInfo": "1.4.3",
+            "supplier": "Organization: Red Hat",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "SECURITY",
+                    "referenceType": "cpe22Type",
+                    "referenceLocator": "cpe:/a:redhat:enterprise_linux_ai:1.4::el9"
+                }
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-image-index",
+            "name": "nvidia-bootc-1-4",
+            "versionInfo": "abccf1662c34f22cf75cca88fb3d7f82e2980bb3",
+            "downloadLocation": "NOASSERTION",
+            "licenseConcluded": "NOASSERTION",
+            "supplier": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "PACKAGE-MANAGER",
+                    "referenceType": "purl",
+                    "referenceLocator": "pkg:oci/bootc-nvidia-rhel9@sha256%3Afae7e52c95ee8d24ad9e64b54e693047b94e1b1ef98be3e3b4b9859f986e5b1d?repository_url=registry.redhat.io/rhelai1&tag=1.4.3-1743086940"
+                }
+            ],
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "fae7e52c95ee8d24ad9e64b54e693047b94e1b1ef98be3e3b4b9859f986e5b1d"
+                }
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "spdxElementId": "SPDXRef-DOCUMENT",
+            "relationshipType": "DESCRIBES",
+            "relatedSpdxElement": "SPDXRef-product"
+        },
+        {
+            "spdxElementId": "SPDXRef-image-index",
+            "relationshipType": "PACKAGE_OF",
+            "relatedSpdxElement": "SPDXRef-product"
+        }
+    ]
+}
