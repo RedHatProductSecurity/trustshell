@@ -84,7 +84,6 @@ def _build_root_tree(base_name, ancestor_data: dict[str, Any]) -> Node:
         return
     base_node = Node(base_name)
     build_ancestor_tree(base_node, ancestor_data["items"])
-    _render_tree(base_node)
     base_node = _consolidate_duplicate_nodes(base_node)
     return base_node
 
