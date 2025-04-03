@@ -9,6 +9,7 @@ from trustshell.products import (
     _render_tree,
 )
 
+
 def test_build_node_purl_rpm():
     purls = [
         "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstrea"
@@ -35,6 +36,7 @@ def test_build_node_purl_oci():
     print(result)
     assert result == "pkg:oci/quay?tag=v3.12.8-1"
 
+
 def test_build_root_tree_srpm():
     base_purl = "pkg:rpm/redhat/openssl"
     with open("tests/testdata/openssl.json", "r") as file:
@@ -50,21 +52,21 @@ def test_build_root_tree_srpm():
     _check_node_names_at_depth(result, 2, expected_cpes)
 
 
-
 def test_build_root_tree_binary_rpm():
     base_purl = "pkg:rpm/redhat/openssl"
     with open("tests/testdata/openssl-libs.json", "r") as file:
         data = json.load(file)
     result = _build_root_tree(base_purl, data)
     _render_tree(result)
-    _check_node_names_at_depth(result, 1, ["pkg:rpm/redhat/openssl-libs@3.0.7-18.el9_2"])
+    _check_node_names_at_depth(
+        result, 1, ["pkg:rpm/redhat/openssl-libs@3.0.7-18.el9_2"]
+    )
     _check_node_names_at_depth(result, 2, ["pkg:rpm/redhat/openssl@3.0.7-18.el9_2"])
     expected_cpes = [
         "cpe:/a:redhat:rhel_eus:9.2:*:appstream:*",
         "cpe:/a:redhat:rhel_eus:9.2:*:baseos:*",
     ]
     _check_node_names_at_depth(result, 3, expected_cpes)
-
 
 
 def test_build_root_tree_container_cdx():
@@ -74,8 +76,9 @@ def test_build_root_tree_container_cdx():
     result = _build_root_tree(base_purl, data)
     _render_tree(result)
     assert result.name == base_purl
-    _check_node_names_at_depth(result, 1, ["pkg:oci/quay-builder-qemu-rhcos-rhel8?tag=v3.12.8-1"])
-
+    _check_node_names_at_depth(
+        result, 1, ["pkg:oci/quay-builder-qemu-rhcos-rhel8?tag=v3.12.8-1"]
+    )
 
 
 def test_build_root_tree_dependency():
@@ -85,7 +88,9 @@ def test_build_root_tree_dependency():
     result = _build_root_tree(base_purl, data)
     _render_tree(result)
     assert result.name == base_purl
-    _check_node_names_at_depth(result, 2, ["pkg:oci/quay-builder-qemu-rhcos-rhel8?tag=v3.12.8-1"])
+    _check_node_names_at_depth(
+        result, 2, ["pkg:oci/quay-builder-qemu-rhcos-rhel8?tag=v3.12.8-1"]
+    )
     expected_cpe = ["cpe:/a:redhat:quay:3:*:el8:*"]
     _check_node_names_at_depth(result, 3, expected_cpe)
 
@@ -97,13 +102,14 @@ def test_build_root_tree_spdx_dependency():
     result = _build_root_tree(base_purl, data)
     _render_tree(result)
     assert result.name == base_purl
-    _check_node_names_at_depth(result, 3, ["cpe:/a:redhat:enterprise_linux_ai:1.4:*:el9:*"])
+    _check_node_names_at_depth(
+        result, 3, ["cpe:/a:redhat:enterprise_linux_ai:1.4:*:el9:*"]
+    )
 
 
 def _check_node_names_at_depth(result, depth, expected):
     node_names = [node.name for node in result.descendants if node.depth == depth]
     assert sorted(expected) == sorted(node_names)
-
 
 
 def test_consolidate_duplicate_nodes():
@@ -129,6 +135,7 @@ def test_consolidate_duplicate_nodes():
     assert consolidated_a_node.children[0].name == "A1"
     assert consolidated_a_node.children[1].name == "A2"
     assert consolidated_a_node.children[2].name == "A3"
+
 
 def create_node(root, name, children):
     node_a = Node(name, parent=root)
