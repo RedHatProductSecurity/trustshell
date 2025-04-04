@@ -90,13 +90,11 @@ def _build_root_tree(base_name, ancestor_data: dict[str, Any]) -> Node:
 
 def build_ancestor_tree(parent: Node, ancestors):
     """
-    Recursive function to build an ancestor tree from a nested set of purls, or CPEs. Assumes that
-    CPE only only occurs at the root of the tree.
+    Recursive function to build an ancestor tree from a nested set of purls, or CPEs.
     """
     for component in ancestors:
         base_purl = _build_node_purl(component["purl"])
         if not base_purl:
-            # Top level product components don't have purls, but might have multiples CPEs
             cpes = component["cpe"]
             if not cpes:
                 # Try the next ancestor
@@ -105,7 +103,9 @@ def build_ancestor_tree(parent: Node, ancestors):
                 Node(cpe, parent=parent)
         else:
             node = Node(base_purl.to_string(), parent=parent)
-            build_ancestor_tree(node, component["ancestors"])
+            if "ancestors" in component:
+                build_ancestor_tree(node, component["ancestors"])
+            # else try the next ancestor
 
 
 def _consolidate_duplicate_nodes(root):
