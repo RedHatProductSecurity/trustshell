@@ -1,0 +1,1243 @@
+{
+    "items": [
+      {
+        "sbom_id": "0195ff28-660b-7eb3-9c16-0b53d28f0aab",
+        "node_id": "e003fb8a-68d9-46d1-8fb9-7a58559827c4",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "",
+        "published": "2025-04-04 01:36:12+00",
+        "document_id": "urn:uuid:1f860ff9-75ab-4948-aeaf-3d78bc1715a0/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-660b-7eb3-9c16-0b53d28f0aab",
+            "node_id": "CycloneDX-doc-ref",
+            "purl": [],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "",
+            "published": "2025-04-04 01:36:12+00",
+            "document_id": "urn:uuid:1f860ff9-75ab-4948-aeaf-3d78bc1715a0/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "describes",
+            "ancestors": []
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-660b-7eb3-9c16-0b53d28f0aab",
+        "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8",
+        "published": "2025-04-04 01:36:12+00",
+        "document_id": "urn:uuid:1f860ff9-75ab-4948-aeaf-3d78bc1715a0/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": []
+      },
+      {
+        "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+        "node_id": "quay-builder-qemu-rhcos-container_amd64",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8",
+        "published": "2025-04-04 01:40:23+00",
+        "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+            "node_id": "quay-builder-qemu-rhcos-container_image-index",
+            "purl": [
+              "pkg:oci/quay-quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250"
+            ],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+            "published": "2025-04-04 01:40:23+00",
+            "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "variant",
+            "ancestors": [
+              {
+                "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "purl": [
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14"
+                ],
+                "cpe": [],
+                "name": "quay/quay-builder-qemu-rhcos-rhel8",
+                "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "published": "2025-04-02 20:06:32+00",
+                "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                "product_name": "Red Hat Quay 3",
+                "product_version": "Quay-3-RHEL-8",
+                "relationship": "package",
+                "ancestors": [
+                  {
+                    "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                    "node_id": "Quay-3-RHEL-8",
+                    "purl": [],
+                    "cpe": [
+                      "cpe:/a:redhat:quay:3:*:el8:*"
+                    ],
+                    "name": "Red Hat Quay 3",
+                    "version": "Quay-3-RHEL-8",
+                    "published": "2025-04-02 20:06:32+00",
+                    "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                    "product_name": "Red Hat Quay 3",
+                    "product_version": "Quay-3-RHEL-8",
+                    "relationship": "generates",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                        "node_id": "CycloneDX-doc-ref",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "Red Hat Quay 3",
+                        "version": "",
+                        "published": "2025-04-02 20:06:32+00",
+                        "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                        "product_name": "Red Hat Quay 3",
+                        "product_version": "Quay-3-RHEL-8",
+                        "relationship": "describes",
+                        "ancestors": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+        "node_id": "quay-builder-qemu-rhcos-container_ppc64le",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:76ccc28f31bf6f72a1b28af3ee59fdd2063029bfe5374bceee9ef8eb685f6990?arch=ppc64le&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:76ccc28f31bf6f72a1b28af3ee59fdd2063029bfe5374bceee9ef8eb685f6990",
+        "published": "2025-04-04 01:40:23+00",
+        "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+            "node_id": "quay-builder-qemu-rhcos-container_image-index",
+            "purl": [
+              "pkg:oci/quay-quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250"
+            ],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+            "published": "2025-04-04 01:40:23+00",
+            "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "variant",
+            "ancestors": [
+              {
+                "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "purl": [
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14"
+                ],
+                "cpe": [],
+                "name": "quay/quay-builder-qemu-rhcos-rhel8",
+                "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "published": "2025-04-02 20:06:32+00",
+                "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                "product_name": "Red Hat Quay 3",
+                "product_version": "Quay-3-RHEL-8",
+                "relationship": "package",
+                "ancestors": [
+                  {
+                    "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                    "node_id": "Quay-3-RHEL-8",
+                    "purl": [],
+                    "cpe": [
+                      "cpe:/a:redhat:quay:3:*:el8:*"
+                    ],
+                    "name": "Red Hat Quay 3",
+                    "version": "Quay-3-RHEL-8",
+                    "published": "2025-04-02 20:06:32+00",
+                    "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                    "product_name": "Red Hat Quay 3",
+                    "product_version": "Quay-3-RHEL-8",
+                    "relationship": "generates",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                        "node_id": "CycloneDX-doc-ref",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "Red Hat Quay 3",
+                        "version": "",
+                        "published": "2025-04-02 20:06:32+00",
+                        "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                        "product_name": "Red Hat Quay 3",
+                        "product_version": "Quay-3-RHEL-8",
+                        "relationship": "describes",
+                        "ancestors": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+        "node_id": "quay-builder-qemu-rhcos-container_s390x",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:0192e2c83202ad3091e99d641927869150ee383a373dd02dacf3c91242a0ac5f?arch=s390x&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:0192e2c83202ad3091e99d641927869150ee383a373dd02dacf3c91242a0ac5f",
+        "published": "2025-04-04 01:40:23+00",
+        "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+            "node_id": "quay-builder-qemu-rhcos-container_image-index",
+            "purl": [
+              "pkg:oci/quay-quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250"
+            ],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+            "published": "2025-04-04 01:40:23+00",
+            "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "variant",
+            "ancestors": [
+              {
+                "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "purl": [
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14"
+                ],
+                "cpe": [],
+                "name": "quay/quay-builder-qemu-rhcos-rhel8",
+                "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "published": "2025-04-02 20:06:32+00",
+                "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                "product_name": "Red Hat Quay 3",
+                "product_version": "Quay-3-RHEL-8",
+                "relationship": "package",
+                "ancestors": [
+                  {
+                    "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                    "node_id": "Quay-3-RHEL-8",
+                    "purl": [],
+                    "cpe": [
+                      "cpe:/a:redhat:quay:3:*:el8:*"
+                    ],
+                    "name": "Red Hat Quay 3",
+                    "version": "Quay-3-RHEL-8",
+                    "published": "2025-04-02 20:06:32+00",
+                    "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                    "product_name": "Red Hat Quay 3",
+                    "product_version": "Quay-3-RHEL-8",
+                    "relationship": "generates",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                        "node_id": "CycloneDX-doc-ref",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "Red Hat Quay 3",
+                        "version": "",
+                        "published": "2025-04-02 20:06:32+00",
+                        "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                        "product_name": "Red Hat Quay 3",
+                        "product_version": "Quay-3-RHEL-8",
+                        "relationship": "describes",
+                        "ancestors": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-660b-7eb3-9c16-0b53d28f0aab",
+        "node_id": "e003fb8a-68d9-46d1-8fb9-7a58559827c4",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "",
+        "published": "2025-04-04 01:36:12+00",
+        "document_id": "urn:uuid:1f860ff9-75ab-4948-aeaf-3d78bc1715a0/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-660b-7eb3-9c16-0b53d28f0aab",
+            "node_id": "CycloneDX-doc-ref",
+            "purl": [],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "",
+            "published": "2025-04-04 01:36:12+00",
+            "document_id": "urn:uuid:1f860ff9-75ab-4948-aeaf-3d78bc1715a0/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "describes",
+            "ancestors": []
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-660b-7eb3-9c16-0b53d28f0aab",
+        "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8",
+        "published": "2025-04-04 01:36:12+00",
+        "document_id": "urn:uuid:1f860ff9-75ab-4948-aeaf-3d78bc1715a0/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": []
+      },
+      {
+        "sbom_id": "0195ff28-660b-7eb3-9c16-0b53d28f0aab",
+        "node_id": "e003fb8a-68d9-46d1-8fb9-7a58559827c4",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "",
+        "published": "2025-04-04 01:36:12+00",
+        "document_id": "urn:uuid:1f860ff9-75ab-4948-aeaf-3d78bc1715a0/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-660b-7eb3-9c16-0b53d28f0aab",
+            "node_id": "CycloneDX-doc-ref",
+            "purl": [],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "",
+            "published": "2025-04-04 01:36:12+00",
+            "document_id": "urn:uuid:1f860ff9-75ab-4948-aeaf-3d78bc1715a0/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "describes",
+            "ancestors": []
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-660b-7eb3-9c16-0b53d28f0aab",
+        "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8",
+        "published": "2025-04-04 01:36:12+00",
+        "document_id": "urn:uuid:1f860ff9-75ab-4948-aeaf-3d78bc1715a0/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": []
+      },
+      {
+        "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+        "node_id": "quay-builder-qemu-rhcos-container_amd64",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8",
+        "published": "2025-04-04 01:40:23+00",
+        "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+            "node_id": "quay-builder-qemu-rhcos-container_image-index",
+            "purl": [
+              "pkg:oci/quay-quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250"
+            ],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+            "published": "2025-04-04 01:40:23+00",
+            "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "variant",
+            "ancestors": [
+              {
+                "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "purl": [
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14"
+                ],
+                "cpe": [],
+                "name": "quay/quay-builder-qemu-rhcos-rhel8",
+                "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "published": "2025-04-02 20:06:32+00",
+                "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                "product_name": "Red Hat Quay 3",
+                "product_version": "Quay-3-RHEL-8",
+                "relationship": "package",
+                "ancestors": [
+                  {
+                    "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                    "node_id": "Quay-3-RHEL-8",
+                    "purl": [],
+                    "cpe": [
+                      "cpe:/a:redhat:quay:3:*:el8:*"
+                    ],
+                    "name": "Red Hat Quay 3",
+                    "version": "Quay-3-RHEL-8",
+                    "published": "2025-04-02 20:06:32+00",
+                    "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                    "product_name": "Red Hat Quay 3",
+                    "product_version": "Quay-3-RHEL-8",
+                    "relationship": "generates",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                        "node_id": "CycloneDX-doc-ref",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "Red Hat Quay 3",
+                        "version": "",
+                        "published": "2025-04-02 20:06:32+00",
+                        "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                        "product_name": "Red Hat Quay 3",
+                        "product_version": "Quay-3-RHEL-8",
+                        "relationship": "describes",
+                        "ancestors": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+        "node_id": "quay-builder-qemu-rhcos-container_ppc64le",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:76ccc28f31bf6f72a1b28af3ee59fdd2063029bfe5374bceee9ef8eb685f6990?arch=ppc64le&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:76ccc28f31bf6f72a1b28af3ee59fdd2063029bfe5374bceee9ef8eb685f6990",
+        "published": "2025-04-04 01:40:23+00",
+        "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+            "node_id": "quay-builder-qemu-rhcos-container_image-index",
+            "purl": [
+              "pkg:oci/quay-quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250"
+            ],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+            "published": "2025-04-04 01:40:23+00",
+            "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "variant",
+            "ancestors": [
+              {
+                "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "purl": [
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14"
+                ],
+                "cpe": [],
+                "name": "quay/quay-builder-qemu-rhcos-rhel8",
+                "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "published": "2025-04-02 20:06:32+00",
+                "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                "product_name": "Red Hat Quay 3",
+                "product_version": "Quay-3-RHEL-8",
+                "relationship": "package",
+                "ancestors": [
+                  {
+                    "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                    "node_id": "Quay-3-RHEL-8",
+                    "purl": [],
+                    "cpe": [
+                      "cpe:/a:redhat:quay:3:*:el8:*"
+                    ],
+                    "name": "Red Hat Quay 3",
+                    "version": "Quay-3-RHEL-8",
+                    "published": "2025-04-02 20:06:32+00",
+                    "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                    "product_name": "Red Hat Quay 3",
+                    "product_version": "Quay-3-RHEL-8",
+                    "relationship": "generates",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                        "node_id": "CycloneDX-doc-ref",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "Red Hat Quay 3",
+                        "version": "",
+                        "published": "2025-04-02 20:06:32+00",
+                        "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                        "product_name": "Red Hat Quay 3",
+                        "product_version": "Quay-3-RHEL-8",
+                        "relationship": "describes",
+                        "ancestors": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+        "node_id": "quay-builder-qemu-rhcos-container_s390x",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:0192e2c83202ad3091e99d641927869150ee383a373dd02dacf3c91242a0ac5f?arch=s390x&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:0192e2c83202ad3091e99d641927869150ee383a373dd02dacf3c91242a0ac5f",
+        "published": "2025-04-04 01:40:23+00",
+        "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+            "node_id": "quay-builder-qemu-rhcos-container_image-index",
+            "purl": [
+              "pkg:oci/quay-quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250"
+            ],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+            "published": "2025-04-04 01:40:23+00",
+            "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "variant",
+            "ancestors": [
+              {
+                "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "purl": [
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14"
+                ],
+                "cpe": [],
+                "name": "quay/quay-builder-qemu-rhcos-rhel8",
+                "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "published": "2025-04-02 20:06:32+00",
+                "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                "product_name": "Red Hat Quay 3",
+                "product_version": "Quay-3-RHEL-8",
+                "relationship": "package",
+                "ancestors": [
+                  {
+                    "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                    "node_id": "Quay-3-RHEL-8",
+                    "purl": [],
+                    "cpe": [
+                      "cpe:/a:redhat:quay:3:*:el8:*"
+                    ],
+                    "name": "Red Hat Quay 3",
+                    "version": "Quay-3-RHEL-8",
+                    "published": "2025-04-02 20:06:32+00",
+                    "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                    "product_name": "Red Hat Quay 3",
+                    "product_version": "Quay-3-RHEL-8",
+                    "relationship": "generates",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                        "node_id": "CycloneDX-doc-ref",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "Red Hat Quay 3",
+                        "version": "",
+                        "published": "2025-04-02 20:06:32+00",
+                        "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                        "product_name": "Red Hat Quay 3",
+                        "product_version": "Quay-3-RHEL-8",
+                        "relationship": "describes",
+                        "ancestors": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+        "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0",
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4",
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+        "published": "2025-04-02 20:06:32+00",
+        "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+        "product_name": "Red Hat Quay 3",
+        "product_version": "Quay-3-RHEL-8",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+            "node_id": "Quay-3-RHEL-8",
+            "purl": [],
+            "cpe": [
+              "cpe:/a:redhat:quay:3:*:el8:*"
+            ],
+            "name": "Red Hat Quay 3",
+            "version": "Quay-3-RHEL-8",
+            "published": "2025-04-02 20:06:32+00",
+            "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+            "product_name": "Red Hat Quay 3",
+            "product_version": "Quay-3-RHEL-8",
+            "relationship": "generates",
+            "ancestors": [
+              {
+                "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                "node_id": "CycloneDX-doc-ref",
+                "purl": [],
+                "cpe": [],
+                "name": "Red Hat Quay 3",
+                "version": "",
+                "published": "2025-04-02 20:06:32+00",
+                "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                "product_name": "Red Hat Quay 3",
+                "product_version": "Quay-3-RHEL-8",
+                "relationship": "describes",
+                "ancestors": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-660b-7eb3-9c16-0b53d28f0aab",
+        "node_id": "e003fb8a-68d9-46d1-8fb9-7a58559827c4",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "",
+        "published": "2025-04-04 01:36:12+00",
+        "document_id": "urn:uuid:1f860ff9-75ab-4948-aeaf-3d78bc1715a0/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-660b-7eb3-9c16-0b53d28f0aab",
+            "node_id": "CycloneDX-doc-ref",
+            "purl": [],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "",
+            "published": "2025-04-04 01:36:12+00",
+            "document_id": "urn:uuid:1f860ff9-75ab-4948-aeaf-3d78bc1715a0/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "describes",
+            "ancestors": []
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-660b-7eb3-9c16-0b53d28f0aab",
+        "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8",
+        "published": "2025-04-04 01:36:12+00",
+        "document_id": "urn:uuid:1f860ff9-75ab-4948-aeaf-3d78bc1715a0/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": []
+      },
+      {
+        "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+        "node_id": "quay-builder-qemu-rhcos-container_amd64",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8",
+        "published": "2025-04-04 01:40:23+00",
+        "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+            "node_id": "quay-builder-qemu-rhcos-container_image-index",
+            "purl": [
+              "pkg:oci/quay-quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250"
+            ],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+            "published": "2025-04-04 01:40:23+00",
+            "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "variant",
+            "ancestors": [
+              {
+                "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "purl": [
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14"
+                ],
+                "cpe": [],
+                "name": "quay/quay-builder-qemu-rhcos-rhel8",
+                "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "published": "2025-04-02 20:06:32+00",
+                "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                "product_name": "Red Hat Quay 3",
+                "product_version": "Quay-3-RHEL-8",
+                "relationship": "package",
+                "ancestors": [
+                  {
+                    "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                    "node_id": "Quay-3-RHEL-8",
+                    "purl": [],
+                    "cpe": [
+                      "cpe:/a:redhat:quay:3:*:el8:*"
+                    ],
+                    "name": "Red Hat Quay 3",
+                    "version": "Quay-3-RHEL-8",
+                    "published": "2025-04-02 20:06:32+00",
+                    "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                    "product_name": "Red Hat Quay 3",
+                    "product_version": "Quay-3-RHEL-8",
+                    "relationship": "generates",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                        "node_id": "CycloneDX-doc-ref",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "Red Hat Quay 3",
+                        "version": "",
+                        "published": "2025-04-02 20:06:32+00",
+                        "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                        "product_name": "Red Hat Quay 3",
+                        "product_version": "Quay-3-RHEL-8",
+                        "relationship": "describes",
+                        "ancestors": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+        "node_id": "quay-builder-qemu-rhcos-container_ppc64le",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:76ccc28f31bf6f72a1b28af3ee59fdd2063029bfe5374bceee9ef8eb685f6990?arch=ppc64le&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:76ccc28f31bf6f72a1b28af3ee59fdd2063029bfe5374bceee9ef8eb685f6990",
+        "published": "2025-04-04 01:40:23+00",
+        "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+            "node_id": "quay-builder-qemu-rhcos-container_image-index",
+            "purl": [
+              "pkg:oci/quay-quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250"
+            ],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+            "published": "2025-04-04 01:40:23+00",
+            "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "variant",
+            "ancestors": [
+              {
+                "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "purl": [
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14"
+                ],
+                "cpe": [],
+                "name": "quay/quay-builder-qemu-rhcos-rhel8",
+                "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "published": "2025-04-02 20:06:32+00",
+                "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                "product_name": "Red Hat Quay 3",
+                "product_version": "Quay-3-RHEL-8",
+                "relationship": "package",
+                "ancestors": [
+                  {
+                    "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                    "node_id": "Quay-3-RHEL-8",
+                    "purl": [],
+                    "cpe": [
+                      "cpe:/a:redhat:quay:3:*:el8:*"
+                    ],
+                    "name": "Red Hat Quay 3",
+                    "version": "Quay-3-RHEL-8",
+                    "published": "2025-04-02 20:06:32+00",
+                    "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                    "product_name": "Red Hat Quay 3",
+                    "product_version": "Quay-3-RHEL-8",
+                    "relationship": "generates",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                        "node_id": "CycloneDX-doc-ref",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "Red Hat Quay 3",
+                        "version": "",
+                        "published": "2025-04-02 20:06:32+00",
+                        "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                        "product_name": "Red Hat Quay 3",
+                        "product_version": "Quay-3-RHEL-8",
+                        "relationship": "describes",
+                        "ancestors": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+        "node_id": "quay-builder-qemu-rhcos-container_s390x",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:0192e2c83202ad3091e99d641927869150ee383a373dd02dacf3c91242a0ac5f?arch=s390x&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:0192e2c83202ad3091e99d641927869150ee383a373dd02dacf3c91242a0ac5f",
+        "published": "2025-04-04 01:40:23+00",
+        "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+            "node_id": "quay-builder-qemu-rhcos-container_image-index",
+            "purl": [
+              "pkg:oci/quay-quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250"
+            ],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+            "published": "2025-04-04 01:40:23+00",
+            "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "variant",
+            "ancestors": [
+              {
+                "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "purl": [
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14"
+                ],
+                "cpe": [],
+                "name": "quay/quay-builder-qemu-rhcos-rhel8",
+                "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "published": "2025-04-02 20:06:32+00",
+                "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                "product_name": "Red Hat Quay 3",
+                "product_version": "Quay-3-RHEL-8",
+                "relationship": "package",
+                "ancestors": [
+                  {
+                    "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                    "node_id": "Quay-3-RHEL-8",
+                    "purl": [],
+                    "cpe": [
+                      "cpe:/a:redhat:quay:3:*:el8:*"
+                    ],
+                    "name": "Red Hat Quay 3",
+                    "version": "Quay-3-RHEL-8",
+                    "published": "2025-04-02 20:06:32+00",
+                    "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                    "product_name": "Red Hat Quay 3",
+                    "product_version": "Quay-3-RHEL-8",
+                    "relationship": "generates",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                        "node_id": "CycloneDX-doc-ref",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "Red Hat Quay 3",
+                        "version": "",
+                        "published": "2025-04-02 20:06:32+00",
+                        "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                        "product_name": "Red Hat Quay 3",
+                        "product_version": "Quay-3-RHEL-8",
+                        "relationship": "describes",
+                        "ancestors": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+        "node_id": "quay-builder-qemu-rhcos-container_amd64",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8",
+        "published": "2025-04-04 01:40:23+00",
+        "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+            "node_id": "quay-builder-qemu-rhcos-container_image-index",
+            "purl": [
+              "pkg:oci/quay-quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250"
+            ],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+            "published": "2025-04-04 01:40:23+00",
+            "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "variant",
+            "ancestors": [
+              {
+                "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "purl": [
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14"
+                ],
+                "cpe": [],
+                "name": "quay/quay-builder-qemu-rhcos-rhel8",
+                "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "published": "2025-04-02 20:06:32+00",
+                "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                "product_name": "Red Hat Quay 3",
+                "product_version": "Quay-3-RHEL-8",
+                "relationship": "package",
+                "ancestors": [
+                  {
+                    "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                    "node_id": "Quay-3-RHEL-8",
+                    "purl": [],
+                    "cpe": [
+                      "cpe:/a:redhat:quay:3:*:el8:*"
+                    ],
+                    "name": "Red Hat Quay 3",
+                    "version": "Quay-3-RHEL-8",
+                    "published": "2025-04-02 20:06:32+00",
+                    "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                    "product_name": "Red Hat Quay 3",
+                    "product_version": "Quay-3-RHEL-8",
+                    "relationship": "generates",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                        "node_id": "CycloneDX-doc-ref",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "Red Hat Quay 3",
+                        "version": "",
+                        "published": "2025-04-02 20:06:32+00",
+                        "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                        "product_name": "Red Hat Quay 3",
+                        "product_version": "Quay-3-RHEL-8",
+                        "relationship": "describes",
+                        "ancestors": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+        "node_id": "quay-builder-qemu-rhcos-container_ppc64le",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:76ccc28f31bf6f72a1b28af3ee59fdd2063029bfe5374bceee9ef8eb685f6990?arch=ppc64le&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:76ccc28f31bf6f72a1b28af3ee59fdd2063029bfe5374bceee9ef8eb685f6990",
+        "published": "2025-04-04 01:40:23+00",
+        "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+            "node_id": "quay-builder-qemu-rhcos-container_image-index",
+            "purl": [
+              "pkg:oci/quay-quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250"
+            ],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+            "published": "2025-04-04 01:40:23+00",
+            "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "variant",
+            "ancestors": [
+              {
+                "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "purl": [
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14"
+                ],
+                "cpe": [],
+                "name": "quay/quay-builder-qemu-rhcos-rhel8",
+                "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "published": "2025-04-02 20:06:32+00",
+                "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                "product_name": "Red Hat Quay 3",
+                "product_version": "Quay-3-RHEL-8",
+                "relationship": "package",
+                "ancestors": [
+                  {
+                    "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                    "node_id": "Quay-3-RHEL-8",
+                    "purl": [],
+                    "cpe": [
+                      "cpe:/a:redhat:quay:3:*:el8:*"
+                    ],
+                    "name": "Red Hat Quay 3",
+                    "version": "Quay-3-RHEL-8",
+                    "published": "2025-04-02 20:06:32+00",
+                    "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                    "product_name": "Red Hat Quay 3",
+                    "product_version": "Quay-3-RHEL-8",
+                    "relationship": "generates",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                        "node_id": "CycloneDX-doc-ref",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "Red Hat Quay 3",
+                        "version": "",
+                        "published": "2025-04-02 20:06:32+00",
+                        "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                        "product_name": "Red Hat Quay 3",
+                        "product_version": "Quay-3-RHEL-8",
+                        "relationship": "describes",
+                        "ancestors": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+        "node_id": "quay-builder-qemu-rhcos-container_s390x",
+        "purl": [
+          "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:0192e2c83202ad3091e99d641927869150ee383a373dd02dacf3c91242a0ac5f?arch=s390x&os=linux&tag=v3.14.0-4"
+        ],
+        "cpe": [],
+        "name": "quay/quay-builder-qemu-rhcos-rhel8",
+        "version": "sha256:0192e2c83202ad3091e99d641927869150ee383a373dd02dacf3c91242a0ac5f",
+        "published": "2025-04-04 01:40:23+00",
+        "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+        "product_name": "",
+        "product_version": "",
+        "ancestors": [
+          {
+            "sbom_id": "0195ff28-652f-7ce1-b81a-f21e8288fa20",
+            "node_id": "quay-builder-qemu-rhcos-container_image-index",
+            "purl": [
+              "pkg:oci/quay-quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250"
+            ],
+            "cpe": [],
+            "name": "quay/quay-builder-qemu-rhcos-rhel8",
+            "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+            "published": "2025-04-04 01:40:23+00",
+            "document_id": "urn:uuid:7cd405cf-6c0e-3cd9-8c90-09a28f9cdc82/1",
+            "product_name": "",
+            "product_version": "",
+            "relationship": "variant",
+            "ancestors": [
+              {
+                "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                "node_id": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "purl": [
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4",
+                  "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14"
+                ],
+                "cpe": [],
+                "name": "quay/quay-builder-qemu-rhcos-rhel8",
+                "version": "sha256:54fe1f4dedfbbac247c3a3d87eaa6310c828f314904435f13ff2c74acbd0f250",
+                "published": "2025-04-02 20:06:32+00",
+                "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                "product_name": "Red Hat Quay 3",
+                "product_version": "Quay-3-RHEL-8",
+                "relationship": "package",
+                "ancestors": [
+                  {
+                    "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                    "node_id": "Quay-3-RHEL-8",
+                    "purl": [],
+                    "cpe": [
+                      "cpe:/a:redhat:quay:3:*:el8:*"
+                    ],
+                    "name": "Red Hat Quay 3",
+                    "version": "Quay-3-RHEL-8",
+                    "published": "2025-04-02 20:06:32+00",
+                    "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                    "product_name": "Red Hat Quay 3",
+                    "product_version": "Quay-3-RHEL-8",
+                    "relationship": "generates",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0195ff28-6533-7d13-8eae-d4c37b886d49",
+                        "node_id": "CycloneDX-doc-ref",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "Red Hat Quay 3",
+                        "version": "",
+                        "published": "2025-04-02 20:06:32+00",
+                        "document_id": "urn:uuid:41c798d8-83f6-33ba-870c-7b795655067f/1",
+                        "product_name": "Red Hat Quay 3",
+                        "product_version": "Quay-3-RHEL-8",
+                        "relationship": "describes",
+                        "ancestors": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "total": 21
+  }
