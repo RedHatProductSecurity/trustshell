@@ -4,7 +4,7 @@ import httpx
 import logging
 import sys
 
-from anytree import Node, RenderTree
+from anytree import Node, RenderTree, PreOrderIter
 from packageurl import PackageURL
 from rich.console import Console
 from rich.theme import Theme
@@ -53,8 +53,12 @@ def search(component: str, debug: bool):
         console.print(f"{component} is not a valid Package URL", style="error")
         sys.exit(1)
 
-    ancestor_tree = _get_roots(component)
-    _render_tree(ancestor_tree)
+    ancestor_trees = _get_roots(component)
+    if len(ancestor_trees) == 0:
+        console.print("No results")
+        return
+    for tree in ancestor_trees:
+        _render_tree(tree)
 
 
 def _render_tree(root: Node):
@@ -66,29 +70,19 @@ def _render_tree(root: Node):
         console.print("No results")
 
 
-def _get_roots(base_purl: str):
+def _get_roots(base_purl: str) -> list[Node]:
     """Lookup base_purl ancestors in Trustify"""
     # TODO change back to purl~ (like) query?
     request_url = (
-        f"{ANALYSIS_ENDPOINT}?ancestors={MAX_I64}&q={urlencoded(f'{base_purl}@')}"
+        f"{ANALYSIS_ENDPOINT}?ancestors={MAX_I64}&q={urlencoded(f'purl~{base_purl}@')}"
     )
     ancestors_response = httpx.get(request_url)
     ancestors_response.raise_for_status()
     ancestors = ancestors_response.json()
-    return _build_root_tree(base_purl, ancestors)
+    return _trees_with_cpes(ancestors)
 
 
-def _build_root_tree(base_name, ancestor_data: dict[str, Any]) -> Node:
-    """Builds a tree of ancestors with a target component root"""
-    if "items" not in ancestor_data or not ancestor_data["items"]:
-        return
-    base_node = Node(base_name)
-    build_ancestor_tree(base_node, ancestor_data["items"])
-    base_node = _consolidate_duplicate_nodes(base_node)
-    return base_node
-
-
-def build_ancestor_tree(parent: Node, ancestors):
+def build_ancestor_tree(parent: Node, ancestors) -> list[Node]:
     """
     Recursive function to build an ancestor tree from a nested set of purls, or CPEs.
     """
@@ -108,47 +102,145 @@ def build_ancestor_tree(parent: Node, ancestors):
             # else try the next ancestor
 
 
-def _consolidate_duplicate_nodes(root):
-    """Consolidate duplicate nodes in the tree"""
-    # First, collect nodes by name
-    name_to_nodes = defaultdict(list)
+def _remove_root_return_children(root):
+    """
+    Removes the root node and returns a list of its direct children.
 
-    def collect_nodes(node):
-        name_to_nodes[node.name].append(node)
-        for child in node.children:
-            collect_nodes(child)
+    Args:
+        root (Node): The root node of the tree
 
-    collect_nodes(root)
+    Returns:
+        list: A list of the former root's direct children as independent trees
+    """
+    # Get all direct children of the root
+    children = list(root.children)
 
-    # Process nodes with duplicates
-    consolidation_count = 0
-    children_moved_count = 0
+    # Detach all children from the root
+    for child in children:
+        child.parent = None
 
-    for name, duplicate_nodes in name_to_nodes.items():
-        if len(duplicate_nodes) > 1:
-            logger.debug(f"Found {len(duplicate_nodes)} nodes with name '{name}'")
-            # Keep the first node
-            primary_node = duplicate_nodes[0]
+    # Return the list of children
+    return children
 
-            # Collect all children from duplicate nodes
-            for duplicate in duplicate_nodes[1:]:
-                logger.debug(f"Consolidating duplicate node: {duplicate.name}")
-                consolidation_count += 1
-                # Reparent children
-                for child in list(duplicate.children):
-                    logger.debug(f"Moving child '{child.name}' to primary node")
-                    child.parent = primary_node
-                    children_moved_count += 1
 
-                # Remove the duplicate node
-                duplicate.parent = None
+def _get_branch_signature(node):
+    """
+    Create a unique signature for a branch structure starting from the given node.
+    The signature represents the structure and node names in the branch.
 
-    # Log summary of consolidation
-    logger.debug("Consolidation Summary:")
-    logger.debug(f"- Total nodes consolidated: {consolidation_count}")
-    logger.debug(f"- Total children moved: {children_moved_count}")
+    Args:
+        node (Node): Root node of the branch to signature
+
+    Returns:
+        str: A string signature representing the branch structure
+    """
+    # Use a list to collect branch elements in pre-order traversal
+    elements = []
+
+    def traverse(current_node, path=""):
+        # Add node name and its level in the path
+        node_sig = f"{path}{current_node.name}"
+        elements.append(node_sig)
+
+        # Process children in a consistent order (sort by name)
+        for i, child in enumerate(sorted(current_node.children, key=lambda x: x.name)):
+            # Use numbers to indicate branching structure
+            traverse(child, f"{path}{i}.")
+
+    traverse(node)
+    return "|".join(elements)
+
+
+def _has_cpe_node(node):
+    """
+    Check if the node or any of its descendants have a name starting with "cpe:/".
+
+    Args:
+        node (Node): The node to check
+
+    Returns:
+        bool: True if the node or any descendant has a name starting with "cpe:/", False otherwise
+    """
+    # Check if the current node's name starts with "cpe:/"
+    if node.name.startswith("cpe:/"):
+        return True
+
+    # Check if any descendant node's name starts with "cpe:/"
+    for descendant in PreOrderIter(node):
+        if descendant.name.startswith("cpe:/"):
+            return True
+
+    return False
+
+
+def _remove_duplicate_branches(root):
+    """
+    Removes duplicate branch structures from an Anytree tree
+
+    Args:
+        root (Node): The root node of the tree
+
+    Returns:
+        Node: The root node of the modified tree with duplicate branches removed
+    """
+
+    # Dictionary to store branches by their signatures
+    branches_by_signature = defaultdict(list)
+
+    # Collect branch signatures (skip the root node)
+    for node in list(PreOrderIter(root))[1:]:
+        # Only process nodes that have children (branches, not leaves)
+        if node.children:
+            signature = _get_branch_signature(node)
+            branches_by_signature[signature].append(node)
+
+    # Remove duplicate branches
+    for signature, nodes in branches_by_signature.items():
+        if len(nodes) > 1:
+            # Keep the first occurrence of the branch
+            for node in nodes[1:]:
+                # Remove this duplicate branch
+                if node.parent:
+                    node.parent = None
 
     return root
+
+
+def _trees_with_cpes(ancestor_data: dict[str, Any]) -> list[Node]:
+    """Builds a tree of ancestors with a target component root"""
+    if "items" not in ancestor_data or not ancestor_data["items"]:
+        return
+    base_node = Node("root")
+    build_ancestor_tree(base_node, ancestor_data["items"])
+    _remove_duplicate_branches(base_node)
+    _remove_duplicate_parent_nodes(base_node)
+    first_children = _remove_root_return_children(base_node)
+    return [tree for tree in first_children if _has_cpe_node(tree)]
+
+
+def _remove_duplicate_parent_nodes(node: Node):
+    """
+    Removes nodes in an anytree tree that have the same name as their direct parent,
+    and reparents their children to the remaining node.
+
+    :param node: The node to process.
+    """
+
+    def _remove_duplicates(n):
+        if not n.children:
+            return
+
+        for child in n.children:
+            if child.name == n.name:
+                for grandchild in child.children:
+                    grandchild.parent = n
+                child.parent = None
+                break
+
+        for child in n.children:
+            _remove_duplicates(child)
+
+    _remove_duplicates(node)
 
 
 def _build_node_purl(purls: list[str]) -> Optional[PackageURL]:
