@@ -5,6 +5,7 @@ from anytree import Node
 from trustshell.products import (
     _build_node_purl,
     _remove_duplicate_parent_nodes,
+    _remove_non_cpe_branches,
     _trees_with_cpes,
     _render_tree,
     _has_cpe_node,
@@ -156,6 +157,100 @@ def test_has_cpe_node_with_no_descendants():
 def test_has_cpe_node_with_empty_children():
     root = Node("d")
     assert not _has_cpe_node(root)
+
+
+def test_remove_non_cpe_branches():
+    # Create a tree with duplicate parent nodes
+    # root
+    # ├── base
+    # │   └── srpm
+    # │       └── cpe:/
+    # └── base
+    #     └── srpm
+    root = Node("root")
+    base1 = Node("base", parent=root)
+    base2 = Node("base", parent=root)
+    srpm = Node("srpm", parent=base1)
+    Node("srpm", parent=base2)
+    Node("cpe:/", parent=srpm)
+    _remove_non_cpe_branches(root)
+    _render_tree(root)
+
+    # Assert that the tree structure is as expected
+    # root
+    # ├── base
+    # │   └── srpm
+    # │       └── cpe:/
+    _check_node_names_at_depth(root, 1, ["base"])
+    _check_node_names_at_depth(root, 2, ["srpm"])
+    _check_node_names_at_depth(root, 3, ["cpe:/"])
+
+
+def test_remove_multi_non_cpe_branches():
+    # Create a tree with duplicate parent nodes
+    # root
+    # ├── base
+    # │   └── srpm
+    # │       └── cpe:/
+    # └── base
+    #     └── srpm
+    # └── base
+    #     └── srpm
+    root = Node("root")
+    base1 = Node("base", parent=root)
+    base2 = Node("base", parent=root)
+    base3 = Node("base", parent=root)
+    srpm = Node("srpm", parent=base1)
+    Node("srpm", parent=base2)
+    Node("srpm", parent=base3)
+    Node("cpe:/", parent=srpm)
+    _remove_non_cpe_branches(root)
+    _render_tree(root)
+
+    # Assert that the tree structure is as expected
+    # root
+    # ├── base
+    # │   └── srpm
+    # │       └── cpe:/
+    _check_node_names_at_depth(root, 1, ["base"])
+    _check_node_names_at_depth(root, 2, ["srpm"])
+    _check_node_names_at_depth(root, 3, ["cpe:/"])
+
+
+def test_remove_non_cpe_branches_multi_cpe():
+    # Create a tree with duplicate parent nodes
+    # root
+    # ├── base
+    # │   └── srpm
+    # │       └── cpe:/
+    # └── base
+    #     └── srpm
+    # └── base
+    #     └── srpm
+    # │       └── cpe:/
+    root = Node("root")
+    base1 = Node("base", parent=root)
+    base2 = Node("base", parent=root)
+    base3 = Node("base", parent=root)
+    srpm = Node("srpm", parent=base1)
+    Node("srpm", parent=base2)
+    srpm3 = Node("srpm", parent=base3)
+    Node("cpe:/", parent=srpm)
+    Node("cpe:/", parent=srpm3)
+    _remove_non_cpe_branches(root)
+    _render_tree(root)
+
+    # Assert that the tree structure is as expected
+    # root
+    # ├── base
+    # │   └── srpm
+    # │       └── cpe:/
+    # ├── base
+    # │   └── srpm
+    # │       └── cpe:/
+    _check_node_names_at_depth(root, 1, ["base", "base"])
+    _check_node_names_at_depth(root, 2, ["srpm", "srpm"])
+    _check_node_names_at_depth(root, 3, ["cpe:/", "cpe:/"])
 
 
 def test_remove_duplicate_parent_nodes():

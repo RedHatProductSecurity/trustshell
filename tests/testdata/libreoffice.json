@@ -1,0 +1,997 @@
+{
+    "items": [
+      {
+        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+        "node_id": "pkg:maven/org.hsqldb.util.SqlTool/hsqldb@build-7.1.8.1?package-id=d7e3d9e1c4dc5801",
+        "purl": [
+          "pkg:maven/org.hsqldb.util.SqlTool/hsqldb@build-7.1.8.1"
+        ],
+        "cpe": [],
+        "name": "hsqldb",
+        "version": "build-7.1.8.1",
+        "published": "2025-04-07 16:40:09+00",
+        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+        "product_name": "libreoffice",
+        "product_version": "7.1.8.1-15.el9_4",
+        "ancestors": [
+          {
+            "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+            "node_id": "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=s390x",
+            "purl": [
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=s390x&repository_id=rhel-9-for-s390x-appstream-e4s-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=s390x&repository_id=rhel-9-for-s390x-appstream-eus-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=s390x&repository_id=codeready-builder-for-rhel-9-s390x-eus-rpms__9_DOT_4"
+            ],
+            "cpe": [],
+            "name": "libreoffice-base",
+            "version": "7.1.8.1-15.el9_4",
+            "published": "2025-04-07 16:40:09+00",
+            "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+            "product_name": "libreoffice",
+            "product_version": "7.1.8.1-15.el9_4",
+            "relationship": "generates",
+            "ancestors": [
+              {
+                "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                "node_id": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src",
+                "purl": [
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-s390x-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-aus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-x86_64-eus-source-rpms__9_DOT_4"
+                ],
+                "cpe": [],
+                "name": "libreoffice",
+                "version": "7.1.8.1-15.el9_4",
+                "published": "2025-04-07 16:40:09+00",
+                "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                "product_name": "libreoffice",
+                "product_version": "7.1.8.1-15.el9_4",
+                "relationship": "generates",
+                "ancestors": [
+                  {
+                    "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                    "node_id": "pkg:generic/dtoa@20180411?download_url=https://pkgs.devel.redhat.com/repo/libreoffice/dtoa-20180411.tgz/sha512/722aa814c33a34bfffe6c0201b0035cc3b65854a0ba9ae2f51620a89d68019353e2c306651b35bca337186b22b2e9865ef3c5e3df8e9328006f882e4577f8c85/dtoa-20180411.tgz&checksum=SHA-512:722aa814c33a34bfffe6c0201b0035cc3b65854a0ba9ae2f51620a89d68019353e2c306651b35bca337186b22b2e9865ef3c5e3df8e9328006f882e4577f8c85",
+                    "purl": [
+                      "pkg:generic/dtoa@20180411?checksum=SHA-512:722aa814c33a34bfffe6c0201b0035cc3b65854a0ba9ae2f51620a89d68019353e2c306651b35bca337186b22b2e9865ef3c5e3df8e9328006f882e4577f8c85&download_url=https://pkgs.devel.redhat.com/repo/libreoffice/dtoa-20180411.tgz/sha512/722aa814c33a34bfffe6c0201b0035cc3b65854a0ba9ae2f51620a89d68019353e2c306651b35bca337186b22b2e9865ef3c5e3df8e9328006f882e4577f8c85/dtoa-20180411.tgz"
+                    ],
+                    "cpe": [],
+                    "name": "dtoa",
+                    "version": "20180411",
+                    "published": "2025-04-07 16:40:09+00",
+                    "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                    "product_name": "libreoffice",
+                    "product_version": "7.1.8.1-15.el9_4",
+                    "relationship": "ancestor_of",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                        "node_id": "pkg:generic/dtoa@20180411?download_url=http://dev-www.libreoffice.org/src/dtoa-20180411.tgz&checksum=SHA-256:0082d0684f7db6f62361b76c4b7faba19e0c7ce5cb8e36c4b65fea8281e711b4",
+                        "purl": [
+                          "pkg:generic/dtoa@20180411?checksum=SHA-256:0082d0684f7db6f62361b76c4b7faba19e0c7ce5cb8e36c4b65fea8281e711b4&download_url=http://dev-www.libreoffice.org/src/dtoa-20180411.tgz"
+                        ],
+                        "cpe": [],
+                        "name": "dtoa",
+                        "version": "20180411",
+                        "published": "2025-04-07 16:40:09+00",
+                        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                        "product_name": "libreoffice",
+                        "product_version": "7.1.8.1-15.el9_4",
+                        "relationship": "ancestor_of",
+                        "ancestors": []
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                    "node_id": "pkg:generic/libreoffice-translations@7.1.8.1?download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-translations-7.1.8.1.tar.xz.asc/sha512/a710e052153c350e1f5e943fe5369aaf6c0f985316d67c6395b8ce0f10659147c6cec5fd0e01cc25f2cde94da4b585aa4b33013f7ce1d643ec98930c0a92ce67/libreoffice-translations-7.1.8.1.tar.xz.asc&checksum=SHA-512:a710e052153c350e1f5e943fe5369aaf6c0f985316d67c6395b8ce0f10659147c6cec5fd0e01cc25f2cde94da4b585aa4b33013f7ce1d643ec98930c0a92ce67",
+                    "purl": [
+                      "pkg:generic/libreoffice-translations@7.1.8.1?checksum=SHA-512:a710e052153c350e1f5e943fe5369aaf6c0f985316d67c6395b8ce0f10659147c6cec5fd0e01cc25f2cde94da4b585aa4b33013f7ce1d643ec98930c0a92ce67&download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-translations-7.1.8.1.tar.xz.asc/sha512/a710e052153c350e1f5e943fe5369aaf6c0f985316d67c6395b8ce0f10659147c6cec5fd0e01cc25f2cde94da4b585aa4b33013f7ce1d643ec98930c0a92ce67/libreoffice-translations-7.1.8.1.tar.xz.asc"
+                    ],
+                    "cpe": [],
+                    "name": "libreoffice-translations",
+                    "version": "7.1.8.1",
+                    "published": "2025-04-07 16:40:09+00",
+                    "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                    "product_name": "libreoffice",
+                    "product_version": "7.1.8.1-15.el9_4",
+                    "relationship": "ancestor_of",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                        "node_id": "pkg:generic/libreoffice-translations@7.1.8.1?download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-translations-7.1.8.1.tar.xz.asc&checksum=SHA-256:a38d5f946fc70fb3c7fcd849d744c4871f20e4a3e07b0116322470a50f4530f7",
+                        "purl": [
+                          "pkg:generic/libreoffice-translations@7.1.8.1?checksum=SHA-256:a38d5f946fc70fb3c7fcd849d744c4871f20e4a3e07b0116322470a50f4530f7&download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-translations-7.1.8.1.tar.xz.asc"
+                        ],
+                        "cpe": [],
+                        "name": "libreoffice-translations",
+                        "version": "7.1.8.1",
+                        "published": "2025-04-07 16:40:09+00",
+                        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                        "product_name": "libreoffice",
+                        "product_version": "7.1.8.1-15.el9_4",
+                        "relationship": "ancestor_of",
+                        "ancestors": []
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                    "node_id": "pkg:generic/libreoffice-translations@7.1.8.1?download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-translations-7.1.8.1.tar.xz/sha512/6e95384a94bd4b47846bcccda1408e6200c120d984934672492de9f934ed1ab8fb4126690436860952240de3f068199a4fff3eb25f3bbbc3fac9db43aa9da0b0/libreoffice-translations-7.1.8.1.tar.xz&checksum=SHA-512:6e95384a94bd4b47846bcccda1408e6200c120d984934672492de9f934ed1ab8fb4126690436860952240de3f068199a4fff3eb25f3bbbc3fac9db43aa9da0b0",
+                    "purl": [
+                      "pkg:generic/libreoffice-translations@7.1.8.1?checksum=SHA-512:6e95384a94bd4b47846bcccda1408e6200c120d984934672492de9f934ed1ab8fb4126690436860952240de3f068199a4fff3eb25f3bbbc3fac9db43aa9da0b0&download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-translations-7.1.8.1.tar.xz/sha512/6e95384a94bd4b47846bcccda1408e6200c120d984934672492de9f934ed1ab8fb4126690436860952240de3f068199a4fff3eb25f3bbbc3fac9db43aa9da0b0/libreoffice-translations-7.1.8.1.tar.xz"
+                    ],
+                    "cpe": [],
+                    "name": "libreoffice-translations",
+                    "version": "7.1.8.1",
+                    "published": "2025-04-07 16:40:09+00",
+                    "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                    "product_name": "libreoffice",
+                    "product_version": "7.1.8.1-15.el9_4",
+                    "relationship": "ancestor_of",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                        "node_id": "pkg:generic/libreoffice-translations@7.1.8.1?download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-translations-7.1.8.1.tar.xz&checksum=SHA-256:8f2e5d5332821016224d787a741c2075f5b53a4e65d620c6c8bd7789c4075843",
+                        "purl": [
+                          "pkg:generic/libreoffice-translations@7.1.8.1?checksum=SHA-256:8f2e5d5332821016224d787a741c2075f5b53a4e65d620c6c8bd7789c4075843&download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-translations-7.1.8.1.tar.xz"
+                        ],
+                        "cpe": [],
+                        "name": "libreoffice-translations",
+                        "version": "7.1.8.1",
+                        "published": "2025-04-07 16:40:09+00",
+                        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                        "product_name": "libreoffice",
+                        "product_version": "7.1.8.1-15.el9_4",
+                        "relationship": "ancestor_of",
+                        "ancestors": []
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                    "node_id": "pkg:generic/libreoffice-help@7.1.8.1?download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-help-7.1.8.1.tar.xz.asc/sha512/8d2d6ced486f11676c2812f50e8eaffa4153473b78be7756bc377be102084603a7f0626a8baee3ce5f907f4a164b5c0bf56d4e57928f4489c35c7d54ee73aba5/libreoffice-help-7.1.8.1.tar.xz.asc&checksum=SHA-512:8d2d6ced486f11676c2812f50e8eaffa4153473b78be7756bc377be102084603a7f0626a8baee3ce5f907f4a164b5c0bf56d4e57928f4489c35c7d54ee73aba5",
+                    "purl": [
+                      "pkg:generic/libreoffice-help@7.1.8.1?checksum=SHA-512:8d2d6ced486f11676c2812f50e8eaffa4153473b78be7756bc377be102084603a7f0626a8baee3ce5f907f4a164b5c0bf56d4e57928f4489c35c7d54ee73aba5&download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-help-7.1.8.1.tar.xz.asc/sha512/8d2d6ced486f11676c2812f50e8eaffa4153473b78be7756bc377be102084603a7f0626a8baee3ce5f907f4a164b5c0bf56d4e57928f4489c35c7d54ee73aba5/libreoffice-help-7.1.8.1.tar.xz.asc"
+                    ],
+                    "cpe": [],
+                    "name": "libreoffice-help",
+                    "version": "7.1.8.1",
+                    "published": "2025-04-07 16:40:09+00",
+                    "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                    "product_name": "libreoffice",
+                    "product_version": "7.1.8.1-15.el9_4",
+                    "relationship": "ancestor_of",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                        "node_id": "pkg:generic/libreoffice-help@7.1.8.1?download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-help-7.1.8.1.tar.xz.asc&checksum=SHA-256:bd0c5a5da381b6f3580f3f387d62956387586db950b31c6096d4699a3145804b",
+                        "purl": [
+                          "pkg:generic/libreoffice-help@7.1.8.1?checksum=SHA-256:bd0c5a5da381b6f3580f3f387d62956387586db950b31c6096d4699a3145804b&download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-help-7.1.8.1.tar.xz.asc"
+                        ],
+                        "cpe": [],
+                        "name": "libreoffice-help",
+                        "version": "7.1.8.1",
+                        "published": "2025-04-07 16:40:09+00",
+                        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                        "product_name": "libreoffice",
+                        "product_version": "7.1.8.1-15.el9_4",
+                        "relationship": "ancestor_of",
+                        "ancestors": []
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                    "node_id": "pkg:generic/libreoffice-help@7.1.8.1?download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-help-7.1.8.1.tar.xz/sha512/d271a56ab39d4e32a06def119790cf4c82a742e902b0932d77af430b49fca9c1a093344cbf39df050b328b1a3000390a8b4dd7adc9808269c794c0284470b414/libreoffice-help-7.1.8.1.tar.xz&checksum=SHA-512:d271a56ab39d4e32a06def119790cf4c82a742e902b0932d77af430b49fca9c1a093344cbf39df050b328b1a3000390a8b4dd7adc9808269c794c0284470b414",
+                    "purl": [
+                      "pkg:generic/libreoffice-help@7.1.8.1?checksum=SHA-512:d271a56ab39d4e32a06def119790cf4c82a742e902b0932d77af430b49fca9c1a093344cbf39df050b328b1a3000390a8b4dd7adc9808269c794c0284470b414&download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-help-7.1.8.1.tar.xz/sha512/d271a56ab39d4e32a06def119790cf4c82a742e902b0932d77af430b49fca9c1a093344cbf39df050b328b1a3000390a8b4dd7adc9808269c794c0284470b414/libreoffice-help-7.1.8.1.tar.xz"
+                    ],
+                    "cpe": [],
+                    "name": "libreoffice-help",
+                    "version": "7.1.8.1",
+                    "published": "2025-04-07 16:40:09+00",
+                    "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                    "product_name": "libreoffice",
+                    "product_version": "7.1.8.1-15.el9_4",
+                    "relationship": "ancestor_of",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                        "node_id": "pkg:generic/libreoffice-help@7.1.8.1?download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-help-7.1.8.1.tar.xz&checksum=SHA-256:b6bda19827914727edd3735f93c69f49abab095e8325262ec4aa3818f2bf22de",
+                        "purl": [
+                          "pkg:generic/libreoffice-help@7.1.8.1?checksum=SHA-256:b6bda19827914727edd3735f93c69f49abab095e8325262ec4aa3818f2bf22de&download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-help-7.1.8.1.tar.xz"
+                        ],
+                        "cpe": [],
+                        "name": "libreoffice-help",
+                        "version": "7.1.8.1",
+                        "published": "2025-04-07 16:40:09+00",
+                        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                        "product_name": "libreoffice",
+                        "product_version": "7.1.8.1-15.el9_4",
+                        "relationship": "ancestor_of",
+                        "ancestors": []
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                    "node_id": "pkg:generic/libreoffice@7.1.8.1?download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-7.1.8.1.tar.xz.asc/sha512/26cca7de0307b36e03508400a807a8562ade9ca5f1c1f4a0eaa13491e0a219812ce7eb5aa8df043b19b80249404c2b566ccd31d2077fa7567dbab677689f9513/libreoffice-7.1.8.1.tar.xz.asc&checksum=SHA-512:26cca7de0307b36e03508400a807a8562ade9ca5f1c1f4a0eaa13491e0a219812ce7eb5aa8df043b19b80249404c2b566ccd31d2077fa7567dbab677689f9513",
+                    "purl": [
+                      "pkg:generic/libreoffice@7.1.8.1?checksum=SHA-512:26cca7de0307b36e03508400a807a8562ade9ca5f1c1f4a0eaa13491e0a219812ce7eb5aa8df043b19b80249404c2b566ccd31d2077fa7567dbab677689f9513&download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-7.1.8.1.tar.xz.asc/sha512/26cca7de0307b36e03508400a807a8562ade9ca5f1c1f4a0eaa13491e0a219812ce7eb5aa8df043b19b80249404c2b566ccd31d2077fa7567dbab677689f9513/libreoffice-7.1.8.1.tar.xz.asc"
+                    ],
+                    "cpe": [],
+                    "name": "libreoffice",
+                    "version": "7.1.8.1",
+                    "published": "2025-04-07 16:40:09+00",
+                    "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                    "product_name": "libreoffice",
+                    "product_version": "7.1.8.1-15.el9_4",
+                    "relationship": "ancestor_of",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                        "node_id": "pkg:generic/libreoffice@7.1.8.1?download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-7.1.8.1.tar.xz.asc&checksum=SHA-256:6a501e36e9e9cbbc6b39d239792de521729bacabaa071dd0fe4872ef21138ef4",
+                        "purl": [
+                          "pkg:generic/libreoffice@7.1.8.1?checksum=SHA-256:6a501e36e9e9cbbc6b39d239792de521729bacabaa071dd0fe4872ef21138ef4&download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-7.1.8.1.tar.xz.asc"
+                        ],
+                        "cpe": [],
+                        "name": "libreoffice",
+                        "version": "7.1.8.1",
+                        "published": "2025-04-07 16:40:09+00",
+                        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                        "product_name": "libreoffice",
+                        "product_version": "7.1.8.1-15.el9_4",
+                        "relationship": "ancestor_of",
+                        "ancestors": []
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                    "node_id": "pkg:generic/libreoffice@7.1.8.1?download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-7.1.8.1.tar.xz/sha512/ad6d09a68fc6d617dc271ed02ee88bc56128a56aab57d5e355faf12d7accb8bf8160a0f20f0b60f1daf6e93b9fef2573b7b37b32f56695893381c14f778a702c/libreoffice-7.1.8.1.tar.xz&checksum=SHA-512:ad6d09a68fc6d617dc271ed02ee88bc56128a56aab57d5e355faf12d7accb8bf8160a0f20f0b60f1daf6e93b9fef2573b7b37b32f56695893381c14f778a702c",
+                    "purl": [
+                      "pkg:generic/libreoffice@7.1.8.1?checksum=SHA-512:ad6d09a68fc6d617dc271ed02ee88bc56128a56aab57d5e355faf12d7accb8bf8160a0f20f0b60f1daf6e93b9fef2573b7b37b32f56695893381c14f778a702c&download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-7.1.8.1.tar.xz/sha512/ad6d09a68fc6d617dc271ed02ee88bc56128a56aab57d5e355faf12d7accb8bf8160a0f20f0b60f1daf6e93b9fef2573b7b37b32f56695893381c14f778a702c/libreoffice-7.1.8.1.tar.xz"
+                    ],
+                    "cpe": [],
+                    "name": "libreoffice",
+                    "version": "7.1.8.1",
+                    "published": "2025-04-07 16:40:09+00",
+                    "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                    "product_name": "libreoffice",
+                    "product_version": "7.1.8.1-15.el9_4",
+                    "relationship": "ancestor_of",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                        "node_id": "pkg:generic/libreoffice@7.1.8.1?download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-7.1.8.1.tar.xz&checksum=SHA-256:4c6711dbf4d24093a3abb1b5bd749ae0c68403a7c6f79ac75597e78e88aa7893",
+                        "purl": [
+                          "pkg:generic/libreoffice@7.1.8.1?checksum=SHA-256:4c6711dbf4d24093a3abb1b5bd749ae0c68403a7c6f79ac75597e78e88aa7893&download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-7.1.8.1.tar.xz"
+                        ],
+                        "cpe": [],
+                        "name": "libreoffice",
+                        "version": "7.1.8.1",
+                        "published": "2025-04-07 16:40:09+00",
+                        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                        "product_name": "libreoffice",
+                        "product_version": "7.1.8.1-15.el9_4",
+                        "relationship": "ancestor_of",
+                        "ancestors": []
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "01961356-83c0-7c72-8a10-30a135a6740e",
+                    "node_id": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src",
+                    "purl": [
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-eus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-eus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-eus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-eus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-aus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-eus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-e4s-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-e4s-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-e4s-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-e4s-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-eus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-x86_64-eus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-s390x-eus-source-rpms__9_DOT_4"
+                    ],
+                    "cpe": [],
+                    "name": "libreoffice",
+                    "version": "7.1.8.1-15.el9_4",
+                    "published": "2025-04-03 01:33:18+00",
+                    "document_id": "urn:uuid:9b33b805-6d10-33d4-a4b4-d7971a1bdb81/1",
+                    "product_name": "",
+                    "product_version": "",
+                    "relationship": "package",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-83c0-7c72-8a10-30a135a6740e",
+                        "node_id": "RHEL-9.4.0.Z.EUS",
+                        "purl": [],
+                        "cpe": [
+                          "cpe:/a:redhat:rhel_eus:9.4:*:crb:*",
+                          "cpe:/a:redhat:rhel_eus:9.4:*:appstream:*"
+                        ],
+                        "name": "Red Hat Enterprise Linux 9.4 Extended Update Support",
+                        "version": "RHEL-9.4.0.Z.EUS",
+                        "published": "2025-04-03 01:33:18+00",
+                        "document_id": "urn:uuid:9b33b805-6d10-33d4-a4b4-d7971a1bdb81/1",
+                        "product_name": "",
+                        "product_version": "",
+                        "relationship": "generates",
+                        "ancestors": [
+                          {
+                            "sbom_id": "01961356-83c0-7c72-8a10-30a135a6740e",
+                            "node_id": "CycloneDX-doc-ref",
+                            "purl": [],
+                            "cpe": [],
+                            "name": "Red Hat Enterprise Linux 9.4 Extended Update Support",
+                            "version": "",
+                            "published": "2025-04-03 01:33:18+00",
+                            "document_id": "urn:uuid:9b33b805-6d10-33d4-a4b4-d7971a1bdb81/1",
+                            "product_name": "",
+                            "product_version": "",
+                            "relationship": "describes",
+                            "ancestors": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+            "node_id": "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=x86_64",
+            "purl": [
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=x86_64&repository_id=rhel-9-for-x86_64-appstream-e4s-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=x86_64&repository_id=rhel-9-for-x86_64-appstream-eus-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=x86_64&repository_id=rhel-9-for-x86_64-appstream-aus-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=x86_64&repository_id=codeready-builder-for-rhel-9-x86_64-eus-rpms__9_DOT_4"
+            ],
+            "cpe": [],
+            "name": "libreoffice-base",
+            "version": "7.1.8.1-15.el9_4",
+            "published": "2025-04-07 16:40:09+00",
+            "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+            "product_name": "libreoffice",
+            "product_version": "7.1.8.1-15.el9_4",
+            "relationship": "generates",
+            "ancestors": [
+              {
+                "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                "node_id": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src",
+                "purl": [
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-s390x-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-aus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-x86_64-eus-source-rpms__9_DOT_4"
+                ],
+                "cpe": [],
+                "name": "libreoffice",
+                "version": "7.1.8.1-15.el9_4",
+                "published": "2025-04-07 16:40:09+00",
+                "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                "product_name": "libreoffice",
+                "product_version": "7.1.8.1-15.el9_4",
+                "relationship": "generates"
+              }
+            ]
+          },
+          {
+            "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+            "node_id": "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=ppc64le",
+            "purl": [
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=ppc64le&repository_id=codeready-builder-for-rhel-9-ppc64le-eus-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=ppc64le&repository_id=rhel-9-for-ppc64le-appstream-e4s-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=ppc64le&repository_id=rhel-9-for-ppc64le-appstream-eus-rpms__9_DOT_4"
+            ],
+            "cpe": [],
+            "name": "libreoffice-base",
+            "version": "7.1.8.1-15.el9_4",
+            "published": "2025-04-07 16:40:09+00",
+            "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+            "product_name": "libreoffice",
+            "product_version": "7.1.8.1-15.el9_4",
+            "relationship": "generates",
+            "ancestors": [
+              {
+                "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                "node_id": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src",
+                "purl": [
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-s390x-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-aus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-x86_64-eus-source-rpms__9_DOT_4"
+                ],
+                "cpe": [],
+                "name": "libreoffice",
+                "version": "7.1.8.1-15.el9_4",
+                "published": "2025-04-07 16:40:09+00",
+                "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                "product_name": "libreoffice",
+                "product_version": "7.1.8.1-15.el9_4",
+                "relationship": "generates"
+              }
+            ]
+          },
+          {
+            "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+            "node_id": "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=aarch64",
+            "purl": [
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=aarch64&repository_id=rhel-9-for-aarch64-appstream-eus-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=aarch64&repository_id=codeready-builder-for-rhel-9-aarch64-eus-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=aarch64&repository_id=rhel-9-for-aarch64-appstream-e4s-rpms__9_DOT_4"
+            ],
+            "cpe": [],
+            "name": "libreoffice-base",
+            "version": "7.1.8.1-15.el9_4",
+            "published": "2025-04-07 16:40:09+00",
+            "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+            "product_name": "libreoffice",
+            "product_version": "7.1.8.1-15.el9_4",
+            "relationship": "generates",
+            "ancestors": [
+              {
+                "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                "node_id": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src",
+                "purl": [
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-s390x-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-aus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-x86_64-eus-source-rpms__9_DOT_4"
+                ],
+                "cpe": [],
+                "name": "libreoffice",
+                "version": "7.1.8.1-15.el9_4",
+                "published": "2025-04-07 16:40:09+00",
+                "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                "product_name": "libreoffice",
+                "product_version": "7.1.8.1-15.el9_4",
+                "relationship": "generates"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+        "node_id": "pkg:maven/org.hsqldb.util.SqlTool/hsqldb@build-7.1.8.1?package-id=d7e3d9e1c4dc5801",
+        "purl": [
+          "pkg:maven/org.hsqldb.util.SqlTool/hsqldb@build-7.1.8.1"
+        ],
+        "cpe": [],
+        "name": "hsqldb",
+        "version": "build-7.1.8.1",
+        "published": "2025-04-07 16:40:09+00",
+        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+        "product_name": "libreoffice",
+        "product_version": "7.1.8.1-15.el9_4",
+        "ancestors": [
+          {
+            "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+            "node_id": "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=s390x",
+            "purl": [
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=s390x&repository_id=rhel-9-for-s390x-appstream-e4s-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=s390x&repository_id=rhel-9-for-s390x-appstream-eus-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=s390x&repository_id=codeready-builder-for-rhel-9-s390x-eus-rpms__9_DOT_4"
+            ],
+            "cpe": [],
+            "name": "libreoffice-base",
+            "version": "7.1.8.1-15.el9_4",
+            "published": "2025-04-07 16:40:09+00",
+            "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+            "product_name": "libreoffice",
+            "product_version": "7.1.8.1-15.el9_4",
+            "relationship": "generates",
+            "ancestors": [
+              {
+                "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                "node_id": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src",
+                "purl": [
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-s390x-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-aus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-x86_64-eus-source-rpms__9_DOT_4"
+                ],
+                "cpe": [],
+                "name": "libreoffice",
+                "version": "7.1.8.1-15.el9_4",
+                "published": "2025-04-07 16:40:09+00",
+                "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                "product_name": "libreoffice",
+                "product_version": "7.1.8.1-15.el9_4",
+                "relationship": "generates",
+                "ancestors": [
+                  {
+                    "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                    "node_id": "pkg:generic/dtoa@20180411?download_url=https://pkgs.devel.redhat.com/repo/libreoffice/dtoa-20180411.tgz/sha512/722aa814c33a34bfffe6c0201b0035cc3b65854a0ba9ae2f51620a89d68019353e2c306651b35bca337186b22b2e9865ef3c5e3df8e9328006f882e4577f8c85/dtoa-20180411.tgz&checksum=SHA-512:722aa814c33a34bfffe6c0201b0035cc3b65854a0ba9ae2f51620a89d68019353e2c306651b35bca337186b22b2e9865ef3c5e3df8e9328006f882e4577f8c85",
+                    "purl": [
+                      "pkg:generic/dtoa@20180411?checksum=SHA-512:722aa814c33a34bfffe6c0201b0035cc3b65854a0ba9ae2f51620a89d68019353e2c306651b35bca337186b22b2e9865ef3c5e3df8e9328006f882e4577f8c85&download_url=https://pkgs.devel.redhat.com/repo/libreoffice/dtoa-20180411.tgz/sha512/722aa814c33a34bfffe6c0201b0035cc3b65854a0ba9ae2f51620a89d68019353e2c306651b35bca337186b22b2e9865ef3c5e3df8e9328006f882e4577f8c85/dtoa-20180411.tgz"
+                    ],
+                    "cpe": [],
+                    "name": "dtoa",
+                    "version": "20180411",
+                    "published": "2025-04-07 16:40:09+00",
+                    "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                    "product_name": "libreoffice",
+                    "product_version": "7.1.8.1-15.el9_4",
+                    "relationship": "ancestor_of",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                        "node_id": "pkg:generic/dtoa@20180411?download_url=http://dev-www.libreoffice.org/src/dtoa-20180411.tgz&checksum=SHA-256:0082d0684f7db6f62361b76c4b7faba19e0c7ce5cb8e36c4b65fea8281e711b4",
+                        "purl": [
+                          "pkg:generic/dtoa@20180411?checksum=SHA-256:0082d0684f7db6f62361b76c4b7faba19e0c7ce5cb8e36c4b65fea8281e711b4&download_url=http://dev-www.libreoffice.org/src/dtoa-20180411.tgz"
+                        ],
+                        "cpe": [],
+                        "name": "dtoa",
+                        "version": "20180411",
+                        "published": "2025-04-07 16:40:09+00",
+                        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                        "product_name": "libreoffice",
+                        "product_version": "7.1.8.1-15.el9_4",
+                        "relationship": "ancestor_of",
+                        "ancestors": []
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                    "node_id": "pkg:generic/libreoffice-translations@7.1.8.1?download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-translations-7.1.8.1.tar.xz.asc/sha512/a710e052153c350e1f5e943fe5369aaf6c0f985316d67c6395b8ce0f10659147c6cec5fd0e01cc25f2cde94da4b585aa4b33013f7ce1d643ec98930c0a92ce67/libreoffice-translations-7.1.8.1.tar.xz.asc&checksum=SHA-512:a710e052153c350e1f5e943fe5369aaf6c0f985316d67c6395b8ce0f10659147c6cec5fd0e01cc25f2cde94da4b585aa4b33013f7ce1d643ec98930c0a92ce67",
+                    "purl": [
+                      "pkg:generic/libreoffice-translations@7.1.8.1?checksum=SHA-512:a710e052153c350e1f5e943fe5369aaf6c0f985316d67c6395b8ce0f10659147c6cec5fd0e01cc25f2cde94da4b585aa4b33013f7ce1d643ec98930c0a92ce67&download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-translations-7.1.8.1.tar.xz.asc/sha512/a710e052153c350e1f5e943fe5369aaf6c0f985316d67c6395b8ce0f10659147c6cec5fd0e01cc25f2cde94da4b585aa4b33013f7ce1d643ec98930c0a92ce67/libreoffice-translations-7.1.8.1.tar.xz.asc"
+                    ],
+                    "cpe": [],
+                    "name": "libreoffice-translations",
+                    "version": "7.1.8.1",
+                    "published": "2025-04-07 16:40:09+00",
+                    "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                    "product_name": "libreoffice",
+                    "product_version": "7.1.8.1-15.el9_4",
+                    "relationship": "ancestor_of",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                        "node_id": "pkg:generic/libreoffice-translations@7.1.8.1?download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-translations-7.1.8.1.tar.xz.asc&checksum=SHA-256:a38d5f946fc70fb3c7fcd849d744c4871f20e4a3e07b0116322470a50f4530f7",
+                        "purl": [
+                          "pkg:generic/libreoffice-translations@7.1.8.1?checksum=SHA-256:a38d5f946fc70fb3c7fcd849d744c4871f20e4a3e07b0116322470a50f4530f7&download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-translations-7.1.8.1.tar.xz.asc"
+                        ],
+                        "cpe": [],
+                        "name": "libreoffice-translations",
+                        "version": "7.1.8.1",
+                        "published": "2025-04-07 16:40:09+00",
+                        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                        "product_name": "libreoffice",
+                        "product_version": "7.1.8.1-15.el9_4",
+                        "relationship": "ancestor_of",
+                        "ancestors": []
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                    "node_id": "pkg:generic/libreoffice-translations@7.1.8.1?download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-translations-7.1.8.1.tar.xz/sha512/6e95384a94bd4b47846bcccda1408e6200c120d984934672492de9f934ed1ab8fb4126690436860952240de3f068199a4fff3eb25f3bbbc3fac9db43aa9da0b0/libreoffice-translations-7.1.8.1.tar.xz&checksum=SHA-512:6e95384a94bd4b47846bcccda1408e6200c120d984934672492de9f934ed1ab8fb4126690436860952240de3f068199a4fff3eb25f3bbbc3fac9db43aa9da0b0",
+                    "purl": [
+                      "pkg:generic/libreoffice-translations@7.1.8.1?checksum=SHA-512:6e95384a94bd4b47846bcccda1408e6200c120d984934672492de9f934ed1ab8fb4126690436860952240de3f068199a4fff3eb25f3bbbc3fac9db43aa9da0b0&download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-translations-7.1.8.1.tar.xz/sha512/6e95384a94bd4b47846bcccda1408e6200c120d984934672492de9f934ed1ab8fb4126690436860952240de3f068199a4fff3eb25f3bbbc3fac9db43aa9da0b0/libreoffice-translations-7.1.8.1.tar.xz"
+                    ],
+                    "cpe": [],
+                    "name": "libreoffice-translations",
+                    "version": "7.1.8.1",
+                    "published": "2025-04-07 16:40:09+00",
+                    "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                    "product_name": "libreoffice",
+                    "product_version": "7.1.8.1-15.el9_4",
+                    "relationship": "ancestor_of",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                        "node_id": "pkg:generic/libreoffice-translations@7.1.8.1?download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-translations-7.1.8.1.tar.xz&checksum=SHA-256:8f2e5d5332821016224d787a741c2075f5b53a4e65d620c6c8bd7789c4075843",
+                        "purl": [
+                          "pkg:generic/libreoffice-translations@7.1.8.1?checksum=SHA-256:8f2e5d5332821016224d787a741c2075f5b53a4e65d620c6c8bd7789c4075843&download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-translations-7.1.8.1.tar.xz"
+                        ],
+                        "cpe": [],
+                        "name": "libreoffice-translations",
+                        "version": "7.1.8.1",
+                        "published": "2025-04-07 16:40:09+00",
+                        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                        "product_name": "libreoffice",
+                        "product_version": "7.1.8.1-15.el9_4",
+                        "relationship": "ancestor_of",
+                        "ancestors": []
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                    "node_id": "pkg:generic/libreoffice-help@7.1.8.1?download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-help-7.1.8.1.tar.xz.asc/sha512/8d2d6ced486f11676c2812f50e8eaffa4153473b78be7756bc377be102084603a7f0626a8baee3ce5f907f4a164b5c0bf56d4e57928f4489c35c7d54ee73aba5/libreoffice-help-7.1.8.1.tar.xz.asc&checksum=SHA-512:8d2d6ced486f11676c2812f50e8eaffa4153473b78be7756bc377be102084603a7f0626a8baee3ce5f907f4a164b5c0bf56d4e57928f4489c35c7d54ee73aba5",
+                    "purl": [
+                      "pkg:generic/libreoffice-help@7.1.8.1?checksum=SHA-512:8d2d6ced486f11676c2812f50e8eaffa4153473b78be7756bc377be102084603a7f0626a8baee3ce5f907f4a164b5c0bf56d4e57928f4489c35c7d54ee73aba5&download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-help-7.1.8.1.tar.xz.asc/sha512/8d2d6ced486f11676c2812f50e8eaffa4153473b78be7756bc377be102084603a7f0626a8baee3ce5f907f4a164b5c0bf56d4e57928f4489c35c7d54ee73aba5/libreoffice-help-7.1.8.1.tar.xz.asc"
+                    ],
+                    "cpe": [],
+                    "name": "libreoffice-help",
+                    "version": "7.1.8.1",
+                    "published": "2025-04-07 16:40:09+00",
+                    "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                    "product_name": "libreoffice",
+                    "product_version": "7.1.8.1-15.el9_4",
+                    "relationship": "ancestor_of",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                        "node_id": "pkg:generic/libreoffice-help@7.1.8.1?download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-help-7.1.8.1.tar.xz.asc&checksum=SHA-256:bd0c5a5da381b6f3580f3f387d62956387586db950b31c6096d4699a3145804b",
+                        "purl": [
+                          "pkg:generic/libreoffice-help@7.1.8.1?checksum=SHA-256:bd0c5a5da381b6f3580f3f387d62956387586db950b31c6096d4699a3145804b&download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-help-7.1.8.1.tar.xz.asc"
+                        ],
+                        "cpe": [],
+                        "name": "libreoffice-help",
+                        "version": "7.1.8.1",
+                        "published": "2025-04-07 16:40:09+00",
+                        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                        "product_name": "libreoffice",
+                        "product_version": "7.1.8.1-15.el9_4",
+                        "relationship": "ancestor_of",
+                        "ancestors": []
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                    "node_id": "pkg:generic/libreoffice-help@7.1.8.1?download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-help-7.1.8.1.tar.xz/sha512/d271a56ab39d4e32a06def119790cf4c82a742e902b0932d77af430b49fca9c1a093344cbf39df050b328b1a3000390a8b4dd7adc9808269c794c0284470b414/libreoffice-help-7.1.8.1.tar.xz&checksum=SHA-512:d271a56ab39d4e32a06def119790cf4c82a742e902b0932d77af430b49fca9c1a093344cbf39df050b328b1a3000390a8b4dd7adc9808269c794c0284470b414",
+                    "purl": [
+                      "pkg:generic/libreoffice-help@7.1.8.1?checksum=SHA-512:d271a56ab39d4e32a06def119790cf4c82a742e902b0932d77af430b49fca9c1a093344cbf39df050b328b1a3000390a8b4dd7adc9808269c794c0284470b414&download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-help-7.1.8.1.tar.xz/sha512/d271a56ab39d4e32a06def119790cf4c82a742e902b0932d77af430b49fca9c1a093344cbf39df050b328b1a3000390a8b4dd7adc9808269c794c0284470b414/libreoffice-help-7.1.8.1.tar.xz"
+                    ],
+                    "cpe": [],
+                    "name": "libreoffice-help",
+                    "version": "7.1.8.1",
+                    "published": "2025-04-07 16:40:09+00",
+                    "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                    "product_name": "libreoffice",
+                    "product_version": "7.1.8.1-15.el9_4",
+                    "relationship": "ancestor_of",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                        "node_id": "pkg:generic/libreoffice-help@7.1.8.1?download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-help-7.1.8.1.tar.xz&checksum=SHA-256:b6bda19827914727edd3735f93c69f49abab095e8325262ec4aa3818f2bf22de",
+                        "purl": [
+                          "pkg:generic/libreoffice-help@7.1.8.1?checksum=SHA-256:b6bda19827914727edd3735f93c69f49abab095e8325262ec4aa3818f2bf22de&download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-help-7.1.8.1.tar.xz"
+                        ],
+                        "cpe": [],
+                        "name": "libreoffice-help",
+                        "version": "7.1.8.1",
+                        "published": "2025-04-07 16:40:09+00",
+                        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                        "product_name": "libreoffice",
+                        "product_version": "7.1.8.1-15.el9_4",
+                        "relationship": "ancestor_of",
+                        "ancestors": []
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                    "node_id": "pkg:generic/libreoffice@7.1.8.1?download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-7.1.8.1.tar.xz.asc/sha512/26cca7de0307b36e03508400a807a8562ade9ca5f1c1f4a0eaa13491e0a219812ce7eb5aa8df043b19b80249404c2b566ccd31d2077fa7567dbab677689f9513/libreoffice-7.1.8.1.tar.xz.asc&checksum=SHA-512:26cca7de0307b36e03508400a807a8562ade9ca5f1c1f4a0eaa13491e0a219812ce7eb5aa8df043b19b80249404c2b566ccd31d2077fa7567dbab677689f9513",
+                    "purl": [
+                      "pkg:generic/libreoffice@7.1.8.1?checksum=SHA-512:26cca7de0307b36e03508400a807a8562ade9ca5f1c1f4a0eaa13491e0a219812ce7eb5aa8df043b19b80249404c2b566ccd31d2077fa7567dbab677689f9513&download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-7.1.8.1.tar.xz.asc/sha512/26cca7de0307b36e03508400a807a8562ade9ca5f1c1f4a0eaa13491e0a219812ce7eb5aa8df043b19b80249404c2b566ccd31d2077fa7567dbab677689f9513/libreoffice-7.1.8.1.tar.xz.asc"
+                    ],
+                    "cpe": [],
+                    "name": "libreoffice",
+                    "version": "7.1.8.1",
+                    "published": "2025-04-07 16:40:09+00",
+                    "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                    "product_name": "libreoffice",
+                    "product_version": "7.1.8.1-15.el9_4",
+                    "relationship": "ancestor_of",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                        "node_id": "pkg:generic/libreoffice@7.1.8.1?download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-7.1.8.1.tar.xz.asc&checksum=SHA-256:6a501e36e9e9cbbc6b39d239792de521729bacabaa071dd0fe4872ef21138ef4",
+                        "purl": [
+                          "pkg:generic/libreoffice@7.1.8.1?checksum=SHA-256:6a501e36e9e9cbbc6b39d239792de521729bacabaa071dd0fe4872ef21138ef4&download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-7.1.8.1.tar.xz.asc"
+                        ],
+                        "cpe": [],
+                        "name": "libreoffice",
+                        "version": "7.1.8.1",
+                        "published": "2025-04-07 16:40:09+00",
+                        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                        "product_name": "libreoffice",
+                        "product_version": "7.1.8.1-15.el9_4",
+                        "relationship": "ancestor_of",
+                        "ancestors": []
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                    "node_id": "pkg:generic/libreoffice@7.1.8.1?download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-7.1.8.1.tar.xz/sha512/ad6d09a68fc6d617dc271ed02ee88bc56128a56aab57d5e355faf12d7accb8bf8160a0f20f0b60f1daf6e93b9fef2573b7b37b32f56695893381c14f778a702c/libreoffice-7.1.8.1.tar.xz&checksum=SHA-512:ad6d09a68fc6d617dc271ed02ee88bc56128a56aab57d5e355faf12d7accb8bf8160a0f20f0b60f1daf6e93b9fef2573b7b37b32f56695893381c14f778a702c",
+                    "purl": [
+                      "pkg:generic/libreoffice@7.1.8.1?checksum=SHA-512:ad6d09a68fc6d617dc271ed02ee88bc56128a56aab57d5e355faf12d7accb8bf8160a0f20f0b60f1daf6e93b9fef2573b7b37b32f56695893381c14f778a702c&download_url=https://pkgs.devel.redhat.com/repo/libreoffice/libreoffice-7.1.8.1.tar.xz/sha512/ad6d09a68fc6d617dc271ed02ee88bc56128a56aab57d5e355faf12d7accb8bf8160a0f20f0b60f1daf6e93b9fef2573b7b37b32f56695893381c14f778a702c/libreoffice-7.1.8.1.tar.xz"
+                    ],
+                    "cpe": [],
+                    "name": "libreoffice",
+                    "version": "7.1.8.1",
+                    "published": "2025-04-07 16:40:09+00",
+                    "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                    "product_name": "libreoffice",
+                    "product_version": "7.1.8.1-15.el9_4",
+                    "relationship": "ancestor_of",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                        "node_id": "pkg:generic/libreoffice@7.1.8.1?download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-7.1.8.1.tar.xz&checksum=SHA-256:4c6711dbf4d24093a3abb1b5bd749ae0c68403a7c6f79ac75597e78e88aa7893",
+                        "purl": [
+                          "pkg:generic/libreoffice@7.1.8.1?checksum=SHA-256:4c6711dbf4d24093a3abb1b5bd749ae0c68403a7c6f79ac75597e78e88aa7893&download_url=http://download.documentfoundation.org/libreoffice/src/7.1.8/libreoffice-7.1.8.1.tar.xz"
+                        ],
+                        "cpe": [],
+                        "name": "libreoffice",
+                        "version": "7.1.8.1",
+                        "published": "2025-04-07 16:40:09+00",
+                        "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                        "product_name": "libreoffice",
+                        "product_version": "7.1.8.1-15.el9_4",
+                        "relationship": "ancestor_of",
+                        "ancestors": []
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "01961356-83c0-7c72-8a10-30a135a6740e",
+                    "node_id": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src",
+                    "purl": [
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-eus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-eus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-eus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-eus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-aus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-eus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-e4s-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-e4s-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-e4s-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-e4s-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-eus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-x86_64-eus-source-rpms__9_DOT_4",
+                      "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-s390x-eus-source-rpms__9_DOT_4"
+                    ],
+                    "cpe": [],
+                    "name": "libreoffice",
+                    "version": "7.1.8.1-15.el9_4",
+                    "published": "2025-04-03 01:33:18+00",
+                    "document_id": "urn:uuid:9b33b805-6d10-33d4-a4b4-d7971a1bdb81/1",
+                    "product_name": "",
+                    "product_version": "",
+                    "relationship": "package",
+                    "ancestors": [
+                      {
+                        "sbom_id": "01961356-83c0-7c72-8a10-30a135a6740e",
+                        "node_id": "RHEL-9.4.0.Z.EUS",
+                        "purl": [],
+                        "cpe": [
+                          "cpe:/a:redhat:rhel_eus:9.4:*:crb:*",
+                          "cpe:/a:redhat:rhel_eus:9.4:*:appstream:*"
+                        ],
+                        "name": "Red Hat Enterprise Linux 9.4 Extended Update Support",
+                        "version": "RHEL-9.4.0.Z.EUS",
+                        "published": "2025-04-03 01:33:18+00",
+                        "document_id": "urn:uuid:9b33b805-6d10-33d4-a4b4-d7971a1bdb81/1",
+                        "product_name": "",
+                        "product_version": "",
+                        "relationship": "generates",
+                        "ancestors": [
+                          {
+                            "sbom_id": "01961356-83c0-7c72-8a10-30a135a6740e",
+                            "node_id": "CycloneDX-doc-ref",
+                            "purl": [],
+                            "cpe": [],
+                            "name": "Red Hat Enterprise Linux 9.4 Extended Update Support",
+                            "version": "",
+                            "published": "2025-04-03 01:33:18+00",
+                            "document_id": "urn:uuid:9b33b805-6d10-33d4-a4b4-d7971a1bdb81/1",
+                            "product_name": "",
+                            "product_version": "",
+                            "relationship": "describes",
+                            "ancestors": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+            "node_id": "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=x86_64",
+            "purl": [
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=x86_64&repository_id=rhel-9-for-x86_64-appstream-e4s-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=x86_64&repository_id=rhel-9-for-x86_64-appstream-eus-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=x86_64&repository_id=rhel-9-for-x86_64-appstream-aus-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=x86_64&repository_id=codeready-builder-for-rhel-9-x86_64-eus-rpms__9_DOT_4"
+            ],
+            "cpe": [],
+            "name": "libreoffice-base",
+            "version": "7.1.8.1-15.el9_4",
+            "published": "2025-04-07 16:40:09+00",
+            "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+            "product_name": "libreoffice",
+            "product_version": "7.1.8.1-15.el9_4",
+            "relationship": "generates",
+            "ancestors": [
+              {
+                "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                "node_id": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src",
+                "purl": [
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-s390x-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-aus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-x86_64-eus-source-rpms__9_DOT_4"
+                ],
+                "cpe": [],
+                "name": "libreoffice",
+                "version": "7.1.8.1-15.el9_4",
+                "published": "2025-04-07 16:40:09+00",
+                "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                "product_name": "libreoffice",
+                "product_version": "7.1.8.1-15.el9_4",
+                "relationship": "generates"
+              }
+            ]
+          },
+          {
+            "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+            "node_id": "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=ppc64le",
+            "purl": [
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=ppc64le&repository_id=codeready-builder-for-rhel-9-ppc64le-eus-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=ppc64le&repository_id=rhel-9-for-ppc64le-appstream-e4s-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=ppc64le&repository_id=rhel-9-for-ppc64le-appstream-eus-rpms__9_DOT_4"
+            ],
+            "cpe": [],
+            "name": "libreoffice-base",
+            "version": "7.1.8.1-15.el9_4",
+            "published": "2025-04-07 16:40:09+00",
+            "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+            "product_name": "libreoffice",
+            "product_version": "7.1.8.1-15.el9_4",
+            "relationship": "generates",
+            "ancestors": [
+              {
+                "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                "node_id": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src",
+                "purl": [
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-s390x-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-aus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-x86_64-eus-source-rpms__9_DOT_4"
+                ],
+                "cpe": [],
+                "name": "libreoffice",
+                "version": "7.1.8.1-15.el9_4",
+                "published": "2025-04-07 16:40:09+00",
+                "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                "product_name": "libreoffice",
+                "product_version": "7.1.8.1-15.el9_4",
+                "relationship": "generates"
+              }
+            ]
+          },
+          {
+            "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+            "node_id": "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=aarch64",
+            "purl": [
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=aarch64&repository_id=rhel-9-for-aarch64-appstream-eus-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=aarch64&repository_id=codeready-builder-for-rhel-9-aarch64-eus-rpms__9_DOT_4",
+              "pkg:rpm/redhat/libreoffice-base@7.1.8.1-15.el9_4?arch=aarch64&repository_id=rhel-9-for-aarch64-appstream-e4s-rpms__9_DOT_4"
+            ],
+            "cpe": [],
+            "name": "libreoffice-base",
+            "version": "7.1.8.1-15.el9_4",
+            "published": "2025-04-07 16:40:09+00",
+            "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+            "product_name": "libreoffice",
+            "product_version": "7.1.8.1-15.el9_4",
+            "relationship": "generates",
+            "ancestors": [
+              {
+                "sbom_id": "01961356-85e5-7d02-a4e4-d9f7c8aeedf8",
+                "node_id": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src",
+                "purl": [
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-s390x-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-aus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-eus-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-e4s-source-rpms__9_DOT_4",
+                  "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-x86_64-eus-source-rpms__9_DOT_4"
+                ],
+                "cpe": [],
+                "name": "libreoffice",
+                "version": "7.1.8.1-15.el9_4",
+                "published": "2025-04-07 16:40:09+00",
+                "document_id": "urn:uuid:ed904e64-edf7-42a1-853d-185fe9552b18/1",
+                "product_name": "libreoffice",
+                "product_version": "7.1.8.1-15.el9_4",
+                "relationship": "generates"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "total": 2
+  }

@@ -5,6 +5,7 @@ import logging
 import sys
 
 from anytree import Node, RenderTree, PreOrderIter
+from anytree.walker import Walker
 from packageurl import PackageURL
 from rich.console import Console
 from rich.theme import Theme
@@ -173,6 +174,28 @@ def _has_cpe_node(node):
     return False
 
 
+def _remove_non_cpe_branches(root):
+    # Inspect all the leaves for ones not starting with cpe:/
+    leaves_to_remove = set()
+    leaves_to_keep = set()
+    for leaf in root.leaves:
+        if leaf.name.startswith("cpe:/"):
+            leaves_to_keep.add(leaf)
+        else:
+            leaves_to_remove.add(leaf)
+    while leaves_to_remove:
+        to_remove = leaves_to_remove.pop()
+        if leaves_to_keep:
+            to_keep = next(iter(leaves_to_keep))
+            # remove all leaves and branches up to common ancestores
+            w = Walker()
+            up, common, _ = w.walk(to_remove, to_keep)
+            for node in up:
+                if node != common:
+                    node.parent = None
+    return root
+
+
 def _remove_duplicate_branches(root):
     """
     Removes duplicate branch structures from an Anytree tree
@@ -215,7 +238,8 @@ def _trees_with_cpes(ancestor_data: dict[str, Any]) -> list[Node]:
     _remove_duplicate_branches(base_node)
     _remove_duplicate_parent_nodes(base_node)
     first_children = _remove_root_return_children(base_node)
-    return [tree for tree in first_children if _has_cpe_node(tree)]
+    trees_with_cpes = [tree for tree in first_children if _has_cpe_node(tree)]
+    return [_remove_non_cpe_branches(tree) for tree in trees_with_cpes]
 
 
 def _remove_duplicate_parent_nodes(node: Node):
