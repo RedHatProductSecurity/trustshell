@@ -8,7 +8,7 @@ Command Line Tool to work with [Trustify](https://github.com/trustification/trus
 Directly from GitHub:
 
 ```commandline
-$ pip install git+https://github.com.com/RedHatProductSecurity/trustshell.git#egg=trustshell
+$ pip install git+https://github.com/RedHatProductSecurity/trustshell.git#egg=trustshell
 ```
 
 ## Linting before committing
