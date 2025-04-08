@@ -1,0 +1,146 @@
+{
+  "version": 1,
+  "metadata": {
+    "tools": {
+      "components": [
+        {
+          "name": "SBOMer",
+          "type": "application",
+          "author": "Red Hat",
+          "version": "ef2faee3"
+        }
+      ]
+    },
+    "supplier": {
+      "url": [
+        "https://www.redhat.com"
+      ],
+      "name": "Red Hat"
+    },
+    "component": {
+      "name": "Red Hat Enterprise Linux 9.4 Extended Update Support",
+      "type": "operating-system",
+      "bom-ref": "RHEL-9.4.0.Z.EUS",
+      "version": "RHEL-9.4.0.Z.EUS",
+      "evidence": {
+        "identity": [
+          {
+            "field": "cpe",
+            "concludedValue": "cpe:/a:redhat:rhel_eus:9.4::crb"
+          },
+          {
+            "field": "cpe",
+            "concludedValue": "cpe:/a:redhat:rhel_eus:9.4::appstream"
+          }
+        ]
+      },
+      "supplier": {
+        "url": [
+          "https://www.redhat.com"
+        ],
+        "name": "Red Hat"
+      }
+    },
+    "timestamp": "2025-04-03T01:33:18Z",
+    "properties": [
+      {
+        "name": "redhat:advisory_id",
+        "value": "147720"
+      }
+    ]
+  },
+  "bomFormat": "CycloneDX",
+  "components": [
+    {
+      "name": "libreoffice",
+      "purl": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src",
+      "type": "library",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "6ecc60741f284dc0c04d3dd59d9f9032d4e14978a7adfba4b3fb123cf63803d2"
+        }
+      ],
+      "bom-ref": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src",
+      "version": "7.1.8.1-15.el9_4",
+      "evidence": {
+        "identity": [
+          {
+            "field": "purl",
+            "concludedValue": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-x86_64-eus-source-rpms__9_DOT_4"
+          },
+          {
+            "field": "purl",
+            "concludedValue": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-eus-source-rpms__9_DOT_4"
+          },
+          {
+            "field": "purl",
+            "concludedValue": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-e4s-source-rpms__9_DOT_4"
+          },
+          {
+            "field": "purl",
+            "concludedValue": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-eus-source-rpms__9_DOT_4"
+          },
+          {
+            "field": "purl",
+            "concludedValue": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-aus-source-rpms__9_DOT_4"
+          },
+          {
+            "field": "purl",
+            "concludedValue": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-s390x-appstream-eus-source-rpms__9_DOT_4"
+          },
+          {
+            "field": "purl",
+            "concludedValue": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-s390x-eus-source-rpms__9_DOT_4"
+          },
+          {
+            "field": "purl",
+            "concludedValue": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-e4s-source-rpms__9_DOT_4"
+          },
+          {
+            "field": "purl",
+            "concludedValue": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-ppc64le-appstream-e4s-source-rpms__9_DOT_4"
+          },
+          {
+            "field": "purl",
+            "concludedValue": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-eus-source-rpms__9_DOT_4"
+          },
+          {
+            "field": "purl",
+            "concludedValue": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-aarch64-appstream-eus-source-rpms__9_DOT_4"
+          },
+          {
+            "field": "purl",
+            "concludedValue": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-eus-source-rpms__9_DOT_4"
+          },
+          {
+            "field": "purl",
+            "concludedValue": "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src&repository_id=rhel-9-for-x86_64-appstream-e4s-source-rpms__9_DOT_4"
+          }
+        ]
+      },
+      "licenses": [
+        {
+          "expression": "NOASSERTION"
+        }
+      ],
+      "supplier": {
+        "url": [
+          "https://www.redhat.com"
+        ],
+        "name": "Red Hat"
+      }
+    }
+  ],
+  "specVersion": "1.6",
+  "dependencies": [
+    {
+      "ref": "RHEL-9.4.0.Z.EUS",
+      "provides": [
+        "pkg:rpm/redhat/libreoffice@7.1.8.1-15.el9_4?arch=src"
+      ],
+      "dependsOn": []
+    }
+  ],
+  "serialNumber": "urn:uuid:9b33b805-6d10-33d4-a4b4-d7971a1bdb81"
+}

@@ -61,6 +61,12 @@
             "name": "quay/quay-builder-qemu-rhcos-rhel8",
             "purl": "pkg:oci/quay-builder-qemu-rhcos-rhel8@sha256%3A62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8?arch=amd64&os=linux&repository_url=registry.access.redhat.com%2Fquay%2Fquay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4",
             "type": "container",
+            "hashes": [
+              {
+                "alg": "SHA-256",
+                "content": "62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8"
+              }
+            ],
             "bom-ref": "quay-builder-qemu-rhcos-container_amd64",
             "version": "sha256:62547876e96ec9e555f7fde9f8cf034b0a87b0b12f9706893fa57a8f972706b8",
             "supplier": {
