@@ -225,22 +225,12 @@ def _remove_duplicate_parent_nodes(node: Node):
 
     :param node: The node to process.
     """
-
-    def _remove_duplicates(n):
-        if not n.children:
-            return
-
-        for child in n.children:
-            if child.name == n.name:
-                for grandchild in child.children:
-                    grandchild.parent = n
-                child.parent = None
-                break
-
-        for child in n.children:
-            _remove_duplicates(child)
-
-    _remove_duplicates(node)
+    for descandant in node.descendants:
+        if descandant.name == descandant.parent.name:
+            new_children = list(descandant.siblings)
+            new_children.extend(descandant.children)
+            descandant.parent.children = new_children
+            descandant.parent = None
 
 
 def _build_node_purl(purls: list[str]) -> Optional[PackageURL]:

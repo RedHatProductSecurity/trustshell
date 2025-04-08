@@ -4,6 +4,7 @@ from anytree import Node
 
 from trustshell.products import (
     _build_node_purl,
+    _remove_duplicate_parent_nodes,
     _trees_with_cpes,
     _render_tree,
     _has_cpe_node,
@@ -84,10 +85,10 @@ def test_trees_with_cpes_dependency():
     assert len(result) == 1
     _render_tree(result[0])
     _check_node_names_at_depth(
-        result[0], 2, ["pkg:oci/quay-builder-qemu-rhcos-rhel8?tag=v3.12.8-1"]
+        result[0], 1, ["pkg:oci/quay-builder-qemu-rhcos-rhel8?tag=v3.12.8-1"]
     )
     expected_cpe = ["cpe:/a:redhat:quay:3:*:el8:*"]
-    _check_node_names_at_depth(result[0], 3, expected_cpe)
+    _check_node_names_at_depth(result[0], 2, expected_cpe)
 
 
 def test_trees_with_cpes_spdx_dependency():
@@ -97,7 +98,10 @@ def test_trees_with_cpes_spdx_dependency():
     assert len(result) == 1
     _render_tree(result[0])
     _check_node_names_at_depth(
-        result[0], 3, ["cpe:/a:redhat:enterprise_linux_ai:1.4:*:el9:*"]
+        result[0], 1, ["pkg:oci/bootc-nvidia-rhel9?tag=1.4.3-1743086940"]
+    )
+    _check_node_names_at_depth(
+        result[0], 2, ["cpe:/a:redhat:enterprise_linux_ai:1.4:*:el9:*"]
     )
 
 
@@ -154,26 +158,18 @@ def test_has_cpe_node_with_empty_children():
     assert not _has_cpe_node(root)
 
 
-# TODO make this pass as well
-# def test_remove_duplicate_parent_nodes():
-#     # Create a tree with duplicate parent nodes
-#     root = Node("root")
-#     child1 = Node("child1", parent=root)
-#     child2 = Node("child1", parent=child1)
-#     child3 = Node("child1", parent=child2)
-#     Node("grandchild1", parent=child3)
-#
-#     _render_tree(root)
-#
-#     # Call the function to remove duplicate parent nodes
-#     _remove_duplicate_parent_nodes(root)
-#
-#     print(f"tree after remving duplicate parent nodes:")
-#     _render_tree(root)
-#
-#     # Assert that the tree structure is as expected
-#     _check_node_names_at_depth(root, 1, ["child1"])
-#     _check_node_names_at_depth(root, 2, ["grandchild1"])
+def test_remove_duplicate_parent_nodes():
+    # Create a tree with duplicate parent nodes
+    root = Node("root")
+    child1 = Node("child1", parent=root)
+    child2 = Node("child1", parent=child1)
+    child3 = Node("child1", parent=child2)
+    Node("grandchild1", parent=child3)
+    _remove_duplicate_parent_nodes(root)
+    _render_tree(root)
+    # Assert that the tree structure is as expected
+    _check_node_names_at_depth(root, 1, ["child1"])
+    _check_node_names_at_depth(root, 2, ["grandchild1"])
 
 
 def create_node(root, name, children) -> list[Node]:
