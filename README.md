@@ -1,4 +1,4 @@
-#TrustShell
+# TrustShell
 
 ## Description
 Command Line Tool to work with [Trustify](https://github.com/trustification/trustify/).
@@ -9,14 +9,6 @@ Directly from GitHub:
 
 ```commandline
 $ pip install git+https://github.com.com/RedHatProductSecurity/trustshell.git#egg=trustshell
-```
-
-## Linting before committing
-
-To ensure code quality and consistency, run the following linting commands before committing your changes:
-
-```commandline
-tox -e flake8,black,isort,mypy
 ```
 
 
