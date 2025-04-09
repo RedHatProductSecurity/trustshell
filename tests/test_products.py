@@ -253,6 +253,52 @@ def test_remove_non_cpe_branches_multi_cpe():
     _check_node_names_at_depth(root, 3, ["cpe:/", "cpe:/"])
 
 
+# TODO add a more complicated examle like:
+# pkg:maven/io.agroal/agroal-api@2.5.0.redhat-00002
+# ├── pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002
+# │   ├── pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql@3.15.0.redhat-00007
+# │   │   ├── pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001
+# │   │   │   └── cpe:/a:redhat:camel_quarkus:3:*:*:*
+# │   │   └── pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql-deployment@3.15.0.redhat-00007
+# │   │       └── pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001
+# │   ├── pkg:maven/io.quarkiverse.mybatis/quarkus-mybatis@2.2.4.redhat-00001
+# │   │   ├── pkg:maven/io.quarkiverse.mybatis/quarkus-mybatis-deployment@2.2.4.redhat-00001
+# │   │   │   └── pkg:maven/org.apache.camel.quarkus/camel-quarkus-mybatis-deployment@3.15.0.redhat-00007
+# │   │   │       └── pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001
+# │   │   └── pkg:maven/org.apache.camel.quarkus/camel-quarkus-mybatis@3.15.0.redhat-00007
+# │   │       ├── pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001
+# │   │       └── pkg:maven/org.apache.camel.quarkus/camel-quarkus-mybatis-deployment@3.15.0.redhat-00007
+# │   ├── pkg:maven/io.quarkus/quarkus-hibernate-orm@3.20.0.redhat-00002
+# │   │   ├── pkg:maven/io.quarkus/quarkus-hibernate-orm-deployment@3.20.0.redhat-00002
+# │   │   │   └── pkg:maven/org.apache.camel.quarkus/camel-quarkus-jpa-deployment@3.15.0.redhat-00007
+# │   │   │       └── pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001
+# │   │   └── pkg:maven/org.apache.camel.quarkus/camel-quarkus-jpa@3.15.0.redhat-00007
+# │   │       ├── pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001
+# │   │       └── pkg:maven/org.apache.camel.quarkus/camel-quarkus-jpa-deployment@3.15.0.redhat-00007
+# │   ├── pkg:maven/io.quarkus/quarkus-agroal-deployment@3.20.0.redhat-00002
+# │   │   ├── pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql-deployment@3.15.0.redhat-00007
+# │   │   ├── pkg:maven/io.quarkiverse.mybatis/quarkus-mybatis-deployment@2.2.4.redhat-00001
+# │   │   ├── pkg:maven/io.quarkus/quarkus-hibernate-orm-deployment@3.20.0.redhat-00002
+# │   │   ├── pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc-deployment@3.15.0.redhat-00007
+# │   │   │   └── pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001
+# │   │   └── pkg:maven/org.apache.camel.quarkus/camel-quarkus-support-jdbc-deployment@3.15.0.redhat-00007
+# │   │       ├── pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql-deployment@3.15.0.redhat-00007
+# │   │       └── pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc-deployment@3.15.0.redhat-00007
+# │   ├── pkg:maven/io.quarkus/quarkus-agroal-dev@3.20.0.redhat-00002
+# │   │   └── pkg:maven/io.quarkus/quarkus-agroal-deployment@3.20.0.redhat-00002
+# │   ├── pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc@3.15.0.redhat-00007
+# │   │   ├── pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001
+# │   │   └── pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc-deployment@3.15.0.redhat-00007
+# │   └── pkg:maven/org.apache.camel.quarkus/camel-quarkus-support-jdbc@3.15.0.redhat-00007
+# │       ├── pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql@3.15.0.redhat-00007
+# │       ├── pkg:maven/org.apache.camel.quarkus/camel-quarkus-support-jdbc-deployment@3.15.0.redhat-00007
+# │       └── pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc@3.15.0.redhat-00007
+# ├── pkg:maven/io.agroal/agroal-pool@2.5.0.redhat-00002
+# │   └── pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002
+# └── pkg:maven/io.agroal/agroal-narayana@2.5.0.redhat-00002
+#     └── pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002
+
+
 def test_remove_duplicate_parent_nodes():
     # Create a tree with duplicate parent nodes
     root = Node("root")
