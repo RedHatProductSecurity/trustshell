@@ -124,6 +124,65 @@ def test_trees_with_cpes_multi_versions():
     _check_node_names_at_depth(result[1], 1, expected_cpes)
 
 
+def test_trees_with_cpes_quarkus_agroal():
+    with open("tests/testdata/quarkus-3.20-agroal-api.json") as file:
+        data = json.load(file)
+    result = _trees_with_cpes(data)
+
+    print("first_result")
+    _render_tree(result[0])
+    assert len(result) == 1
+    assert result[0].name == "pkg:maven/io.agroal/agroal-api@2.5.0.redhat-00002"
+    _check_node_names_at_depth(
+        result[0], 1, ["pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002"]
+    )
+    _check_node_names_at_depth(
+        result[0],
+        2,
+        ["pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql@3.15.0.redhat-00007"],
+    )
+    _check_node_names_at_depth(
+        result[0],
+        3,
+        ["pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001"],
+    )
+    _check_node_names_at_depth(result[0], 4, ["cpe:/a:redhat:camel_quarkus:3:*:*:*"])
+
+
+def test_trees_with_cpes_quarkus_xmlsec():
+    with open("tests/testdata/quarkus-3.15-xmlsec.json") as file:
+        data = json.load(file)
+    result = _trees_with_cpes(data)
+
+    print("first_result")
+    _render_tree(result[0])
+    assert len(result) == 1
+    assert result[0].name == "pkg:maven/org.apache.santuario/xmlsec@3.0.4"
+    _check_node_names_at_depth(
+        result[0],
+        1,
+        ["pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec@3.15.3"],
+    )
+    _check_node_names_at_depth(
+        result[0],
+        2,
+        ["pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec-deployment@3.15.3"],
+    )
+    _check_node_names_at_depth(
+        result[0],
+        3,
+        [
+            "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security-deployment@3.15.3.redhat-00008"
+        ],
+    )
+    _check_node_names_at_depth(
+        result[0],
+        4,
+        ["pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001"],
+    )
+    _check_node_names_at_depth(result[0], 5, ["cpe:/a:redhat:camel_quarkus:3:*:*:*"])
+
+
 def _check_node_names_at_depth(result, depth, expected):
     node_names = [node.name for node in result.descendants if node.depth == depth]
     assert sorted(expected) == sorted(node_names)
