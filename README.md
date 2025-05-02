@@ -8,17 +8,22 @@ Command Line Tool to work with [Trustify](https://github.com/trustification/trus
 Directly from GitHub:
 
 ```commandline
-$ pip install git+https://github.com.com/RedHatProductSecurity/trustshell.git#egg=trustshell
+$ pip install git+https://github.com/RedHatProductSecurity/trustshell.git#egg=trustshell
 ```
 
-## Linting before committing
+## Configuration
 
-To ensure code quality and consistency, run the following linting commands before committing your changes:
+Ensure the following environment variables are set:
 
-```commandline
-tox -e flake8,black,isort,mypy
-```
+`export TRUSTIFY_URL="http://localhost:8080/api/v2/"`
 
+dev:
+
+`export AUTH_ENDPOINT="http://localhost:8090/realms/trustify/protocol/openid-connect/auth"`
+
+stage:
+
+`export AUTH_ENDPOINT="https://auth.stage.redhat.com/auth/realms/EmployeeIDP/protocol/openid-connect"`
 
 ## Usage
 

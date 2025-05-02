@@ -18,6 +18,7 @@ from trustshell import (
     print_version,
     urlencoded,
 )
+from trustshell.oidc_pkce_authcode import get_access_token
 
 ANALYSIS_ENDPOINT = f"{TRUSTIFY_URL}analysis/component"
 MAX_I64 = 2**63 - 1
@@ -73,11 +74,14 @@ def _render_tree(root: Node):
 
 def _get_roots(base_purl: str) -> list[Node]:
     """Lookup base_purl ancestors in Trustify"""
+    access_token, _, _ = get_access_token()
+    auth_header = {"Authorization": f"Bearer {access_token}"}
+
     # TODO change back to purl~ (like) query?
     request_url = (
         f"{ANALYSIS_ENDPOINT}?ancestors={MAX_I64}&q={urlencoded(f'purl~{base_purl}@')}"
     )
-    ancestors_response = httpx.get(request_url)
+    ancestors_response = httpx.get(request_url, headers=auth_header, timeout=60.0)
     ancestors_response.raise_for_status()
     ancestors = ancestors_response.json()
     return _trees_with_cpes(ancestors)

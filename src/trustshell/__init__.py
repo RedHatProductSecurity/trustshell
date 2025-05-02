@@ -1,5 +1,6 @@
 import importlib.metadata
 import logging
+import os
 import urllib
 
 from packageurl import PackageURL
@@ -8,7 +9,10 @@ from rich.logging import RichHandler
 from rich.theme import Theme
 
 
-TRUSTIFY_URL = "http://localhost:8080/api/v2/"
+if "TRUSTIFY_URL" in os.environ:
+    TRUSTIFY_URL = os.getenv("TRUSTIFY_URL")
+else:
+    TRUSTIFY_URL = "http://localhost:8080/api/v2/"
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
 console = Console(color_system="auto", theme=custom_theme)
