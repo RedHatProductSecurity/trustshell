@@ -12,6 +12,7 @@ from rich.theme import Theme
 from typing import Any, Optional
 from univers.versions import RpmVersion
 from trustshell import (
+    AUTH_ENABLED,
     TRUSTIFY_URL,
     config_logging,
     get_tag_from_purl,
@@ -74,8 +75,11 @@ def _render_tree(root: Node):
 
 def _get_roots(base_purl: str) -> list[Node]:
     """Lookup base_purl ancestors in Trustify"""
-    access_token, _, _ = get_access_token()
-    auth_header = {"Authorization": f"Bearer {access_token}"}
+
+    auth_header = {}
+    if AUTH_ENABLED:
+        access_token, _, _ = get_access_token()
+        auth_header = {"Authorization": f"Bearer {access_token}"}
 
     # TODO change back to purl~ (like) query?
     request_url = (
