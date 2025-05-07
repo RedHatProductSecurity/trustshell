@@ -17,9 +17,6 @@ Ensure the following environment variables are set:
 
 `export TRUSTIFY_URL="http://localhost:8080/api/v2/"`
 
-dev:
-
-`export AUTH_ENDPOINT="http://localhost:8090/realms/trustify/protocol/openid-connect/auth"`
 
 stage:
 
