@@ -23,6 +23,7 @@ from trustshell import (
     config_logging,
     urlencoded,
 )
+from trustshell.oidc_pkce_authcode import get_access_token
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
 console = Console(color_system="auto", theme=custom_theme)
@@ -53,9 +54,12 @@ def search(component: str, latest_version: bool, debug: bool):
     else:
         config_logging(level="DEBUG")
 
-    purls = _query_trustify_packages(component)
+    access_token, _, _ = get_access_token()
+    auth_header = {"Authorization": f"Bearer {access_token}"}
+
+    purls = _query_trustify_packages(component, auth_header)
     if latest_version:
-        purls_with_version = _latest_package_versions(purls)
+        purls_with_version = _latest_package_versions(purls, auth_header)
         console.print(
             "Found these matching packages in Trustify, including the highest version found:"
         )
@@ -67,7 +71,7 @@ def search(component: str, latest_version: bool, debug: bool):
             console.print(purl)
 
 
-def _query_trustify_packages(component: str) -> list[str]:
+def _query_trustify_packages(component: str, auth_header: dict[str, str]) -> list[str]:
     """
     Given a search string 'component' use the Trustify PURL Base endpoint to find packages in PURL
     format matching the given package. Accepts requests such as k8s.io/api that have both a PURL
@@ -75,7 +79,9 @@ def _query_trustify_packages(component: str) -> list[str]:
     """
     package_query = {"q": component}
     console.print(f"Querying Trustify for packages matching {component}")
-    package_response = httpx.get(PURL_BASE_ENDPOINT, params=package_query)
+    package_response = httpx.get(
+        PURL_BASE_ENDPOINT, params=package_query, headers=auth_header
+    )
     package_response.raise_for_status()
     package_result = package_response.json()
     if len(package_result["items"]) == 0:
@@ -84,12 +90,12 @@ def _query_trustify_packages(component: str) -> list[str]:
 
 
 def _latest_package_versions(
-    base_purls: list[str],
+    base_purls: list[str], auth_header: dict[str, str]
 ) -> dict[str, tuple[Version, PackageURL]]:
     """Get the latest version from a list of purls"""
     packages: dict[str, tuple[Version, PackageURL]] = {}
     for base_purl in base_purls:
-        versions = _get_package_versions(base_purl)
+        versions = _get_package_versions(base_purl, auth_header)
         purl = PackageURL.from_string(base_purl)
         for version in versions:
             # Use lexicographic ordering for OCI once KONFLUX-6210 is resolved
@@ -116,7 +122,7 @@ def _latest_package_versions(
     return packages
 
 
-def _get_package_versions(base_purl: str) -> set[str]:
+def _get_package_versions(base_purl: str, auth_header: dict[str, str]) -> set[str]:
     """
     If an OCI base_purl is passed in, get it's version from purl tags. Otherwise return the
     purl versions reported by Trustify
@@ -124,7 +130,7 @@ def _get_package_versions(base_purl: str) -> set[str]:
 
     logger.debug(f"Finding versions for {base_purl}")
     purl = PackageURL.from_string(base_purl)
-    purl_versions = _lookup_base_purl(base_purl)
+    purl_versions = _lookup_base_purl(base_purl, auth_header)
     versions: set[str] = set()
     if "versions" not in purl_versions:
         return versions
@@ -139,10 +145,12 @@ def _get_package_versions(base_purl: str) -> set[str]:
     return versions
 
 
-def _lookup_base_purl(base_purl: str) -> dict[str, Any]:
+def _lookup_base_purl(base_purl: str, auth_header: dict[str, str]) -> dict[str, Any]:
     """Get the details of a base purl from Atlas"""
     encoded_base_purl = urlencoded(base_purl)
     # TODO use asyncio
-    base_purl_response = httpx.get(f"{PURL_BASE_ENDPOINT}/{encoded_base_purl}")
+    base_purl_response = httpx.get(
+        f"{PURL_BASE_ENDPOINT}/{encoded_base_purl}", headers=auth_header
+    )
     base_purl_response.raise_for_status()
     return base_purl_response.json()
