@@ -11,8 +11,10 @@ from rich.theme import Theme
 
 if "TRUSTIFY_URL" in os.environ:
     TRUSTIFY_URL = os.getenv("TRUSTIFY_URL")
+    AUTH_ENABLED = True
 else:
     TRUSTIFY_URL = "http://localhost:8080/api/v2/"
+    AUTH_ENABLED = False
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
 console = Console(color_system="auto", theme=custom_theme)

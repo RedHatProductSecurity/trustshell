@@ -17,6 +17,7 @@ from univers.versions import (
 )
 
 from trustshell import (
+    AUTH_ENABLED,
     TRUSTIFY_URL,
     get_tag_from_purl,
     print_version,
@@ -54,8 +55,10 @@ def search(component: str, latest_version: bool, debug: bool):
     else:
         config_logging(level="DEBUG")
 
-    access_token, _, _ = get_access_token()
-    auth_header = {"Authorization": f"Bearer {access_token}"}
+    auth_header = {}
+    if AUTH_ENABLED:
+        access_token, _, _ = get_access_token()
+        auth_header = {"Authorization": f"Bearer {access_token}"}
 
     purls = _query_trustify_packages(component, auth_header)
     if latest_version:
