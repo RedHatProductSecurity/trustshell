@@ -1,0 +1,2343 @@
+{
+    "items": [
+      {
+        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+        "node_id": "pkg:maven/org.apache.santuario/xmlsec@3.0.4?type=jar",
+        "purl": [
+          "pkg:maven/org.apache.santuario/xmlsec@3.0.4?type=jar"
+        ],
+        "cpe": [],
+        "name": "xmlsec",
+        "version": "3.0.4",
+        "published": "2025-04-08 06:32:44+00",
+        "document_id": "1",
+        "product_name": "quarkus-cxf-bom",
+        "product_version": "3.15.4.redhat-00001",
+        "ancestors": [
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "i.q.c:quarkus-cxf-santuario-xmlsec:3.15.3#1",
+            "purl": [
+              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec@3.15.3?type=jar"
+            ],
+            "cpe": [],
+            "name": "quarkus-cxf-santuario-xmlsec",
+            "version": "3.15.3",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec-deployment@3.15.3?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec-deployment@3.15.3?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-cxf-santuario-xmlsec-deployment",
+                "version": "3.15.3",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security-deployment@3.15.3.redhat-00008?type=jar",
+                    "purl": [
+                      "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security-deployment@3.15.3.redhat-00008?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-cxf-rt-ws-security-deployment",
+                    "version": "3.15.3.redhat-00008",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                        "purl": [
+                          "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-cxf-bom",
+                        "version": "3.15.4.redhat-00001",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "CycloneDX-doc-ref",
+                            "purl": [],
+                            "cpe": [],
+                            "name": "quarkus-cxf-bom",
+                            "version": "",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "describes",
+                            "ancestors": []
+                          },
+                          {
+                            "sbom_id": "0196c1e6-14f4-76e2-ad80-e4b8c1edd059",
+                            "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                            "purl": [
+                              "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                              "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?repository_url=https://maven.repository.redhat.com/ga/&type=pom"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-bom",
+                            "version": "3.15.4.redhat-00001",
+                            "published": "2025-04-01 16:48:42+00",
+                            "document_id": "urn:uuid:f4484fb6-53e6-3c53-96ea-1ee4f0710556/1",
+                            "product_name": "Red Hat Build of Apache Camel",
+                            "product_version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.15",
+                            "relationship": "package",
+                            "ancestors": [
+                              {
+                                "sbom_id": "0196c1e6-14f4-76e2-ad80-e4b8c1edd059",
+                                "node_id": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.15",
+                                "purl": [],
+                                "cpe": [
+                                  "cpe:/a:redhat:camel_quarkus:3:*:*:*"
+                                ],
+                                "name": "Red Hat Build of Apache Camel",
+                                "version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.15",
+                                "published": "2025-04-01 16:48:42+00",
+                                "document_id": "urn:uuid:f4484fb6-53e6-3c53-96ea-1ee4f0710556/1",
+                                "product_name": "Red Hat Build of Apache Camel",
+                                "product_version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.15",
+                                "relationship": "generates",
+                                "ancestors": [
+                                  {
+                                    "sbom_id": "0196c1e6-14f4-76e2-ad80-e4b8c1edd059",
+                                    "node_id": "CycloneDX-doc-ref",
+                                    "purl": [],
+                                    "cpe": [],
+                                    "name": "Red Hat Build of Apache Camel",
+                                    "version": "",
+                                    "published": "2025-04-01 16:48:42+00",
+                                    "document_id": "urn:uuid:f4484fb6-53e6-3c53-96ea-1ee4f0710556/1",
+                                    "product_name": "Red Hat Build of Apache Camel",
+                                    "product_version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.15",
+                                    "relationship": "describes",
+                                    "ancestors": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts-deployment@3.15.3.redhat-00008?type=jar",
+                        "purl": [
+                          "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts-deployment@3.15.3.redhat-00008?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-cxf-services-sts-deployment",
+                        "version": "3.15.3.redhat-00008",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                            "purl": [
+                              "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-bom",
+                            "version": "3.15.4.redhat-00001",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency"
+                          }
+                        ]
+                      },
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm-deployment@3.15.3.redhat-00008?type=jar",
+                        "purl": [
+                          "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm-deployment@3.15.3.redhat-00008?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-cxf-rt-ws-rm-deployment",
+                        "version": "3.15.3.redhat-00008",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                            "purl": [
+                              "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-bom",
+                            "version": "3.15.4.redhat-00001",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "i.q.c:quarkus-cxf-rt-ws-security:3.15.3.redhat-00008#1",
+                "purl": [
+                  "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security@3.15.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-cxf-rt-ws-security",
+                "version": "3.15.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "i.q.c:quarkus-cxf-services-sts:3.15.3.redhat-00008#1",
+                    "purl": [
+                      "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts@3.15.3.redhat-00008?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-cxf-services-sts",
+                    "version": "3.15.3.redhat-00008",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts-deployment@3.15.3.redhat-00008?type=jar",
+                        "purl": [
+                          "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts-deployment@3.15.3.redhat-00008?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-cxf-services-sts-deployment",
+                        "version": "3.15.3.redhat-00008",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security-deployment@3.15.3.redhat-00008?type=jar",
+                    "purl": [
+                      "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security-deployment@3.15.3.redhat-00008?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-cxf-rt-ws-security-deployment",
+                    "version": "3.15.3.redhat-00008",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "i.q.c:quarkus-cxf-rt-ws-rm:3.15.3.redhat-00008#1",
+                    "purl": [
+                      "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm@3.15.3.redhat-00008?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-cxf-rt-ws-rm",
+                    "version": "3.15.3.redhat-00008",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm-deployment@3.15.3.redhat-00008?type=jar",
+                        "purl": [
+                          "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm-deployment@3.15.3.redhat-00008?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-cxf-rt-ws-rm-deployment",
+                        "version": "3.15.3.redhat-00008",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "pkg:maven/org.apache.wss4j/wss4j-bindings@3.0.3.redhat-00008?type=jar",
+            "purl": [
+              "pkg:maven/org.apache.wss4j/wss4j-bindings@3.0.3.redhat-00008?type=jar"
+            ],
+            "cpe": [],
+            "name": "wss4j-bindings",
+            "version": "3.0.3.redhat-00008",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "o.a.w:wss4j-ws-security-stax:3.0.3.redhat-00008#1",
+                "purl": [
+                  "pkg:maven/org.apache.wss4j/wss4j-ws-security-stax@3.0.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "wss4j-ws-security-stax",
+                "version": "3.0.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "o.a.c:cxf-rt-ws-security:4.0.5.fuse-redhat-00022#1",
+                    "purl": [
+                      "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "cxf-rt-ws-security",
+                    "version": "4.0.5.fuse-redhat-00022",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "o.a.c.s.s:cxf-services-sts-core:4.0.5.fuse-redhat-00022#1",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf.services.sts/cxf-services-sts-core@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-services-sts-core",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "i.q.c:quarkus-cxf-services-sts:3.15.3.redhat-00008#1",
+                            "purl": [
+                              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts@3.15.3.redhat-00008?type=jar"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-services-sts",
+                            "version": "3.15.3.redhat-00008",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency"
+                          }
+                        ]
+                      },
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "o.a.c:cxf-rt-ws-rm:4.0.5.fuse-redhat-00022#1",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf/cxf-rt-ws-rm@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-rt-ws-rm",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "i.q.c:quarkus-cxf-rt-ws-rm:3.15.3.redhat-00008#1",
+                            "purl": [
+                              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm@3.15.3.redhat-00008?type=jar"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-rt-ws-rm",
+                            "version": "3.15.3.redhat-00008",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency"
+                          }
+                        ]
+                      },
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "i.q.c:quarkus-cxf-rt-ws-security:3.15.3.redhat-00008#1",
+                        "purl": [
+                          "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security@3.15.3.redhat-00008?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-cxf-rt-ws-security",
+                        "version": "3.15.3.redhat-00008",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "o.a.w:wss4j-ws-security-policy-stax:3.0.3.redhat-00008#1",
+                    "purl": [
+                      "pkg:maven/org.apache.wss4j/wss4j-ws-security-policy-stax@3.0.3.redhat-00008?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "wss4j-ws-security-policy-stax",
+                    "version": "3.0.3.redhat-00008",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "o.a.c:cxf-rt-ws-security:4.0.5.fuse-redhat-00022#1",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-rt-ws-security",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.apache.wss4j/wss4j-ws-security-stax@3.0.3.redhat-00008?type=jar",
+                "purl": [
+                  "pkg:maven/org.apache.wss4j/wss4j-ws-security-stax@3.0.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "wss4j-ws-security-stax",
+                "version": "3.0.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "cxf-rt-ws-security",
+                    "version": "4.0.5.fuse-redhat-00022",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/org.apache.cxf.services.sts/cxf-services-sts-core@4.0.5.fuse-redhat-00022?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf.services.sts/cxf-services-sts-core@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-services-sts-core",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts@3.15.3.redhat-00008?type=jar",
+                            "purl": [
+                              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts@3.15.3.redhat-00008?type=jar"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-services-sts",
+                            "version": "3.15.3.redhat-00008",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency",
+                            "ancestors": [
+                              {
+                                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                                "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                                "purl": [
+                                  "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom"
+                                ],
+                                "cpe": [],
+                                "name": "quarkus-cxf-bom",
+                                "version": "3.15.4.redhat-00001",
+                                "published": "2025-04-08 06:32:44+00",
+                                "document_id": "1",
+                                "product_name": "quarkus-cxf-bom",
+                                "product_version": "3.15.4.redhat-00001",
+                                "relationship": "dependency"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/org.apache.cxf/cxf-rt-ws-rm@4.0.5.fuse-redhat-00022?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf/cxf-rt-ws-rm@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-rt-ws-rm",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm@3.15.3.redhat-00008?type=jar",
+                            "purl": [
+                              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm@3.15.3.redhat-00008?type=jar"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-rt-ws-rm",
+                            "version": "3.15.3.redhat-00008",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency",
+                            "ancestors": [
+                              {
+                                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                                "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                                "purl": [
+                                  "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom"
+                                ],
+                                "cpe": [],
+                                "name": "quarkus-cxf-bom",
+                                "version": "3.15.4.redhat-00001",
+                                "published": "2025-04-08 06:32:44+00",
+                                "document_id": "1",
+                                "product_name": "quarkus-cxf-bom",
+                                "product_version": "3.15.4.redhat-00001",
+                                "relationship": "dependency"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security@3.15.3.redhat-00008?type=jar",
+                        "purl": [
+                          "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security@3.15.3.redhat-00008?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-cxf-rt-ws-security",
+                        "version": "3.15.3.redhat-00008",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                            "purl": [
+                              "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-bom",
+                            "version": "3.15.4.redhat-00001",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency"
+                          },
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts@3.15.3.redhat-00008?type=jar",
+                            "purl": [
+                              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts@3.15.3.redhat-00008?type=jar"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-services-sts",
+                            "version": "3.15.3.redhat-00008",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency"
+                          },
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm@3.15.3.redhat-00008?type=jar",
+                            "purl": [
+                              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm@3.15.3.redhat-00008?type=jar"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-rt-ws-rm",
+                            "version": "3.15.3.redhat-00008",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.apache.wss4j/wss4j-ws-security-policy-stax@3.0.3.redhat-00008?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.wss4j/wss4j-ws-security-policy-stax@3.0.3.redhat-00008?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "wss4j-ws-security-policy-stax",
+                    "version": "3.0.3.redhat-00008",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-rt-ws-security",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "pkg:maven/org.apache.wss4j/wss4j-ws-security-common@3.0.3.redhat-00008?type=jar",
+            "purl": [
+              "pkg:maven/org.apache.wss4j/wss4j-ws-security-common@3.0.3.redhat-00008?type=jar"
+            ],
+            "cpe": [],
+            "name": "wss4j-ws-security-common",
+            "version": "3.0.3.redhat-00008",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "o.a.w:wss4j-ws-security-stax:3.0.3.redhat-00008#1",
+                "purl": [
+                  "pkg:maven/org.apache.wss4j/wss4j-ws-security-stax@3.0.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "wss4j-ws-security-stax",
+                "version": "3.0.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.apache.wss4j/wss4j-ws-security-stax@3.0.3.redhat-00008?type=jar",
+                "purl": [
+                  "pkg:maven/org.apache.wss4j/wss4j-ws-security-stax@3.0.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "wss4j-ws-security-stax",
+                "version": "3.0.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.apache.wss4j/wss4j-ws-security-dom@3.0.3.redhat-00008?type=jar",
+                "purl": [
+                  "pkg:maven/org.apache.wss4j/wss4j-ws-security-dom@3.0.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "wss4j-ws-security-dom",
+                "version": "3.0.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "o.a.c:cxf-rt-ws-security:4.0.5.fuse-redhat-00022#1",
+                    "purl": [
+                      "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "cxf-rt-ws-security",
+                    "version": "4.0.5.fuse-redhat-00022",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "o.a.c:cxf-rt-security-saml:4.0.5.fuse-redhat-00022#1",
+                    "purl": [
+                      "pkg:maven/org.apache.cxf/cxf-rt-security-saml@4.0.5.fuse-redhat-00022?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "cxf-rt-security-saml",
+                    "version": "4.0.5.fuse-redhat-00022",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "o.a.c:cxf-rt-ws-security:4.0.5.fuse-redhat-00022#1",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-rt-ws-security",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "cxf-rt-ws-security",
+                    "version": "4.0.5.fuse-redhat-00022",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.apache.cxf/cxf-rt-security-saml@4.0.5.fuse-redhat-00022?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.cxf/cxf-rt-security-saml@4.0.5.fuse-redhat-00022?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "cxf-rt-security-saml",
+                    "version": "4.0.5.fuse-redhat-00022",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-rt-ws-security",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar",
+            "purl": [
+              "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar"
+            ],
+            "cpe": [],
+            "name": "opensaml-saml-impl",
+            "version": "4.3.0.redhat-00012",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.apache.wss4j/wss4j-ws-security-common@3.0.3.redhat-00008?type=jar",
+                "purl": [
+                  "pkg:maven/org.apache.wss4j/wss4j-ws-security-common@3.0.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "wss4j-ws-security-common",
+                "version": "3.0.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-xacml-saml-impl@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-xacml-saml-impl@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-xacml-saml-impl",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.apache.wss4j/wss4j-ws-security-common@3.0.3.redhat-00008?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.wss4j/wss4j-ws-security-common@3.0.3.redhat-00008?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "wss4j-ws-security-common",
+                    "version": "3.0.3.redhat-00008",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "pkg:maven/org.opensaml/opensaml-xmlsec-impl@4.3.0.redhat-00012?type=jar",
+            "purl": [
+              "pkg:maven/org.opensaml/opensaml-xmlsec-impl@4.3.0.redhat-00012?type=jar"
+            ],
+            "cpe": [],
+            "name": "opensaml-xmlsec-impl",
+            "version": "4.3.0.redhat-00012",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-saml-impl",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "pkg:maven/org.opensaml/opensaml-saml-api@4.3.0.redhat-00012?type=jar",
+            "purl": [
+              "pkg:maven/org.opensaml/opensaml-saml-api@4.3.0.redhat-00012?type=jar"
+            ],
+            "cpe": [],
+            "name": "opensaml-saml-api",
+            "version": "4.3.0.redhat-00012",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-xacml-saml-impl@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-xacml-saml-impl@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-xacml-saml-impl",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-xacml-saml-api@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-xacml-saml-api@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-xacml-saml-api",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.opensaml/opensaml-xacml-saml-impl@4.3.0.redhat-00012?type=jar",
+                    "purl": [
+                      "pkg:maven/org.opensaml/opensaml-xacml-saml-impl@4.3.0.redhat-00012?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "opensaml-xacml-saml-impl",
+                    "version": "4.3.0.redhat-00012",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency"
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-saml-impl",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "pkg:maven/org.opensaml/opensaml-xmlsec-api@4.3.0.redhat-00012?type=jar",
+            "purl": [
+              "pkg:maven/org.opensaml/opensaml-xmlsec-api@4.3.0.redhat-00012?type=jar"
+            ],
+            "cpe": [],
+            "name": "opensaml-xmlsec-api",
+            "version": "4.3.0.redhat-00012",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-saml-impl",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-xmlsec-impl@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-xmlsec-impl@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-xmlsec-impl",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-saml-api@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-saml-api@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-saml-api",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-soap-api@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-soap-api@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-soap-api",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar",
+                    "purl": [
+                      "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "opensaml-saml-impl",
+                    "version": "4.3.0.redhat-00012",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.opensaml/opensaml-saml-api@4.3.0.redhat-00012?type=jar",
+                    "purl": [
+                      "pkg:maven/org.opensaml/opensaml-saml-api@4.3.0.redhat-00012?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "opensaml-saml-api",
+                    "version": "4.3.0.redhat-00012",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec@3.15.3?type=jar",
+            "purl": [
+              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec@3.15.3?type=jar"
+            ],
+            "cpe": [],
+            "name": "quarkus-cxf-santuario-xmlsec",
+            "version": "3.15.3",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security@3.15.3.redhat-00008?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security@3.15.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-cxf-rt-ws-security",
+                "version": "3.15.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+        "node_id": "pkg:maven/org.apache.santuario/xmlsec@3.0.4?type=jar",
+        "purl": [
+          "pkg:maven/org.apache.santuario/xmlsec@3.0.4?type=jar"
+        ],
+        "cpe": [],
+        "name": "xmlsec",
+        "version": "3.0.4",
+        "published": "2025-04-08 06:32:44+00",
+        "document_id": "1",
+        "product_name": "quarkus-cxf-bom",
+        "product_version": "3.15.4.redhat-00001",
+        "ancestors": [
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "i.q.c:quarkus-cxf-santuario-xmlsec:3.15.3#1",
+            "purl": [
+              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec@3.15.3?type=jar"
+            ],
+            "cpe": [],
+            "name": "quarkus-cxf-santuario-xmlsec",
+            "version": "3.15.3",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec-deployment@3.15.3?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec-deployment@3.15.3?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-cxf-santuario-xmlsec-deployment",
+                "version": "3.15.3",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security-deployment@3.15.3.redhat-00008?type=jar",
+                    "purl": [
+                      "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security-deployment@3.15.3.redhat-00008?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-cxf-rt-ws-security-deployment",
+                    "version": "3.15.3.redhat-00008",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                        "purl": [
+                          "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-cxf-bom",
+                        "version": "3.15.4.redhat-00001",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "CycloneDX-doc-ref",
+                            "purl": [],
+                            "cpe": [],
+                            "name": "quarkus-cxf-bom",
+                            "version": "",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "describes",
+                            "ancestors": []
+                          },
+                          {
+                            "sbom_id": "0196c1e6-14f4-76e2-ad80-e4b8c1edd059",
+                            "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                            "purl": [
+                              "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                              "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?repository_url=https://maven.repository.redhat.com/ga/&type=pom"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-bom",
+                            "version": "3.15.4.redhat-00001",
+                            "published": "2025-04-01 16:48:42+00",
+                            "document_id": "urn:uuid:f4484fb6-53e6-3c53-96ea-1ee4f0710556/1",
+                            "product_name": "Red Hat Build of Apache Camel",
+                            "product_version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.15",
+                            "relationship": "package",
+                            "ancestors": [
+                              {
+                                "sbom_id": "0196c1e6-14f4-76e2-ad80-e4b8c1edd059",
+                                "node_id": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.15",
+                                "purl": [],
+                                "cpe": [
+                                  "cpe:/a:redhat:camel_quarkus:3:*:*:*"
+                                ],
+                                "name": "Red Hat Build of Apache Camel",
+                                "version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.15",
+                                "published": "2025-04-01 16:48:42+00",
+                                "document_id": "urn:uuid:f4484fb6-53e6-3c53-96ea-1ee4f0710556/1",
+                                "product_name": "Red Hat Build of Apache Camel",
+                                "product_version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.15",
+                                "relationship": "generates",
+                                "ancestors": [
+                                  {
+                                    "sbom_id": "0196c1e6-14f4-76e2-ad80-e4b8c1edd059",
+                                    "node_id": "CycloneDX-doc-ref",
+                                    "purl": [],
+                                    "cpe": [],
+                                    "name": "Red Hat Build of Apache Camel",
+                                    "version": "",
+                                    "published": "2025-04-01 16:48:42+00",
+                                    "document_id": "urn:uuid:f4484fb6-53e6-3c53-96ea-1ee4f0710556/1",
+                                    "product_name": "Red Hat Build of Apache Camel",
+                                    "product_version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.15",
+                                    "relationship": "describes",
+                                    "ancestors": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts-deployment@3.15.3.redhat-00008?type=jar",
+                        "purl": [
+                          "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts-deployment@3.15.3.redhat-00008?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-cxf-services-sts-deployment",
+                        "version": "3.15.3.redhat-00008",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                            "purl": [
+                              "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-bom",
+                            "version": "3.15.4.redhat-00001",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency"
+                          }
+                        ]
+                      },
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm-deployment@3.15.3.redhat-00008?type=jar",
+                        "purl": [
+                          "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm-deployment@3.15.3.redhat-00008?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-cxf-rt-ws-rm-deployment",
+                        "version": "3.15.3.redhat-00008",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                            "purl": [
+                              "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-bom",
+                            "version": "3.15.4.redhat-00001",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "i.q.c:quarkus-cxf-rt-ws-security:3.15.3.redhat-00008#1",
+                "purl": [
+                  "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security@3.15.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-cxf-rt-ws-security",
+                "version": "3.15.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "i.q.c:quarkus-cxf-services-sts:3.15.3.redhat-00008#1",
+                    "purl": [
+                      "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts@3.15.3.redhat-00008?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-cxf-services-sts",
+                    "version": "3.15.3.redhat-00008",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts-deployment@3.15.3.redhat-00008?type=jar",
+                        "purl": [
+                          "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts-deployment@3.15.3.redhat-00008?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-cxf-services-sts-deployment",
+                        "version": "3.15.3.redhat-00008",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security-deployment@3.15.3.redhat-00008?type=jar",
+                    "purl": [
+                      "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security-deployment@3.15.3.redhat-00008?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-cxf-rt-ws-security-deployment",
+                    "version": "3.15.3.redhat-00008",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "i.q.c:quarkus-cxf-rt-ws-rm:3.15.3.redhat-00008#1",
+                    "purl": [
+                      "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm@3.15.3.redhat-00008?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-cxf-rt-ws-rm",
+                    "version": "3.15.3.redhat-00008",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm-deployment@3.15.3.redhat-00008?type=jar",
+                        "purl": [
+                          "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm-deployment@3.15.3.redhat-00008?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-cxf-rt-ws-rm-deployment",
+                        "version": "3.15.3.redhat-00008",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "pkg:maven/org.apache.wss4j/wss4j-bindings@3.0.3.redhat-00008?type=jar",
+            "purl": [
+              "pkg:maven/org.apache.wss4j/wss4j-bindings@3.0.3.redhat-00008?type=jar"
+            ],
+            "cpe": [],
+            "name": "wss4j-bindings",
+            "version": "3.0.3.redhat-00008",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "o.a.w:wss4j-ws-security-stax:3.0.3.redhat-00008#1",
+                "purl": [
+                  "pkg:maven/org.apache.wss4j/wss4j-ws-security-stax@3.0.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "wss4j-ws-security-stax",
+                "version": "3.0.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "o.a.c:cxf-rt-ws-security:4.0.5.fuse-redhat-00022#1",
+                    "purl": [
+                      "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "cxf-rt-ws-security",
+                    "version": "4.0.5.fuse-redhat-00022",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "o.a.c.s.s:cxf-services-sts-core:4.0.5.fuse-redhat-00022#1",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf.services.sts/cxf-services-sts-core@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-services-sts-core",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "i.q.c:quarkus-cxf-services-sts:3.15.3.redhat-00008#1",
+                            "purl": [
+                              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts@3.15.3.redhat-00008?type=jar"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-services-sts",
+                            "version": "3.15.3.redhat-00008",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency"
+                          }
+                        ]
+                      },
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "o.a.c:cxf-rt-ws-rm:4.0.5.fuse-redhat-00022#1",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf/cxf-rt-ws-rm@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-rt-ws-rm",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "i.q.c:quarkus-cxf-rt-ws-rm:3.15.3.redhat-00008#1",
+                            "purl": [
+                              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm@3.15.3.redhat-00008?type=jar"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-rt-ws-rm",
+                            "version": "3.15.3.redhat-00008",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency"
+                          }
+                        ]
+                      },
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "i.q.c:quarkus-cxf-rt-ws-security:3.15.3.redhat-00008#1",
+                        "purl": [
+                          "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security@3.15.3.redhat-00008?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-cxf-rt-ws-security",
+                        "version": "3.15.3.redhat-00008",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "o.a.w:wss4j-ws-security-policy-stax:3.0.3.redhat-00008#1",
+                    "purl": [
+                      "pkg:maven/org.apache.wss4j/wss4j-ws-security-policy-stax@3.0.3.redhat-00008?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "wss4j-ws-security-policy-stax",
+                    "version": "3.0.3.redhat-00008",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "o.a.c:cxf-rt-ws-security:4.0.5.fuse-redhat-00022#1",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-rt-ws-security",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.apache.wss4j/wss4j-ws-security-stax@3.0.3.redhat-00008?type=jar",
+                "purl": [
+                  "pkg:maven/org.apache.wss4j/wss4j-ws-security-stax@3.0.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "wss4j-ws-security-stax",
+                "version": "3.0.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "cxf-rt-ws-security",
+                    "version": "4.0.5.fuse-redhat-00022",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/org.apache.cxf.services.sts/cxf-services-sts-core@4.0.5.fuse-redhat-00022?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf.services.sts/cxf-services-sts-core@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-services-sts-core",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts@3.15.3.redhat-00008?type=jar",
+                            "purl": [
+                              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts@3.15.3.redhat-00008?type=jar"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-services-sts",
+                            "version": "3.15.3.redhat-00008",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency",
+                            "ancestors": [
+                              {
+                                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                                "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                                "purl": [
+                                  "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom"
+                                ],
+                                "cpe": [],
+                                "name": "quarkus-cxf-bom",
+                                "version": "3.15.4.redhat-00001",
+                                "published": "2025-04-08 06:32:44+00",
+                                "document_id": "1",
+                                "product_name": "quarkus-cxf-bom",
+                                "product_version": "3.15.4.redhat-00001",
+                                "relationship": "dependency"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/org.apache.cxf/cxf-rt-ws-rm@4.0.5.fuse-redhat-00022?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf/cxf-rt-ws-rm@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-rt-ws-rm",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm@3.15.3.redhat-00008?type=jar",
+                            "purl": [
+                              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm@3.15.3.redhat-00008?type=jar"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-rt-ws-rm",
+                            "version": "3.15.3.redhat-00008",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency",
+                            "ancestors": [
+                              {
+                                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                                "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                                "purl": [
+                                  "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom"
+                                ],
+                                "cpe": [],
+                                "name": "quarkus-cxf-bom",
+                                "version": "3.15.4.redhat-00001",
+                                "published": "2025-04-08 06:32:44+00",
+                                "document_id": "1",
+                                "product_name": "quarkus-cxf-bom",
+                                "product_version": "3.15.4.redhat-00001",
+                                "relationship": "dependency"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security@3.15.3.redhat-00008?type=jar",
+                        "purl": [
+                          "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security@3.15.3.redhat-00008?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-cxf-rt-ws-security",
+                        "version": "3.15.3.redhat-00008",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom",
+                            "purl": [
+                              "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-bom",
+                            "version": "3.15.4.redhat-00001",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency"
+                          },
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts@3.15.3.redhat-00008?type=jar",
+                            "purl": [
+                              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-services-sts@3.15.3.redhat-00008?type=jar"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-services-sts",
+                            "version": "3.15.3.redhat-00008",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency"
+                          },
+                          {
+                            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                            "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm@3.15.3.redhat-00008?type=jar",
+                            "purl": [
+                              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-rm@3.15.3.redhat-00008?type=jar"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-cxf-rt-ws-rm",
+                            "version": "3.15.3.redhat-00008",
+                            "published": "2025-04-08 06:32:44+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-cxf-bom",
+                            "product_version": "3.15.4.redhat-00001",
+                            "relationship": "dependency"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.apache.wss4j/wss4j-ws-security-policy-stax@3.0.3.redhat-00008?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.wss4j/wss4j-ws-security-policy-stax@3.0.3.redhat-00008?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "wss4j-ws-security-policy-stax",
+                    "version": "3.0.3.redhat-00008",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-rt-ws-security",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "pkg:maven/org.apache.wss4j/wss4j-ws-security-common@3.0.3.redhat-00008?type=jar",
+            "purl": [
+              "pkg:maven/org.apache.wss4j/wss4j-ws-security-common@3.0.3.redhat-00008?type=jar"
+            ],
+            "cpe": [],
+            "name": "wss4j-ws-security-common",
+            "version": "3.0.3.redhat-00008",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "o.a.w:wss4j-ws-security-stax:3.0.3.redhat-00008#1",
+                "purl": [
+                  "pkg:maven/org.apache.wss4j/wss4j-ws-security-stax@3.0.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "wss4j-ws-security-stax",
+                "version": "3.0.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.apache.wss4j/wss4j-ws-security-stax@3.0.3.redhat-00008?type=jar",
+                "purl": [
+                  "pkg:maven/org.apache.wss4j/wss4j-ws-security-stax@3.0.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "wss4j-ws-security-stax",
+                "version": "3.0.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.apache.wss4j/wss4j-ws-security-dom@3.0.3.redhat-00008?type=jar",
+                "purl": [
+                  "pkg:maven/org.apache.wss4j/wss4j-ws-security-dom@3.0.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "wss4j-ws-security-dom",
+                "version": "3.0.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "o.a.c:cxf-rt-ws-security:4.0.5.fuse-redhat-00022#1",
+                    "purl": [
+                      "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "cxf-rt-ws-security",
+                    "version": "4.0.5.fuse-redhat-00022",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "o.a.c:cxf-rt-security-saml:4.0.5.fuse-redhat-00022#1",
+                    "purl": [
+                      "pkg:maven/org.apache.cxf/cxf-rt-security-saml@4.0.5.fuse-redhat-00022?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "cxf-rt-security-saml",
+                    "version": "4.0.5.fuse-redhat-00022",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "o.a.c:cxf-rt-ws-security:4.0.5.fuse-redhat-00022#1",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-rt-ws-security",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "cxf-rt-ws-security",
+                    "version": "4.0.5.fuse-redhat-00022",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.apache.cxf/cxf-rt-security-saml@4.0.5.fuse-redhat-00022?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.cxf/cxf-rt-security-saml@4.0.5.fuse-redhat-00022?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "cxf-rt-security-saml",
+                    "version": "4.0.5.fuse-redhat-00022",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                        "node_id": "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.cxf/cxf-rt-ws-security@4.0.5.fuse-redhat-00022?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "cxf-rt-ws-security",
+                        "version": "4.0.5.fuse-redhat-00022",
+                        "published": "2025-04-08 06:32:44+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-cxf-bom",
+                        "product_version": "3.15.4.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar",
+            "purl": [
+              "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar"
+            ],
+            "cpe": [],
+            "name": "opensaml-saml-impl",
+            "version": "4.3.0.redhat-00012",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.apache.wss4j/wss4j-ws-security-common@3.0.3.redhat-00008?type=jar",
+                "purl": [
+                  "pkg:maven/org.apache.wss4j/wss4j-ws-security-common@3.0.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "wss4j-ws-security-common",
+                "version": "3.0.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-xacml-saml-impl@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-xacml-saml-impl@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-xacml-saml-impl",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.apache.wss4j/wss4j-ws-security-common@3.0.3.redhat-00008?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.wss4j/wss4j-ws-security-common@3.0.3.redhat-00008?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "wss4j-ws-security-common",
+                    "version": "3.0.3.redhat-00008",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "pkg:maven/org.opensaml/opensaml-xmlsec-impl@4.3.0.redhat-00012?type=jar",
+            "purl": [
+              "pkg:maven/org.opensaml/opensaml-xmlsec-impl@4.3.0.redhat-00012?type=jar"
+            ],
+            "cpe": [],
+            "name": "opensaml-xmlsec-impl",
+            "version": "4.3.0.redhat-00012",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-saml-impl",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "pkg:maven/org.opensaml/opensaml-saml-api@4.3.0.redhat-00012?type=jar",
+            "purl": [
+              "pkg:maven/org.opensaml/opensaml-saml-api@4.3.0.redhat-00012?type=jar"
+            ],
+            "cpe": [],
+            "name": "opensaml-saml-api",
+            "version": "4.3.0.redhat-00012",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-xacml-saml-impl@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-xacml-saml-impl@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-xacml-saml-impl",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-xacml-saml-api@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-xacml-saml-api@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-xacml-saml-api",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.opensaml/opensaml-xacml-saml-impl@4.3.0.redhat-00012?type=jar",
+                    "purl": [
+                      "pkg:maven/org.opensaml/opensaml-xacml-saml-impl@4.3.0.redhat-00012?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "opensaml-xacml-saml-impl",
+                    "version": "4.3.0.redhat-00012",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency"
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-saml-impl",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "pkg:maven/org.opensaml/opensaml-xmlsec-api@4.3.0.redhat-00012?type=jar",
+            "purl": [
+              "pkg:maven/org.opensaml/opensaml-xmlsec-api@4.3.0.redhat-00012?type=jar"
+            ],
+            "cpe": [],
+            "name": "opensaml-xmlsec-api",
+            "version": "4.3.0.redhat-00012",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-saml-impl",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-xmlsec-impl@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-xmlsec-impl@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-xmlsec-impl",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-saml-api@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-saml-api@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-saml-api",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              },
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/org.opensaml/opensaml-soap-api@4.3.0.redhat-00012?type=jar",
+                "purl": [
+                  "pkg:maven/org.opensaml/opensaml-soap-api@4.3.0.redhat-00012?type=jar"
+                ],
+                "cpe": [],
+                "name": "opensaml-soap-api",
+                "version": "4.3.0.redhat-00012",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar",
+                    "purl": [
+                      "pkg:maven/org.opensaml/opensaml-saml-impl@4.3.0.redhat-00012?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "opensaml-saml-impl",
+                    "version": "4.3.0.redhat-00012",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                    "node_id": "pkg:maven/org.opensaml/opensaml-saml-api@4.3.0.redhat-00012?type=jar",
+                    "purl": [
+                      "pkg:maven/org.opensaml/opensaml-saml-api@4.3.0.redhat-00012?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "opensaml-saml-api",
+                    "version": "4.3.0.redhat-00012",
+                    "published": "2025-04-08 06:32:44+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-cxf-bom",
+                    "product_version": "3.15.4.redhat-00001",
+                    "relationship": "dependency"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+            "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec@3.15.3?type=jar",
+            "purl": [
+              "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec@3.15.3?type=jar"
+            ],
+            "cpe": [],
+            "name": "quarkus-cxf-santuario-xmlsec",
+            "version": "3.15.3",
+            "published": "2025-04-08 06:32:44+00",
+            "document_id": "1",
+            "product_name": "quarkus-cxf-bom",
+            "product_version": "3.15.4.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1e6-1584-7b73-ae6d-09dc27d26d2c",
+                "node_id": "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security@3.15.3.redhat-00008?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security@3.15.3.redhat-00008?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-cxf-rt-ws-security",
+                "version": "3.15.3.redhat-00008",
+                "published": "2025-04-08 06:32:44+00",
+                "document_id": "1",
+                "product_name": "quarkus-cxf-bom",
+                "product_version": "3.15.4.redhat-00001",
+                "relationship": "dependency"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "total": 2
+  }

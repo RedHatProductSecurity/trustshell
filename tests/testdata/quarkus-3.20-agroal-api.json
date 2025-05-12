@@ -1,0 +1,1473 @@
+{
+    "items": [
+      {
+        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+        "node_id": "pkg:maven/io.agroal/agroal-api@2.5.0.redhat-00002?type=jar",
+        "purl": [
+          "pkg:maven/io.agroal/agroal-api@2.5.0.redhat-00002?type=jar"
+        ],
+        "cpe": [],
+        "name": "agroal-api",
+        "version": "2.5.0.redhat-00002",
+        "published": "2025-04-09 07:43:22+00",
+        "document_id": "1",
+        "product_name": "quarkus-camel-bom",
+        "product_version": "3.20.0.redhat-00001",
+        "ancestors": [
+          {
+            "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+            "node_id": "pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002?type=jar",
+            "purl": [
+              "pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002?type=jar"
+            ],
+            "cpe": [],
+            "name": "quarkus-agroal",
+            "version": "3.20.0.redhat-00002",
+            "published": "2025-04-09 07:43:22+00",
+            "document_id": "1",
+            "product_name": "quarkus-camel-bom",
+            "product_version": "3.20.0.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql@3.15.0.redhat-00007?type=jar",
+                "purl": [
+                  "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql@3.15.0.redhat-00007?type=jar"
+                ],
+                "cpe": [],
+                "name": "camel-quarkus-sql",
+                "version": "3.15.0.redhat-00007",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                    "purl": [
+                      "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-camel-bom",
+                    "version": "3.20.0.redhat-00001",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "CycloneDX-doc-ref",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "quarkus-camel-bom",
+                        "version": "",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "describes",
+                        "ancestors": []
+                      },
+                      {
+                        "sbom_id": "0196c1db-f85e-7740-bd40-a012903c6d05",
+                        "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                        "purl": [
+                          "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?repository_url=https://maven.repository.redhat.com/ga/&type=pom",
+                          "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-camel-bom",
+                        "version": "3.20.0.redhat-00001",
+                        "published": "2025-04-02 16:48:42+00",
+                        "document_id": "urn:uuid:f4484fb6-53e6-3c53-96ea-1ee4f0710556/1",
+                        "product_name": "Red Hat Build of Apache Camel",
+                        "product_version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.20",
+                        "relationship": "package",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1db-f85e-7740-bd40-a012903c6d05",
+                            "node_id": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.20",
+                            "purl": [],
+                            "cpe": [
+                              "cpe:/a:redhat:camel_quarkus:3:*:*:*"
+                            ],
+                            "name": "Red Hat Build of Apache Camel",
+                            "version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.20",
+                            "published": "2025-04-02 16:48:42+00",
+                            "document_id": "urn:uuid:f4484fb6-53e6-3c53-96ea-1ee4f0710556/1",
+                            "product_name": "Red Hat Build of Apache Camel",
+                            "product_version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.20",
+                            "relationship": "generates",
+                            "ancestors": [
+                              {
+                                "sbom_id": "0196c1db-f85e-7740-bd40-a012903c6d05",
+                                "node_id": "CycloneDX-doc-ref",
+                                "purl": [],
+                                "cpe": [],
+                                "name": "Red Hat Build of Apache Camel",
+                                "version": "",
+                                "published": "2025-04-02 16:48:42+00",
+                                "document_id": "urn:uuid:f4484fb6-53e6-3c53-96ea-1ee4f0710556/1",
+                                "product_name": "Red Hat Build of Apache Camel",
+                                "product_version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.20",
+                                "relationship": "describes",
+                                "ancestors": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql-deployment@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql-deployment@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-sql-deployment",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                        "purl": [
+                          "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-camel-bom",
+                        "version": "3.20.0.redhat-00001",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/io.quarkiverse.mybatis/quarkus-mybatis@2.2.4.redhat-00001?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkiverse.mybatis/quarkus-mybatis@2.2.4.redhat-00001?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-mybatis",
+                "version": "2.2.4.redhat-00001",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/io.quarkiverse.mybatis/quarkus-mybatis-deployment@2.2.4.redhat-00001?type=jar",
+                    "purl": [
+                      "pkg:maven/io.quarkiverse.mybatis/quarkus-mybatis-deployment@2.2.4.redhat-00001?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-mybatis-deployment",
+                    "version": "2.2.4.redhat-00001",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-mybatis-deployment@3.15.0.redhat-00007?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.camel.quarkus/camel-quarkus-mybatis-deployment@3.15.0.redhat-00007?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "camel-quarkus-mybatis-deployment",
+                        "version": "3.15.0.redhat-00007",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                            "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                            "purl": [
+                              "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-camel-bom",
+                            "version": "3.20.0.redhat-00001",
+                            "published": "2025-04-09 07:43:22+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-camel-bom",
+                            "product_version": "3.20.0.redhat-00001",
+                            "relationship": "dependency"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-mybatis@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-mybatis@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-mybatis",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                        "purl": [
+                          "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-camel-bom",
+                        "version": "3.20.0.redhat-00001",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      },
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-mybatis-deployment@3.15.0.redhat-00007?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.camel.quarkus/camel-quarkus-mybatis-deployment@3.15.0.redhat-00007?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "camel-quarkus-mybatis-deployment",
+                        "version": "3.15.0.redhat-00007",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/io.quarkus/quarkus-hibernate-orm@3.20.0.redhat-00002?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkus/quarkus-hibernate-orm@3.20.0.redhat-00002?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-hibernate-orm",
+                "version": "3.20.0.redhat-00002",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/io.quarkus/quarkus-hibernate-orm-deployment@3.20.0.redhat-00002?type=jar",
+                    "purl": [
+                      "pkg:maven/io.quarkus/quarkus-hibernate-orm-deployment@3.20.0.redhat-00002?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-hibernate-orm-deployment",
+                    "version": "3.20.0.redhat-00002",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jpa-deployment@3.15.0.redhat-00007?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jpa-deployment@3.15.0.redhat-00007?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "camel-quarkus-jpa-deployment",
+                        "version": "3.15.0.redhat-00007",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                            "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                            "purl": [
+                              "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-camel-bom",
+                            "version": "3.20.0.redhat-00001",
+                            "published": "2025-04-09 07:43:22+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-camel-bom",
+                            "product_version": "3.20.0.redhat-00001",
+                            "relationship": "dependency"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jpa@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jpa@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-jpa",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                        "purl": [
+                          "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-camel-bom",
+                        "version": "3.20.0.redhat-00001",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      },
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jpa-deployment@3.15.0.redhat-00007?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jpa-deployment@3.15.0.redhat-00007?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "camel-quarkus-jpa-deployment",
+                        "version": "3.15.0.redhat-00007",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/io.quarkus/quarkus-agroal-deployment@3.20.0.redhat-00002?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkus/quarkus-agroal-deployment@3.20.0.redhat-00002?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-agroal-deployment",
+                "version": "3.20.0.redhat-00002",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql-deployment@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql-deployment@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-sql-deployment",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/io.quarkiverse.mybatis/quarkus-mybatis-deployment@2.2.4.redhat-00001?type=jar",
+                    "purl": [
+                      "pkg:maven/io.quarkiverse.mybatis/quarkus-mybatis-deployment@2.2.4.redhat-00001?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-mybatis-deployment",
+                    "version": "2.2.4.redhat-00001",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/io.quarkus/quarkus-hibernate-orm-deployment@3.20.0.redhat-00002?type=jar",
+                    "purl": [
+                      "pkg:maven/io.quarkus/quarkus-hibernate-orm-deployment@3.20.0.redhat-00002?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-hibernate-orm-deployment",
+                    "version": "3.20.0.redhat-00002",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc-deployment@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc-deployment@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-jdbc-deployment",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                        "purl": [
+                          "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-camel-bom",
+                        "version": "3.20.0.redhat-00001",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-support-jdbc-deployment@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-support-jdbc-deployment@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-support-jdbc-deployment",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql-deployment@3.15.0.redhat-00007?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql-deployment@3.15.0.redhat-00007?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "camel-quarkus-sql-deployment",
+                        "version": "3.15.0.redhat-00007",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      },
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc-deployment@3.15.0.redhat-00007?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc-deployment@3.15.0.redhat-00007?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "camel-quarkus-jdbc-deployment",
+                        "version": "3.15.0.redhat-00007",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/io.quarkus/quarkus-agroal-dev@3.20.0.redhat-00002?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkus/quarkus-agroal-dev@3.20.0.redhat-00002?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-agroal-dev",
+                "version": "3.20.0.redhat-00002",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/io.quarkus/quarkus-agroal-deployment@3.20.0.redhat-00002?type=jar",
+                    "purl": [
+                      "pkg:maven/io.quarkus/quarkus-agroal-deployment@3.20.0.redhat-00002?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-agroal-deployment",
+                    "version": "3.20.0.redhat-00002",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc@3.15.0.redhat-00007?type=jar",
+                "purl": [
+                  "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc@3.15.0.redhat-00007?type=jar"
+                ],
+                "cpe": [],
+                "name": "camel-quarkus-jdbc",
+                "version": "3.15.0.redhat-00007",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                    "purl": [
+                      "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-camel-bom",
+                    "version": "3.20.0.redhat-00001",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc-deployment@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc-deployment@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-jdbc-deployment",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-support-jdbc@3.15.0.redhat-00007?type=jar",
+                "purl": [
+                  "pkg:maven/org.apache.camel.quarkus/camel-quarkus-support-jdbc@3.15.0.redhat-00007?type=jar"
+                ],
+                "cpe": [],
+                "name": "camel-quarkus-support-jdbc",
+                "version": "3.15.0.redhat-00007",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-sql",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-support-jdbc-deployment@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-support-jdbc-deployment@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-support-jdbc-deployment",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-jdbc",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+            "node_id": "pkg:maven/io.agroal/agroal-pool@2.5.0.redhat-00002?type=jar",
+            "purl": [
+              "pkg:maven/io.agroal/agroal-pool@2.5.0.redhat-00002?type=jar"
+            ],
+            "cpe": [],
+            "name": "agroal-pool",
+            "version": "2.5.0.redhat-00002",
+            "published": "2025-04-09 07:43:22+00",
+            "document_id": "1",
+            "product_name": "quarkus-camel-bom",
+            "product_version": "3.20.0.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-agroal",
+                "version": "3.20.0.redhat-00002",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency"
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+            "node_id": "pkg:maven/io.agroal/agroal-narayana@2.5.0.redhat-00002?type=jar",
+            "purl": [
+              "pkg:maven/io.agroal/agroal-narayana@2.5.0.redhat-00002?type=jar"
+            ],
+            "cpe": [],
+            "name": "agroal-narayana",
+            "version": "2.5.0.redhat-00002",
+            "published": "2025-04-09 07:43:22+00",
+            "document_id": "1",
+            "product_name": "quarkus-camel-bom",
+            "product_version": "3.20.0.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-agroal",
+                "version": "3.20.0.redhat-00002",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+        "node_id": "pkg:maven/io.agroal/agroal-api@2.5.0.redhat-00002?type=jar",
+        "purl": [
+          "pkg:maven/io.agroal/agroal-api@2.5.0.redhat-00002?type=jar"
+        ],
+        "cpe": [],
+        "name": "agroal-api",
+        "version": "2.5.0.redhat-00002",
+        "published": "2025-04-09 07:43:22+00",
+        "document_id": "1",
+        "product_name": "quarkus-camel-bom",
+        "product_version": "3.20.0.redhat-00001",
+        "ancestors": [
+          {
+            "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+            "node_id": "pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002?type=jar",
+            "purl": [
+              "pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002?type=jar"
+            ],
+            "cpe": [],
+            "name": "quarkus-agroal",
+            "version": "3.20.0.redhat-00002",
+            "published": "2025-04-09 07:43:22+00",
+            "document_id": "1",
+            "product_name": "quarkus-camel-bom",
+            "product_version": "3.20.0.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql@3.15.0.redhat-00007?type=jar",
+                "purl": [
+                  "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql@3.15.0.redhat-00007?type=jar"
+                ],
+                "cpe": [],
+                "name": "camel-quarkus-sql",
+                "version": "3.15.0.redhat-00007",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                    "purl": [
+                      "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-camel-bom",
+                    "version": "3.20.0.redhat-00001",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "CycloneDX-doc-ref",
+                        "purl": [],
+                        "cpe": [],
+                        "name": "quarkus-camel-bom",
+                        "version": "",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "describes",
+                        "ancestors": []
+                      },
+                      {
+                        "sbom_id": "0196c1db-f85e-7740-bd40-a012903c6d05",
+                        "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                        "purl": [
+                          "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?repository_url=https://maven.repository.redhat.com/ga/&type=pom",
+                          "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-camel-bom",
+                        "version": "3.20.0.redhat-00001",
+                        "published": "2025-04-02 16:48:42+00",
+                        "document_id": "urn:uuid:f4484fb6-53e6-3c53-96ea-1ee4f0710556/1",
+                        "product_name": "Red Hat Build of Apache Camel",
+                        "product_version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.20",
+                        "relationship": "package",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1db-f85e-7740-bd40-a012903c6d05",
+                            "node_id": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.20",
+                            "purl": [],
+                            "cpe": [
+                              "cpe:/a:redhat:camel_quarkus:3:*:*:*"
+                            ],
+                            "name": "Red Hat Build of Apache Camel",
+                            "version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.20",
+                            "published": "2025-04-02 16:48:42+00",
+                            "document_id": "urn:uuid:f4484fb6-53e6-3c53-96ea-1ee4f0710556/1",
+                            "product_name": "Red Hat Build of Apache Camel",
+                            "product_version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.20",
+                            "relationship": "generates",
+                            "ancestors": [
+                              {
+                                "sbom_id": "0196c1db-f85e-7740-bd40-a012903c6d05",
+                                "node_id": "CycloneDX-doc-ref",
+                                "purl": [],
+                                "cpe": [],
+                                "name": "Red Hat Build of Apache Camel",
+                                "version": "",
+                                "published": "2025-04-02 16:48:42+00",
+                                "document_id": "urn:uuid:f4484fb6-53e6-3c53-96ea-1ee4f0710556/1",
+                                "product_name": "Red Hat Build of Apache Camel",
+                                "product_version": "Red Hat Build of Apache Camel 4.8 for Quarkus 3.20",
+                                "relationship": "describes",
+                                "ancestors": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql-deployment@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql-deployment@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-sql-deployment",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                        "purl": [
+                          "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-camel-bom",
+                        "version": "3.20.0.redhat-00001",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/io.quarkiverse.mybatis/quarkus-mybatis@2.2.4.redhat-00001?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkiverse.mybatis/quarkus-mybatis@2.2.4.redhat-00001?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-mybatis",
+                "version": "2.2.4.redhat-00001",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/io.quarkiverse.mybatis/quarkus-mybatis-deployment@2.2.4.redhat-00001?type=jar",
+                    "purl": [
+                      "pkg:maven/io.quarkiverse.mybatis/quarkus-mybatis-deployment@2.2.4.redhat-00001?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-mybatis-deployment",
+                    "version": "2.2.4.redhat-00001",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-mybatis-deployment@3.15.0.redhat-00007?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.camel.quarkus/camel-quarkus-mybatis-deployment@3.15.0.redhat-00007?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "camel-quarkus-mybatis-deployment",
+                        "version": "3.15.0.redhat-00007",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                            "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                            "purl": [
+                              "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-camel-bom",
+                            "version": "3.20.0.redhat-00001",
+                            "published": "2025-04-09 07:43:22+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-camel-bom",
+                            "product_version": "3.20.0.redhat-00001",
+                            "relationship": "dependency"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-mybatis@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-mybatis@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-mybatis",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                        "purl": [
+                          "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-camel-bom",
+                        "version": "3.20.0.redhat-00001",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      },
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-mybatis-deployment@3.15.0.redhat-00007?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.camel.quarkus/camel-quarkus-mybatis-deployment@3.15.0.redhat-00007?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "camel-quarkus-mybatis-deployment",
+                        "version": "3.15.0.redhat-00007",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/io.quarkus/quarkus-hibernate-orm@3.20.0.redhat-00002?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkus/quarkus-hibernate-orm@3.20.0.redhat-00002?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-hibernate-orm",
+                "version": "3.20.0.redhat-00002",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/io.quarkus/quarkus-hibernate-orm-deployment@3.20.0.redhat-00002?type=jar",
+                    "purl": [
+                      "pkg:maven/io.quarkus/quarkus-hibernate-orm-deployment@3.20.0.redhat-00002?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-hibernate-orm-deployment",
+                    "version": "3.20.0.redhat-00002",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jpa-deployment@3.15.0.redhat-00007?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jpa-deployment@3.15.0.redhat-00007?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "camel-quarkus-jpa-deployment",
+                        "version": "3.15.0.redhat-00007",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency",
+                        "ancestors": [
+                          {
+                            "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                            "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                            "purl": [
+                              "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                            ],
+                            "cpe": [],
+                            "name": "quarkus-camel-bom",
+                            "version": "3.20.0.redhat-00001",
+                            "published": "2025-04-09 07:43:22+00",
+                            "document_id": "1",
+                            "product_name": "quarkus-camel-bom",
+                            "product_version": "3.20.0.redhat-00001",
+                            "relationship": "dependency"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jpa@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jpa@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-jpa",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                        "purl": [
+                          "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-camel-bom",
+                        "version": "3.20.0.redhat-00001",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      },
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jpa-deployment@3.15.0.redhat-00007?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jpa-deployment@3.15.0.redhat-00007?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "camel-quarkus-jpa-deployment",
+                        "version": "3.15.0.redhat-00007",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/io.quarkus/quarkus-agroal-deployment@3.20.0.redhat-00002?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkus/quarkus-agroal-deployment@3.20.0.redhat-00002?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-agroal-deployment",
+                "version": "3.20.0.redhat-00002",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql-deployment@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql-deployment@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-sql-deployment",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/io.quarkiverse.mybatis/quarkus-mybatis-deployment@2.2.4.redhat-00001?type=jar",
+                    "purl": [
+                      "pkg:maven/io.quarkiverse.mybatis/quarkus-mybatis-deployment@2.2.4.redhat-00001?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-mybatis-deployment",
+                    "version": "2.2.4.redhat-00001",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/io.quarkus/quarkus-hibernate-orm-deployment@3.20.0.redhat-00002?type=jar",
+                    "purl": [
+                      "pkg:maven/io.quarkus/quarkus-hibernate-orm-deployment@3.20.0.redhat-00002?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-hibernate-orm-deployment",
+                    "version": "3.20.0.redhat-00002",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc-deployment@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc-deployment@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-jdbc-deployment",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                        "purl": [
+                          "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                        ],
+                        "cpe": [],
+                        "name": "quarkus-camel-bom",
+                        "version": "3.20.0.redhat-00001",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-support-jdbc-deployment@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-support-jdbc-deployment@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-support-jdbc-deployment",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency",
+                    "ancestors": [
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql-deployment@3.15.0.redhat-00007?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql-deployment@3.15.0.redhat-00007?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "camel-quarkus-sql-deployment",
+                        "version": "3.15.0.redhat-00007",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      },
+                      {
+                        "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                        "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc-deployment@3.15.0.redhat-00007?type=jar",
+                        "purl": [
+                          "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc-deployment@3.15.0.redhat-00007?type=jar"
+                        ],
+                        "cpe": [],
+                        "name": "camel-quarkus-jdbc-deployment",
+                        "version": "3.15.0.redhat-00007",
+                        "published": "2025-04-09 07:43:22+00",
+                        "document_id": "1",
+                        "product_name": "quarkus-camel-bom",
+                        "product_version": "3.20.0.redhat-00001",
+                        "relationship": "dependency"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/io.quarkus/quarkus-agroal-dev@3.20.0.redhat-00002?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkus/quarkus-agroal-dev@3.20.0.redhat-00002?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-agroal-dev",
+                "version": "3.20.0.redhat-00002",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/io.quarkus/quarkus-agroal-deployment@3.20.0.redhat-00002?type=jar",
+                    "purl": [
+                      "pkg:maven/io.quarkus/quarkus-agroal-deployment@3.20.0.redhat-00002?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-agroal-deployment",
+                    "version": "3.20.0.redhat-00002",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc@3.15.0.redhat-00007?type=jar",
+                "purl": [
+                  "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc@3.15.0.redhat-00007?type=jar"
+                ],
+                "cpe": [],
+                "name": "camel-quarkus-jdbc",
+                "version": "3.15.0.redhat-00007",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom",
+                    "purl": [
+                      "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
+                    ],
+                    "cpe": [],
+                    "name": "quarkus-camel-bom",
+                    "version": "3.20.0.redhat-00001",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc-deployment@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc-deployment@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-jdbc-deployment",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  }
+                ]
+              },
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-support-jdbc@3.15.0.redhat-00007?type=jar",
+                "purl": [
+                  "pkg:maven/org.apache.camel.quarkus/camel-quarkus-support-jdbc@3.15.0.redhat-00007?type=jar"
+                ],
+                "cpe": [],
+                "name": "camel-quarkus-support-jdbc",
+                "version": "3.15.0.redhat-00007",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency",
+                "ancestors": [
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-sql",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-support-jdbc-deployment@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-support-jdbc-deployment@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-support-jdbc-deployment",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  },
+                  {
+                    "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                    "node_id": "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc@3.15.0.redhat-00007?type=jar",
+                    "purl": [
+                      "pkg:maven/org.apache.camel.quarkus/camel-quarkus-jdbc@3.15.0.redhat-00007?type=jar"
+                    ],
+                    "cpe": [],
+                    "name": "camel-quarkus-jdbc",
+                    "version": "3.15.0.redhat-00007",
+                    "published": "2025-04-09 07:43:22+00",
+                    "document_id": "1",
+                    "product_name": "quarkus-camel-bom",
+                    "product_version": "3.20.0.redhat-00001",
+                    "relationship": "dependency"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+            "node_id": "pkg:maven/io.agroal/agroal-pool@2.5.0.redhat-00002?type=jar",
+            "purl": [
+              "pkg:maven/io.agroal/agroal-pool@2.5.0.redhat-00002?type=jar"
+            ],
+            "cpe": [],
+            "name": "agroal-pool",
+            "version": "2.5.0.redhat-00002",
+            "published": "2025-04-09 07:43:22+00",
+            "document_id": "1",
+            "product_name": "quarkus-camel-bom",
+            "product_version": "3.20.0.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-agroal",
+                "version": "3.20.0.redhat-00002",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency"
+              }
+            ]
+          },
+          {
+            "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+            "node_id": "pkg:maven/io.agroal/agroal-narayana@2.5.0.redhat-00002?type=jar",
+            "purl": [
+              "pkg:maven/io.agroal/agroal-narayana@2.5.0.redhat-00002?type=jar"
+            ],
+            "cpe": [],
+            "name": "agroal-narayana",
+            "version": "2.5.0.redhat-00002",
+            "published": "2025-04-09 07:43:22+00",
+            "document_id": "1",
+            "product_name": "quarkus-camel-bom",
+            "product_version": "3.20.0.redhat-00001",
+            "relationship": "dependency",
+            "ancestors": [
+              {
+                "sbom_id": "0196c1db-f9af-72e3-9d99-7679aec2d8f0",
+                "node_id": "pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002?type=jar",
+                "purl": [
+                  "pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002?type=jar"
+                ],
+                "cpe": [],
+                "name": "quarkus-agroal",
+                "version": "3.20.0.redhat-00002",
+                "published": "2025-04-09 07:43:22+00",
+                "document_id": "1",
+                "product_name": "quarkus-camel-bom",
+                "product_version": "3.20.0.redhat-00001",
+                "relationship": "dependency"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "total": 2
+  }

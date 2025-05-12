@@ -5,7 +5,7 @@ import logging
 import sys
 
 from anytree import Node, RenderTree, PreOrderIter
-from anytree.walker import Walker
+from anytree.walker import Walker, WalkError
 from packageurl import PackageURL
 from rich.console import Console
 from rich.theme import Theme
@@ -197,10 +197,13 @@ def _remove_non_cpe_branches(root):
             to_keep = next(iter(leaves_to_keep))
             # remove all leaves and branches up to common ancestores
             w = Walker()
-            up, common, _ = w.walk(to_remove, to_keep)
-            for node in up:
-                if node != common:
-                    node.parent = None
+            try:
+                up, common, _ = w.walk(to_remove, to_keep)
+                for node in up:
+                    if node != common:
+                        node.parent = None
+            except WalkError:
+                continue
     return root
 
 
