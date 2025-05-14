@@ -21,7 +21,7 @@ from trustshell import (
 )
 from trustshell.oidc_pkce_authcode import get_access_token
 
-ANALYSIS_ENDPOINT = f"{TRUSTIFY_URL}analysis/component"
+ANALYSIS_ENDPOINT = f"{TRUSTIFY_URL}analysis/latest/component"
 MAX_I64 = 2**63 - 1
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
@@ -57,7 +57,7 @@ def search(component: str, debug: bool):
         sys.exit(1)
 
     ancestor_trees = _get_roots(component)
-    if len(ancestor_trees) == 0:
+    if not ancestor_trees or len(ancestor_trees) == 0:
         console.print("No results")
         return
     for tree in ancestor_trees:
