@@ -2,15 +2,19 @@ import importlib.metadata
 import logging
 import os
 import urllib
+from urllib.parse import urlparse, urlunparse
 
 from packageurl import PackageURL
 from rich.console import Console
 from rich.logging import RichHandler
 from rich.theme import Theme
 
-
+TRUSTIFY_URL_PATH = "/api/v2/"
 if "TRUSTIFY_URL" in os.environ:
-    TRUSTIFY_URL = os.getenv("TRUSTIFY_URL")
+    url_env = os.getenv("TRUSTIFY_URL")
+    parsed_url = urlparse(url_env)
+    if not parsed_url.path or parsed_url.path != TRUSTIFY_URL_PATH:
+        TRUSTIFY_URL = urlunparse((parsed_url.scheme, parsed_url.netloc, "/api/v2/", "", "", ""))
     AUTH_ENABLED = True
 else:
     TRUSTIFY_URL = "http://localhost:8080/api/v2/"

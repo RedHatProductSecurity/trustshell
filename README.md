@@ -15,7 +15,7 @@ $ pip install git+https://github.com/RedHatProductSecurity/trustshell.git#egg=tr
 
 Ensure the following environment variables are set:
 
-`export TRUSTIFY_URL="http://localhost:8080/api/v2/"`
+`export TRUSTIFY_URL="https://atlas.release.stage.devshift.net"`
 
 
 stage:
