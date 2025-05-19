@@ -14,12 +14,12 @@ from univers.versions import RpmVersion
 from trustshell import (
     AUTH_ENABLED,
     TRUSTIFY_URL,
+    check_or_get_access_token,
     config_logging,
     get_tag_from_purl,
     print_version,
     urlencoded,
 )
-from trustshell.oidc_pkce_authcode import get_access_token
 
 ANALYSIS_ENDPOINT = f"{TRUSTIFY_URL}analysis/latest/component"
 MAX_I64 = 2**63 - 1
@@ -78,7 +78,7 @@ def _get_roots(base_purl: str) -> list[Node]:
 
     auth_header = {}
     if AUTH_ENABLED:
-        access_token, _, _ = get_access_token()
+        access_token = check_or_get_access_token()
         auth_header = {"Authorization": f"Bearer {access_token}"}
 
     # TODO change back to purl~ (like) query?

@@ -149,8 +149,8 @@ def get_access_token():
     # local web server.
     code = local_http_server(code_challenge, state)
     # swap the code for a token via http calls inside of this script
-    access_token, refresh_token, id_token = code_to_token(code, code_verifier)
-    return access_token, refresh_token, id_token
+    access_token, _, _ = code_to_token(code, code_verifier)
+    return access_token
 
 
 def get_fresh_token(refresh_token):

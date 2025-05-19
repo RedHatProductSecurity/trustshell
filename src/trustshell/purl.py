@@ -20,11 +20,12 @@ from trustshell import (
     AUTH_ENABLED,
     TRUSTIFY_URL,
     get_tag_from_purl,
+    check_or_get_access_token,
     print_version,
     config_logging,
     urlencoded,
 )
-from trustshell.oidc_pkce_authcode import get_access_token
+
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
 console = Console(color_system="auto", theme=custom_theme)
@@ -57,7 +58,7 @@ def search(component: str, latest_version: bool, debug: bool):
 
     auth_header = {}
     if AUTH_ENABLED:
-        access_token, _, _ = get_access_token()
+        access_token = check_or_get_access_token()
         auth_header = {"Authorization": f"Bearer {access_token}"}
 
     purls = _query_trustify_packages(component, auth_header)
