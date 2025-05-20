@@ -40,23 +40,23 @@ logger = logging.getLogger("trustshell")
 )
 @click.option("--debug", "-d", is_flag=True, help="Debug log level.")
 @click.argument(
-    "component",
+    "purl",
     type=click.STRING,
 )
-def search(component: str, debug: bool):
-    """Search for a component in Trustify"""
+def search(purl: str, debug: bool):
+    """Related a purl to products in Trustify"""
     if not debug:
         config_logging(level="INFO")
     else:
         config_logging(level="DEBUG")
 
     try:
-        PackageURL.from_string(component)
+        PackageURL.from_string(purl)
     except ValueError:
-        console.print(f"{component} is not a valid Package URL", style="error")
+        console.print(f"{purl} is not a valid Package URL", style="error")
         sys.exit(1)
 
-    ancestor_trees = _get_roots(component)
+    ancestor_trees = _get_roots(purl)
     if not ancestor_trees or len(ancestor_trees) == 0:
         console.print("No results")
         return
