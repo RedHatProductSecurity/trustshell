@@ -79,7 +79,7 @@ def get_tag_from_purl(purl: PackageURL) -> str:
 def check_or_get_access_token() -> str:
     if not os.path.exists(TOKEN_FILE):
         logger.debug("Access token not found. Getting a new one...")
-        access_token = _get_and_store_access_token(TOKEN_FILE)
+        access_token = _get_and_store_access_token()
     else:
         logger.debug("Access token found. Checking its validity...")
         with open(TOKEN_FILE, "r") as f:
@@ -103,7 +103,7 @@ def check_or_get_access_token() -> str:
     return access_token
 
 
-def _get_and_store_access_token(TOKEN_FILE) -> str:
+def _get_and_store_access_token() -> str:
     access_token = get_access_token()
     with open(TOKEN_FILE, "w") as f:
         f.write(access_token)
