@@ -32,7 +32,7 @@ logger = logging.getLogger("trustshell")
 @click.command()
 @click.option("--check", "-c", is_flag=True, help="Check the status only, don't prime")
 def prime_cache(check: bool):
-    """Prime the analysis/component cache"""
+    """Prime the analysis/component graph cache"""
     auth_header = {}
     if AUTH_ENABLED:
         access_token = check_or_get_access_token()
@@ -48,7 +48,7 @@ def prime_cache(check: bool):
     console.print(f"graph count: {graph_count}")
     console.print(f"sbom_count: {sbom_count}")
     if not check:
-        console.print("Priming graph ...")
+        console.print("Priming graph cache...")
         httpx.get(f"{TRUSTIFY_URL}analysis/component", headers=auth_header, timeout=60)
 
 
