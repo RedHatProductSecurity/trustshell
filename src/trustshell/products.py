@@ -30,6 +30,29 @@ logger = logging.getLogger("trustshell")
 
 
 @click.command()
+@click.option("--check", "-c", is_flag=True, help="Check the status only, don't prime")
+def prime_cache(check: bool):
+    """Prime the analysis/component cache"""
+    auth_header = {}
+    if AUTH_ENABLED:
+        access_token = check_or_get_access_token()
+        auth_header = {"Authorization": f"Bearer {access_token}"}
+    status_response = httpx.get(
+        f"{TRUSTIFY_URL}analysis/status", headers=auth_header, timeout=60
+    )
+    status_response.raise_for_status()
+    status = status_response.json()
+    graph_count = status["graph_count"]
+    sbom_count = status["sbom_count"]
+    console.print("Status before prime:")
+    console.print(f"graph count: {graph_count}")
+    console.print(f"sbom_count: {sbom_count}")
+    if not check:
+        console.print("Priming graph ...")
+        httpx.get(f"{TRUSTIFY_URL}analysis/component", headers=auth_header, timeout=60)
+
+
+@click.command()
 @click.option(
     "--version",
     "-V",
