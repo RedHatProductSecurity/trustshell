@@ -61,7 +61,9 @@ def local_http_server(code_challenge, state):
             # if debug:
             #    print(f"Path your browser hit on the local web server: {self.path}")
             #    print(f"Code the local webserver found: {SimpleHTTPRequestHandler.code}")
-            self.wfile.write(b"<html><h2>You may now return to psirt_cli</h2></html>\n")
+            self.wfile.write(
+                b"<html><h2>You may now return to trustshell</h2></html>\n"
+            )
 
         def log_message(self, format, *args):
             logger.info("Received response from Auth Server")
