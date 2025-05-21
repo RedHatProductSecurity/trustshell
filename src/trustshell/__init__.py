@@ -25,6 +25,8 @@ if "TRUSTIFY_URL" in os.environ:
         TRUSTIFY_URL = urlunparse(
             (parsed_url.scheme, parsed_url.netloc, TRUSTIFY_URL_PATH, "", "", "")
         )
+    else:
+        TRUSTIFY_URL = url_env
     AUTH_ENABLED = True
 else:
     TRUSTIFY_URL = "http://localhost:8080/api/v2/"
