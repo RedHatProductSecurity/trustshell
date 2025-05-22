@@ -67,7 +67,7 @@ def prime_cache(check: bool):
     type=click.STRING,
 )
 def search(purl: str, debug: bool):
-    """Related a purl to products in Trustify"""
+    """Relate a purl to products in Trustify"""
     if not debug:
         config_logging(level="INFO")
     else:
