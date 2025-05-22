@@ -44,7 +44,7 @@ PURL_BASE_ENDPOINT = f"{TRUSTIFY_URL}purl/base"
     is_eager=True,
 )
 @click.option("--debug", "-d", is_flag=True, help="Debug log level.")
-@click.option("--latest_version", "-l", is_flag=True, help="Include latest versions")
+@click.option("--latest-version", "-l", is_flag=True, help="Include latest versions")
 @click.argument(
     "component",
     type=click.STRING,
