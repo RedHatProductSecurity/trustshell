@@ -1,10 +1,11 @@
 from collections import defaultdict
+import copy
 import click
 import httpx
 import logging
 import sys
 
-from anytree import Node, RenderTree, PreOrderIter
+from anytree import Node, RenderTree, PreOrderIter, LevelOrderGroupIter
 from anytree.walker import Walker, WalkError
 from packageurl import PackageURL
 from rich.console import Console
@@ -20,6 +21,7 @@ from trustshell import (
     print_version,
     urlencoded,
 )
+from trustshell.product_definitions import ProdDefs
 
 ANALYSIS_ENDPOINT = f"{TRUSTIFY_URL}analysis/latest/component"
 MAX_I64 = 2**63 - 1
@@ -83,6 +85,10 @@ def search(purl: str, debug: bool):
     if not ancestor_trees or len(ancestor_trees) == 0:
         console.print("No results")
         return
+
+    # prod_defs = ProdDefs()
+    # ancestor_trees = prod_defs.extend_with_product_mappings(ancestor_trees)
+
     for tree in ancestor_trees:
         _render_tree(tree)
 
@@ -104,7 +110,6 @@ def _get_roots(base_purl: str) -> list[Node]:
         access_token = check_or_get_access_token()
         auth_header = {"Authorization": f"Bearer {access_token}"}
 
-    # TODO change back to purl~ (like) query?
     request_url = (
         f"{ANALYSIS_ENDPOINT}?ancestors={MAX_I64}&q={urlencoded(f'purl~{base_purl}@')}"
     )

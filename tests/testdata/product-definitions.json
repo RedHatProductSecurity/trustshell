@@ -1,0 +1,131 @@
+{
+  "ps_products": {
+    "rhel": {
+        "name": "Red Hat Enterprise Linux",
+        "lifecycle_url": "https://access.redhat.com/support/policy/updates/errata/",
+        "ps_modules": [
+            "rhel-9"
+        ]
+    }
+  },
+  "ps_modules": {
+    "rhel-9": {
+      "public_description": "Red Hat Enterprise Linux 9",
+      "ps_update_streams": [
+        "rhel-9.2.0.z",
+        "rhel-9.4.z",
+        "rhel-9.6.z"
+      ],
+      "active_ps_update_streams": [
+        "rhel-9.2.0.z",
+        "rhel-9.4.z",
+        "rhel-9.6.z"
+      ],
+      "default_ps_update_streams": [],
+      "unacked_ps_update_stream": "rhel-9",
+      "moderate_ps_update_streams": [
+        "rhel-9.4.z"
+      ],
+      "manifest": true,
+      "lifecycle": {
+        "supported_from": "2022-05-17",
+        "supported_until": null
+      },
+      "cpe": [
+        "cpe:/o:redhat:enterprise_linux:9",
+        "cpe:/a:redhat:enterprise_linux:9"
+      ],
+      "lifecycle_defs": {
+        "product": "RHEL",
+        "version": "9"
+      }
+    },
+    "quay-3": {
+      "public_description": "Red Hat Quay 3",
+      "ps_update_streams": [
+        "quay-3.12",
+        "quay-3.13"
+      ],
+      "active_ps_update_streams": [
+        "quay-3.12",
+        "quay-3.13"
+      ],
+      "default_ps_update_streams": [
+        "quay-3.12",
+        "quay-3.13"
+      ],
+      "moderate_ps_update_streams": [
+        "quay-3.12",
+        "quay-3.13"
+      ],
+      "lifecycle": {
+        "supported_from": "2019-05-1",
+        "supported_until": null
+      },
+      "cpe": [
+        "cpe:/a:redhat:quay:3"
+      ],
+      "manifest": true
+    }
+  },
+  "ps_update_streams": {
+    "rhel-9.2.0.z": {
+      "pp_label": "rhel-9.2.0.z",
+      "version": "rhel-9.2.0.z",
+      "cpe": [
+        "cpe:/a:redhat:rhel_eus:9.2::appstream",
+        "cpe:/o:redhat:rhel_eus:9.2::baseos",
+        "cpe:/a:redhat:rhel_eus:9.2::crb",
+        "cpe:/a:redhat:rhel_eus:9.2::highavailability",
+        "cpe:/a:redhat:rhel_eus:9.2::nfv",
+        "cpe:/a:redhat:rhel_eus:9.2::realtime",
+        "cpe:/a:redhat:rhel_eus:9.2::resilientstorage",
+        "cpe:/a:redhat:rhel_eus:9.2::sap",
+        "cpe:/a:redhat:rhel_eus:9.2::sap_hana",
+        "cpe:/a:redhat:rhel_eus:9.2::supplementary"
+      ],
+      "flags": [],
+      "keywords": [],
+      "additional_fields": {
+        "jboss": {
+          "fixVersions": "rhel-9.2.0.z"
+        }
+      }
+    },
+    "rhel-9.4.z": {
+      "pp_label": "rhel-9.4.z",
+      "version": "rhel-9.4.z",
+      "cpe": [
+        "cpe:/a:redhat:enterprise_linux:9::appstream",
+        "cpe:/a:redhat:rhel_eus:9.4::appstream",
+        "cpe:/o:redhat:rhel_eus:9.4::baseos",
+        "cpe:/a:redhat:rhel_eus:9.4::crb",
+        "cpe:/a:redhat:rhel_eus:9.4::highavailability",
+        "cpe:/a:redhat:rhel_eus:9.4::nfv",
+        "cpe:/a:redhat:rhel_eus:9.4::realtime",
+        "cpe:/a:redhat:rhel_eus:9.4::resilientstorage",
+        "cpe:/a:redhat:rhel_eus:9.4::sap",
+        "cpe:/a:redhat:rhel_eus:9.4::sap_hana",
+        "cpe:/a:redhat:rhel_eus:9.4::supplementary"
+      ]
+    },
+    "rhel-9.6.z": {
+      "pp_label": "rhel-9.6.z",
+      "version": "rhel-9.6.z",
+      "cpe": [
+        "cpe:/a:redhat:enterprise_linux:9::appstream"
+      ]
+    },
+    "quay-3.12": {
+      "pp_label": "quay-3.12",
+      "version": "quay-v3.12.0"
+    },
+    "quay-3.13": {
+      "pp_label": "quay-3.13",
+      "version": "quay-v3.13.0",
+      "cpe": [
+        "cpe:/a:redhat:quay:3.13"
+      ]
+    }
+  }
+}
