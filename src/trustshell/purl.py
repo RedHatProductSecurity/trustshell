@@ -128,7 +128,7 @@ def _latest_package_versions(
 
 def _get_package_versions(base_purl: str, auth_header: dict[str, str]) -> set[str]:
     """
-    If an OCI base_purl is passed in, get it's version from purl tags. Otherwise return the
+    If an OCI base_purl is passed in, get its version from purl tags. Otherwise return the
     purl versions reported by Trustify
     """
 

@@ -23,7 +23,7 @@ $ uv run trust-products <base purl>
 
 # Linting
 
-The linting tool in use in the CI environment (Github Actions) is 'ruff'. You can run it in the development environment with:
+The linting tool in use in the CI environment (Github Actions) is `ruff`. You can run it in the development environment with:
 
 ```
 $ uvx ruff check
