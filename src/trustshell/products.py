@@ -23,7 +23,7 @@ from trustshell import (
 from trustshell.product_definitions import ProdDefs
 
 ANALYSIS_ENDPOINT = f"{TRUSTIFY_URL}analysis/latest/component"
-MAX_I64 = 2**63 - 1
+ANCESTOR_COUNT = 10000
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
 console = Console(color_system="auto", theme=custom_theme)
@@ -110,7 +110,7 @@ def _get_roots(base_purl: str) -> list[Node]:
         auth_header = {"Authorization": f"Bearer {access_token}"}
 
     request_url = (
-        f"{ANALYSIS_ENDPOINT}?ancestors={MAX_I64}&q={urlencoded(f'purl~{base_purl}@')}"
+        f"{ANALYSIS_ENDPOINT}?ancestors={ANCESTOR_COUNT}&q={urlencoded(f'purl~{base_purl}@')}"
     )
     ancestors_response = httpx.get(request_url, headers=auth_header, timeout=60.0)
     ancestors_response.raise_for_status()
