@@ -56,6 +56,9 @@ pkg:oci/quay-builder-qemu-rhcos-rhel8
     └── cpe:/a:redhat:quay:3:*:el8:*
 ```
 
+Use the --latest flag to include non-latest results. The default is to filter to the latest root components in a CPE. 
+Latest is calculated by comparing the published date of the product SBOM.
+
 ### Prime the Trusify graph:
 If components are found with the trust-purl command, but they are not being linked to products with
 trust-products, it could be because the Trustify graph cache is not yet primed. In order to prime the graph

@@ -22,7 +22,8 @@ from trustshell import (
 )
 from trustshell.product_definitions import ProdDefs
 
-ANALYSIS_ENDPOINT = f"{TRUSTIFY_URL}analysis/latest/component"
+LATEST_ENDPOINT = f"{TRUSTIFY_URL}analysis/latest/component"
+ANALYSIS_ENDPOINT = f"{TRUSTIFY_URL}analysis/component"
 ANCESTOR_COUNT = 10000
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
@@ -62,12 +63,13 @@ def prime_cache(check: bool):
     expose_value=False,
     is_eager=True,
 )
+@click.option("--latest", "-l", is_flag=True, default=True)
 @click.option("--debug", "-d", is_flag=True, help="Debug log level.")
 @click.argument(
     "purl",
     type=click.STRING,
 )
-def search(purl: str, debug: bool):
+def search(purl: str, debug: bool, latest: bool):
     """Related a purl to products in Trustify"""
     if not debug:
         config_logging(level="INFO")
@@ -80,7 +82,7 @@ def search(purl: str, debug: bool):
         console.print(f"{purl} is not a valid Package URL", style="error")
         sys.exit(1)
 
-    ancestor_trees = _get_roots(purl)
+    ancestor_trees = _get_roots(purl, latest)
     if not ancestor_trees or len(ancestor_trees) == 0:
         console.print("No results")
         return
@@ -101,7 +103,7 @@ def _render_tree(root: Node):
         console.print("No results")
 
 
-def _get_roots(base_purl: str) -> list[Node]:
+def _get_roots(base_purl: str, latest: bool = True) -> list[Node]:
     """Lookup base_purl ancestors in Trustify"""
 
     auth_header = {}
@@ -109,12 +111,14 @@ def _get_roots(base_purl: str) -> list[Node]:
         access_token = check_or_get_access_token()
         auth_header = {"Authorization": f"Bearer {access_token}"}
 
-    request_url = (
-        f"{ANALYSIS_ENDPOINT}?ancestors={ANCESTOR_COUNT}&q={urlencoded(f'purl~{base_purl}@')}"
-    )
+    if latest:
+        request_url = f"{LATEST_ENDPOINT}?ancestors={ANCESTOR_COUNT}&q={urlencoded(f'purl~{base_purl}@')}"
+    else:
+        request_url = f"{ANALYSIS_ENDPOINT}?ancestors={ANCESTOR_COUNT}&q={urlencoded(f'purl~{base_purl}@')}"
     ancestors_response = httpx.get(request_url, headers=auth_header, timeout=60.0)
     ancestors_response.raise_for_status()
     ancestors = ancestors_response.json()
+    logger.debug(f"Number of matches for {base_purl}: {ancestors['total']}")
     return _trees_with_cpes(ancestors)
 
 
