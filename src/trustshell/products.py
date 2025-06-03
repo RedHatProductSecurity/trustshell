@@ -104,7 +104,7 @@ def _render_tree(root: Node):
 
 
 def _get_roots(base_purl: str, latest: bool = True) -> list[Node]:
-    """Lookup base_purl ancestors in Trustify"""
+    """Look up base_purl ancestors in Trustify"""
 
     auth_header = {}
     if AUTH_ENABLED:
