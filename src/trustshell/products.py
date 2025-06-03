@@ -31,7 +31,7 @@ console = Console(color_system="auto", theme=custom_theme)
 logger = logging.getLogger("trustshell")
 
 
-@click.command()
+@click.command(context_settings={"help_option_names": ["-h", "--help"]})
 @click.option("--check", "-c", is_flag=True, help="Check the status only, don't prime")
 def prime_cache(check: bool):
     """Prime the analysis/component graph cache"""
@@ -54,7 +54,7 @@ def prime_cache(check: bool):
         httpx.get(f"{TRUSTIFY_URL}analysis/component", headers=auth_header, timeout=60)
 
 
-@click.command()
+@click.command(context_settings={"help_option_names": ["-h", "--help"]})
 @click.option(
     "--version",
     "-V",
@@ -70,7 +70,7 @@ def prime_cache(check: bool):
     type=click.STRING,
 )
 def search(purl: str, debug: bool, latest: bool):
-    """Related a purl to products in Trustify"""
+    """Relate a purl to products in Trustify"""
     if not debug:
         config_logging(level="INFO")
     else:

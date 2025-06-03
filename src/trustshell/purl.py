@@ -34,7 +34,7 @@ logger = logging.getLogger("trustshell")
 PURL_BASE_ENDPOINT = f"{TRUSTIFY_URL}purl/base"
 
 
-@click.command()
+@click.command(context_settings={"help_option_names": ["-h", "--help"]})
 @click.option(
     "--version",
     "-V",
@@ -44,7 +44,7 @@ PURL_BASE_ENDPOINT = f"{TRUSTIFY_URL}purl/base"
     is_eager=True,
 )
 @click.option("--debug", "-d", is_flag=True, help="Debug log level.")
-@click.option("--latest_version", "-l", is_flag=True, help="Include latest versions")
+@click.option("--latest-version", "-l", is_flag=True, help="Include latest versions")
 @click.argument(
     "component",
     type=click.STRING,
