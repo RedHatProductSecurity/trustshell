@@ -25,6 +25,10 @@ Atlas Stage:
 `export TRUSTIFY_URL="https://atlas.release.stage.devshift.net"`
 `export AUTH_ENDPOINT="https://auth.stage.redhat.com/auth/realms/EmployeeIDP/protocol/openid-connect"`
 
+Product Mapping:
+`export PRODDEFS_URL="https://prodsec.pages.example.com/product-definitions/products.json"`
+`export SSL_CERT_FILE=/etc/pki/tls/certs/ca-bundle.crt`
+
 ## Usage
 
 ### Find matching PackageURLs in Trustify:
@@ -66,3 +70,9 @@ Priming graph ...
 ```
 
 It can also be run with `--check` to see the graph and sbom counts without actually priming the garph cache.
+
+### CPE to product mapping
+
+It's possible to map CPEs to products using product metadata as demonstrated in the docs/product-definitions.json file. This allows integration with a bug tracking system like Jira. 
+
+The way this mapping works is to match against a ps_update_steam if such a map exists. If not, we try to match against ps_modules.

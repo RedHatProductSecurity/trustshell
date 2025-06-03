@@ -324,11 +324,3 @@ def test_remove_duplicate_parent_nodes():
     # Assert that the tree structure is as expected
     _check_node_names_at_depth(root, 1, ["child1"])
     _check_node_names_at_depth(root, 2, ["grandchild1"])
-
-
-def create_node(root, name, children) -> list[Node]:
-    node_a = Node(name, parent=root)
-    new_nodes = []
-    for child in children:
-        new_nodes.append(Node(child, parent=node_a))
-    return new_nodes
