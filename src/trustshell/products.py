@@ -280,7 +280,15 @@ def _trees_with_cpes(ancestor_data: dict[str, Any]) -> list[Node]:
     _remove_duplicate_branches(base_node)
     _remove_duplicate_parent_nodes(base_node)
     first_children = _remove_root_return_children(base_node)
-    trees_with_cpes = [tree for tree in first_children if _has_cpe_node(tree)]
+    trees_with_cpes: list[Node] = []
+    for tree in first_children:
+        if not _has_cpe_node(tree):
+            for leaf in tree.leaves:
+                logger.debug(
+                    f"Found result {tree.name} with ancestor: {leaf.name} but no CPE parent"
+                )
+        else:
+            trees_with_cpes.append(tree)
     return [_remove_non_cpe_branches(tree) for tree in trees_with_cpes]
 
 
