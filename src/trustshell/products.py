@@ -328,10 +328,11 @@ def _build_node_purl(purls: list[str]) -> Optional[PackageURL]:
                 qualifiers = purl.qualifiers
                 if qualifiers and isinstance(qualifiers, dict) and "tag" in qualifiers:
                     purl_tags[qualifiers["tag"]] = purl
-            sorted_purls = sorted(
-                purl_tags.keys(), key=lambda x: RpmVersion(x), reverse=True
-            )
-            return purl_tags[sorted_purls[0]]
+            if purl_tags:
+                sorted_purls = sorted(
+                    purl_tags.keys(), key=lambda x: RpmVersion(x), reverse=True
+                )
+                return purl_tags[sorted_purls[0]]
         else:
             console.print(f"multiple node purls found: {node_purls}", style="warning")
     return node_purls.pop()
