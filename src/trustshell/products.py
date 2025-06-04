@@ -33,14 +33,20 @@ logger = logging.getLogger("trustshell")
 
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
 @click.option("--check", "-c", is_flag=True, help="Check the status only, don't prime")
-def prime_cache(check: bool):
+@click.option("--debug", "-d", is_flag=True, help="Debug log level.")
+def prime_cache(check: bool, debug: bool):
     """Prime the analysis/component graph cache"""
+    if not debug:
+        config_logging(level="INFO")
+    else:
+        config_logging(level="DEBUG")
+
     auth_header = {}
     if AUTH_ENABLED:
         access_token = check_or_get_access_token()
         auth_header = {"Authorization": f"Bearer {access_token}"}
     status_response = httpx.get(
-        f"{TRUSTIFY_URL}analysis/status", headers=auth_header, timeout=60
+        f"{TRUSTIFY_URL}analysis/status", headers=auth_header, timeout=300
     )
     status_response.raise_for_status()
     status = status_response.json()
@@ -51,7 +57,7 @@ def prime_cache(check: bool):
     console.print(f"sbom_count: {sbom_count}")
     if not check:
         console.print("Priming graph cache...")
-        httpx.get(f"{TRUSTIFY_URL}analysis/component", headers=auth_header, timeout=60)
+        httpx.get(f"{TRUSTIFY_URL}analysis/component", headers=auth_header, timeout=300)
 
 
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
@@ -115,7 +121,7 @@ def _get_roots(base_purl: str, latest: bool = True) -> list[Node]:
         request_url = f"{LATEST_ENDPOINT}?ancestors={ANCESTOR_COUNT}&q={urlencoded(f'purl~{base_purl}@')}"
     else:
         request_url = f"{ANALYSIS_ENDPOINT}?ancestors={ANCESTOR_COUNT}&q={urlencoded(f'purl~{base_purl}@')}"
-    ancestors_response = httpx.get(request_url, headers=auth_header, timeout=60.0)
+    ancestors_response = httpx.get(request_url, headers=auth_header, timeout=300)
     ancestors_response.raise_for_status()
     ancestors = ancestors_response.json()
     logger.debug(f"Number of matches for {base_purl}: {ancestors['total']}")
