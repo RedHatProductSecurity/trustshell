@@ -28,9 +28,46 @@ class ProductBase(object):
 class ProductModule(ProductBase, NodeMixin):
     def __init__(self, name, cpe_patterns):
         super().__init__(name)
+        self.raw_cpe_patterns = self._filter_raw_patterns(cpe_patterns)
         self.cpe_patterns = [
             pattern.replace(".", "\\.").replace("*", ".*") for pattern in cpe_patterns
         ]
+
+    # Assisted by watsonx Code Assistant 
+    def _check_cpe_wildcards(self, cpe: str):
+        """
+        This function checks a string for the presence of asterisk (*) characters.
+
+        Parameters:
+        s (str): The input string to be checked.
+
+        Returns:
+        str: If there are no asterisks in the string, it returns the string as is.
+            If there is exactly one asterisk at the end of the string, it removes the asterisk and returns the string.
+            If the string has more than one asterisk, it returns an empty string.
+
+        Assumptions:
+        - The input string `cpe` is not None.
+        """
+        asterisks = cpe.count("*")
+        if asterisks == 0:
+            return cpe
+        elif asterisks == 1 and cpe.endswith("*"):
+            return cpe.removesuffix("*")
+        else:
+            return ""
+
+
+    def _filter_raw_patterns(self, cpe_patterns: list[str]) -> list[str]:
+        """ If there is an asterix at the end of pattern, discard it. If the asterix appears anywhere else in the string discard it"""
+        filtered_patterns = []
+        for cpe_pattern in cpe_patterns:
+            filtered_pattern = self._check_cpe_wildcards(cpe_pattern)
+            if not filtered_pattern:
+                logger.warning(f"Skipping CPE pattern {cpe_pattern} for module {self.name}")
+            else:
+                filtered_patterns.append(filtered_pattern)
+        return filtered_patterns
 
     def match(self, cpe) -> bool:
         # First try to match exactly, then substring
@@ -131,7 +168,7 @@ class ProdDefs:
 
     def __init__(self, active_only: bool = True):
         self.stream_nodes_by_cpe = defaultdict(list)
-        product_streams_by_name = defaultdict(list)
+        self.product_streams_by_name = defaultdict(list)
         self.product_trees: list[NodeMixin] = []
 
         data = self.get_product_definitions_service()
@@ -142,7 +179,7 @@ class ProdDefs:
         for ps_update_stream, stream_data in data["ps_update_streams"].items():
             cpes = stream_data.get("cpe", [])
             stream_node = ProductStream(ps_update_stream, cpes)
-            product_streams_by_name[ps_update_stream].append(stream_node)
+            self.product_streams_by_name[ps_update_stream].append(stream_node)
             for cpe in cpes:
                 # We need this check because RHEL mainline CPEs are filtered out
                 if cpe in stream_node.cpes:
@@ -155,7 +192,7 @@ class ProdDefs:
             active_streams: set[str] = set()
             active_streams.update(module_data.get("active_ps_update_streams", []))
             for stream in module_data.get("ps_update_streams"):
-                for stream_node in product_streams_by_name[stream]:
+                for stream_node in self.product_streams_by_name[stream]:
                     if stream in active_streams:
                         stream_node.set_active(True)
                     elif active_only:
@@ -193,7 +230,7 @@ class ProdDefs:
     def _clean_cpe(cpe: str) -> str:
         """CPEs from SBOMs have extra characters added to them, clean them up here
         see https://github.com/trustification/trustify/issues/1621"""
-        # Remove all '*' characters
+        # Remove all "*" characters
         cleaned_cpe = cpe.replace("*", "")
         # Remove trailing ':' characters
         return cleaned_cpe.rstrip(":")
