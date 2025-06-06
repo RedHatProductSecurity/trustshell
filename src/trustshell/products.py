@@ -97,10 +97,10 @@ def search(purl: str, debug: bool, latest: bool):
     ancestor_trees = prod_defs.extend_with_product_mappings(ancestor_trees)
 
     for tree in ancestor_trees:
-        _render_tree(tree.root)
+        render_tree(tree.root)
 
 
-def _render_tree(root: Node):
+def render_tree(root: Node):
     """Pretty print a tree using name only"""
     if root:
         for pre, _, node in RenderTree(root):

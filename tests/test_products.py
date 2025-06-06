@@ -7,7 +7,7 @@ from trustshell.products import (
     _remove_duplicate_parent_nodes,
     _remove_non_cpe_branches,
     _trees_with_cpes,
-    _render_tree,
+    render_tree,
     _has_cpe_node,
 )
 
@@ -44,7 +44,7 @@ def test_trees_with_cpes_srpm():
         data = json.load(file)
     result = _trees_with_cpes(data)
     assert len(result) == 1
-    _render_tree(result[0])
+    render_tree(result[0])
     assert result[0].name == "pkg:rpm/redhat/openssl@3.0.7-18.el9_2"
     expected_cpes = [
         "cpe:/a:redhat:rhel_eus:9.2:*:appstream:*",
@@ -58,7 +58,7 @@ def test_trees_with_cpes_binary_rpm():
         data = json.load(file)
     result = _trees_with_cpes(data)
     assert len(result) == 1
-    _render_tree(result[0])
+    render_tree(result[0])
     assert result[0].name == "pkg:rpm/redhat/openssl-libs@3.0.7-18.el9_2"
     _check_node_names_at_depth(result[0], 1, ["pkg:rpm/redhat/openssl@3.0.7-18.el9_2"])
     expected_cpes = [
@@ -73,7 +73,7 @@ def test_trees_with_cpes_container_cdx():
         data = json.load(file)
     result = _trees_with_cpes(data)
     assert len(result) == 1
-    _render_tree(result[0])
+    render_tree(result[0])
     assert result[0].name == "pkg:oci/quay-builder-qemu-rhcos-rhel8?tag=v3.12.8-1"
     expected_cpe = ["cpe:/a:redhat:quay:3:*:el8:*"]
     _check_node_names_at_depth(result[0], 1, expected_cpe)
@@ -84,7 +84,7 @@ def test_trees_with_cpes_dependency():
         data = json.load(file)
     result = _trees_with_cpes(data)
     assert len(result) == 1
-    _render_tree(result[0])
+    render_tree(result[0])
     _check_node_names_at_depth(
         result[0], 1, ["pkg:oci/quay-builder-qemu-rhcos-rhel8?tag=v3.12.8-1"]
     )
@@ -97,7 +97,7 @@ def test_trees_with_cpes_spdx_dependency():
         data = json.load(file)
     result = _trees_with_cpes(data)
     assert len(result) == 1
-    _render_tree(result[0])
+    render_tree(result[0])
     _check_node_names_at_depth(
         result[0], 1, ["pkg:oci/bootc-nvidia-rhel9?tag=1.4.3-1743086940"]
     )
@@ -113,13 +113,13 @@ def test_trees_with_cpes_multi_versions():
     assert len(result) == 2
 
     print("first_result")
-    _render_tree(result[0])
+    render_tree(result[0])
     assert result[0].name == "pkg:oci/quay-builder-qemu-rhcos-rhel8?tag=v3.14.0-4"
     expected_cpes = ["cpe:/a:redhat:quay:3:*:el8:*"]
     _check_node_names_at_depth(result[0], 1, expected_cpes)
 
     print("second_result")
-    _render_tree(result[1])
+    render_tree(result[1])
     assert result[1].name == "pkg:oci/quay-builder-qemu-rhcos-rhel8?tag=v3.12.8-1"
     _check_node_names_at_depth(result[1], 1, expected_cpes)
 
@@ -130,7 +130,7 @@ def test_trees_with_cpes_quarkus_agroal():
     result = _trees_with_cpes(data)
 
     print("first_result")
-    _render_tree(result[0])
+    render_tree(result[0])
     assert len(result) == 1
     assert result[0].name == "pkg:maven/io.agroal/agroal-api@2.5.0.redhat-00002"
     _check_node_names_at_depth(
@@ -155,7 +155,7 @@ def test_trees_with_cpes_quarkus_xmlsec():
     result = _trees_with_cpes(data)
 
     print("first_result")
-    _render_tree(result[0])
+    render_tree(result[0])
     assert len(result) == 1
     assert result[0].name == "pkg:maven/org.apache.santuario/xmlsec@3.0.4"
     _check_node_names_at_depth(
@@ -233,7 +233,7 @@ def test_remove_non_cpe_branches():
     Node("srpm", parent=base2)
     Node("cpe:/", parent=srpm)
     _remove_non_cpe_branches(root)
-    _render_tree(root)
+    render_tree(root)
 
     # Assert that the tree structure is as expected
     # root
@@ -264,7 +264,7 @@ def test_remove_multi_non_cpe_branches():
     Node("srpm", parent=base3)
     Node("cpe:/", parent=srpm)
     _remove_non_cpe_branches(root)
-    _render_tree(root)
+    render_tree(root)
 
     # Assert that the tree structure is as expected
     # root
@@ -297,7 +297,7 @@ def test_remove_non_cpe_branches_multi_cpe():
     Node("cpe:/", parent=srpm)
     Node("cpe:/", parent=srpm3)
     _remove_non_cpe_branches(root)
-    _render_tree(root)
+    render_tree(root)
 
     # Assert that the tree structure is as expected
     # root
@@ -320,7 +320,7 @@ def test_remove_duplicate_parent_nodes():
     child3 = Node("child1", parent=child2)
     Node("grandchild1", parent=child3)
     _remove_duplicate_parent_nodes(root)
-    _render_tree(root)
+    render_tree(root)
     # Assert that the tree structure is as expected
     _check_node_names_at_depth(root, 1, ["child1"])
     _check_node_names_at_depth(root, 2, ["grandchild1"])

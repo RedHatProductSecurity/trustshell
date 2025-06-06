@@ -4,7 +4,7 @@ from anytree import Node
 from unittest.mock import patch
 from test_products import _check_node_names_at_depth
 from trustshell.product_definitions import ProdDefs, ProductStream
-from trustshell.products import _render_tree
+from trustshell.products import render_tree
 
 
 class TestProdDefs(unittest.TestCase):
@@ -58,7 +58,7 @@ class TestProdDefs(unittest.TestCase):
         prod_defs = ProdDefs()
         assert len(prod_defs.product_trees) == 5
         for tree in prod_defs.product_trees:
-            _render_tree(tree)
+            render_tree(tree)
         rhel_9_2_z_stream = prod_defs.product_trees[0]
         assert rhel_9_2_z_stream.name == "rhel-9.2.0.z"
         _check_node_names_at_depth(rhel_9_2_z_stream, 1, ["rhel-9"])
@@ -78,7 +78,7 @@ class TestProdDefs(unittest.TestCase):
         results = ProdDefs().extend_with_product_mappings(test_trees)
         assert len(results) == 1
         root = results[0].root
-        _render_tree(root)
+        render_tree(root)
         assert root.name == component
         _check_node_names_at_depth(root, 1, [cpe])
         _check_node_names_at_depth(root, 2, ["rhel-9.2.0.z"])
@@ -96,7 +96,7 @@ class TestProdDefs(unittest.TestCase):
         results = ProdDefs().extend_with_product_mappings(test_trees)
         assert len(results) == 1
         root = results[0].root
-        _render_tree(root)
+        render_tree(root)
         assert root.name == component
         _check_node_names_at_depth(root, 1, [cpe])
         _check_node_names_at_depth(root, 2, ["rhel-9.6.z"])
@@ -119,7 +119,7 @@ class TestProdDefs(unittest.TestCase):
         assert len(result) == 2
         for r in result:
             root = r.root
-            _render_tree(root)
+            render_tree(root)
             assert root.name in (component_1, component_2)
             _check_node_names_at_depth(root, 1, [cpe])
             _check_node_names_at_depth(root, 2, ["rhel-9.6.z"])
@@ -136,7 +136,7 @@ class TestProdDefs(unittest.TestCase):
         test_trees = [component_node]
         result = ProdDefs().extend_with_product_mappings(test_trees)
         for r in result:
-            _render_tree(r)
+            render_tree(r)
         # cpe:/a:redhat:quay:3
         # └── quay-3.13
         #     └── quay-3
@@ -169,7 +169,7 @@ class TestProdDefs(unittest.TestCase):
         test_trees = [component_1_node, component_2_node]
         result = ProdDefs().extend_with_product_mappings(test_trees)
         for r in result:
-            _render_tree(r.root)
+            render_tree(r.root)
         # oci:quay@123
         # └── cpe:/a:redhat:quay:3
         #     └── quay-3.13
