@@ -22,6 +22,7 @@ dependencies = [
 trust-purl = "trustshell.purl:search"
 trust-products = "trustshell.products:search"
 trust-prime = "trustshell.products:prime_cache"
+trust-api = "trustshell.api:api"
 
 [build-system]
 requires = ["hatchling"]
