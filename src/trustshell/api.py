@@ -2,6 +2,7 @@ import click
 import httpx
 import json
 import logging
+from urllib.parse import quote
 
 from rich.console import Console
 from rich.theme import Theme
@@ -21,11 +22,13 @@ logger = logging.getLogger("trustshell")
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
 @click.option("--debug", "-d", is_flag=True, help="Debug log level.")
 @click.argument("endpoint", type=click.STRING)
+@click.option("-s", "--subpath", type=click.STRING, required=False)
 @click.argument("params", nargs=-1, type=click.STRING)
-def api(endpoint: str, params: tuple[str], debug: bool):
+def api(endpoint: str, subpath: str, params: tuple[str], debug: bool):
     """Make direct API calls to Trustify endpoints
 
     ENDPOINT: API endpoint path (e.g., 'analysis/latest/component', 'analysis/status')
+    SUBPATH: Optional subpath appended to endpoint that will be URL-encoded (e.g., 'cpe:/redhat:12')
     PARAMS: Query parameters in key=value format (e.g., q=cpe~enterprise_linux limit=10)
     """
     if not debug:
@@ -50,7 +53,10 @@ def api(endpoint: str, params: tuple[str], debug: bool):
             )
             return
 
-    url = f"{TRUSTIFY_URL}{endpoint.lstrip('/')}"
+    url = f"{TRUSTIFY_URL}{endpoint.strip('/')}"
+    if subpath:
+        url += f"/{quote(subpath, safe='')}"
+
     try:
         response = httpx.get(url, params=query_params, headers=auth_header, timeout=300)
         response.raise_for_status()
