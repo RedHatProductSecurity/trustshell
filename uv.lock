@@ -2,6 +2,12 @@ version = 1
 revision = 1
 requires-python = ">=3.13"
 
+[manifest]
+members = [
+    "trustshell",
+    "trustshell-oidc",
+]
+
 [[package]]
 name = "anyio"
 version = "4.9.0"
@@ -295,6 +301,23 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [{ name = "pytest", specifier = ">=8.3.5" }]
 lint = []
+
+[[package]]
+name = "trustshell-oidc"
+version = "0.1.0"
+source = { virtual = "src/trustshell/oidc" }
+dependencies = [
+    { name = "httpx" },
+    { name = "pkce" },
+    { name = "pyjwt" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "httpx", specifier = ">=0.28.1" },
+    { name = "pkce", specifier = ">=1.0.3" },
+    { name = "pyjwt", specifier = ">=2.10.1" },
+]
 
 [[package]]
 name = "univers"
