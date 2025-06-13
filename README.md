@@ -1,4 +1,4 @@
-#TrustShell
+# TrustShell
 
 ## Description
 Command Line Tool to work with [Trustify](https://github.com/trustification/trustify/).
@@ -31,6 +31,35 @@ Product Mapping:
 ```bash
 export PRODDEFS_URL="https://prodsec.pages.example.com/product-definitions/products.json"
 export SSL_CERT_FILE=/etc/pki/tls/certs/ca-bundle.crt
+```
+
+### Running in a container
+
+The authentication flows tries to spawn a browser in order to authentication to Single-Sign On (SSO). If running in a 'headless' environment like a container image that won't work. When running in a container it's necessary to run the container image defined in [this Containerfile](src/trustshell/oidc/Containerfile).
+
+One can build and run the container as follows:
+```bash
+podman build -t oidc-pkce-server .
+podman run -d -p 127.0.0.1:8650:8650 -e AUTH_ENDPOINT="https://auth.redhat.com/auth/realms/EmployeeIDP/protocol/openid-connect" oidc-pkce-server
+```
+
+It's a security risk to bind the oidc-pkce-server on an external network interface. Allowing access to the oidc-pkce-server could allow an attacker to obtain an access_token and grant them read access to the Trusify server.
+
+When first trying to authenticate in a headless environment you'll be presented with a link to authenticate to SSO which you will need to open in a web browser, eg:
+
+```bash
+Open a webbrowser and go to:
+https://auth.redhat.com/auth/realms/EmployeeIDP/protocol/openid-connect/auth?response_type=code&client_id=atlas-frontend&scope=openid&redirect_uri=http%3A%2F%2Flocalhost%3A8650%2Findex.html&code_challenge=<snip>&code_challenge_method=S256&state=<snip>
+```
+
+Subsequent requests to Trustify will use an access_token stored or refreshed by the oidc-pkce-server. Restaring the oidc-pkce-server process will required re-authentication in the browser on restart.
+
+### Running in 'headless' mode
+
+If you want to run in 'headless' mode, and have the `oidc-pkce-server` maintain a persistent authentication session. You can run the `oidc-pkce-server` container as mentioned above and set the following environment variable. You will still have to authenticate in the browser each time the `oidc-pkce-server` container is restarted.
+
+```bash
+export LOCAL_AUTH_SERVER_PORT=8650
 ```
 
 ## Usage

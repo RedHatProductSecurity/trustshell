@@ -1,0 +1,28 @@
+FROM registry.redhat.io/ubi10:10.0
+
+LABEL summary="TrustShell OIDC PKCE Server" \
+      maintainer="Product Security DevOps <prodsec-dev@redhat.com>"
+
+ARG PYPI_MIRROR="https://pypi.python.org/simple"
+ENV PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=off \
+    PIP_INDEX_URL=$PYPI_MIRROR\
+    LISTEN_PORT=8650
+
+EXPOSE 8650
+
+WORKDIR /opt/app-root/src/
+WORKDIR /opt/app-root
+ADD . /opt/app-root
+
+# Download the UV installer
+ADD https://astral.sh/uv/0.7.12/install.sh /uv-installer.sh
+
+# Run the installer then remove it
+RUN sh /uv-installer.sh && rm /uv-installer.sh
+
+# Ensure the installed binary is on the `PATH`
+ENV PATH="/root/.local/bin/:$PATH"
+
+# Run app.py when the container launches
+CMD ["uv", "run", "oidc_pkce_server.py"]
