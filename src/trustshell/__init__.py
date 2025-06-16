@@ -2,20 +2,33 @@ import time
 import importlib.metadata
 import logging
 import os
-import urllib
-from urllib.parse import urlparse, urlunparse
+from urllib.parse import urlparse, urlunparse, quote, parse_qs
 
+import httpx
 import jwt
 from packageurl import PackageURL
 from rich.console import Console
 from rich.logging import RichHandler
 from rich.theme import Theme
+import webbrowser
 
-from trustshell.oidc_pkce_authcode import get_access_token
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+from trustshell.oidc.oidc_pkce_authcode import (
+    LOCAL_SERVER_PORT,
+    REDIRECT_URI,
+    build_url,
+    code_to_token,
+    gen_things,
+)
 
 CONFIG_DIR = os.path.expanduser("~/.config/trustshell/")
 os.makedirs(CONFIG_DIR, exist_ok=True)
 TOKEN_FILE = os.path.join(CONFIG_DIR, "access_token.jwt")
+HEADLESS = "DISPLAY" not in os.environ
+if "LOCAL_AUTH_SERVER_PORT" in os.environ:
+    LOCAL_AUTH_SERVER_PORT = os.getenv("LOCAL_AUTH_SERVER_PORT")
+
 
 TRUSTIFY_URL_PATH = "/api/v2/"
 if "TRUSTIFY_URL" in os.environ:
@@ -62,7 +75,7 @@ def config_logging(level="INFO"):
 
 def urlencoded(base_purl: str) -> str:
     """urlencode a string, excluding the slash character"""
-    return urllib.parse.quote(base_purl, safe="")
+    return quote(base_purl, safe="")
 
 
 def get_tag_from_purl(purl: PackageURL) -> str:
@@ -101,13 +114,92 @@ def check_or_get_access_token() -> str:
             access_token = _get_and_store_access_token()
         except jwt.InvalidTokenError:
             logger.debug("Access token is invalid. Getting a new one...")
-            access_token = _get_and_store_access_token
+            access_token = _get_and_store_access_token()
+    if not access_token:
+        console.print(
+            "Unable to authenticate to Atlas, please try again after authenticating in the browser."
+        )
+        exit(0)
     return access_token
 
 
 def _get_and_store_access_token() -> str:
     access_token = get_access_token()
+    if not access_token:
+        return ""
     with open(TOKEN_FILE, "w") as f:
         f.write(access_token)
         os.chmod(TOKEN_FILE, 0o600)
     return access_token
+
+
+def local_http_server(code_challenge, state):
+    logger.info(
+        f"Starting the local web server on {LOCAL_SERVER_PORT}. Your web browser will send the code"
+        " to it."
+    )
+
+    class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            SimpleHTTPRequestHandler.code = parse_qs(urlparse(self.path).query)["code"][
+                0
+            ]
+            self.send_response(200)
+            self.send_header("Content-type", "text/html")
+            self.end_headers()
+            # if debug:
+            #    print(f"Path your browser hit on the local web server: {self.path}")
+            #    print(f"Code the local webserver found: {SimpleHTTPRequestHandler.code}")
+            self.wfile.write(
+                b"<html><h2>You may now return to trustshell</h2></html>\n"
+            )
+
+        def log_message(self, format, *args):
+            logger.info("Received response from Auth Server")
+
+    httpd = HTTPServer(("localhost", LOCAL_SERVER_PORT), SimpleHTTPRequestHandler)
+
+    launch_browser(code_challenge, state)
+    httpd.handle_request()
+    logger.debug(
+        f"Local web server got this code from your browser: {SimpleHTTPRequestHandler.code}"
+    )
+    return SimpleHTTPRequestHandler.code
+
+
+def get_access_token():
+    if HEADLESS or LOCAL_AUTH_SERVER_PORT:
+        logger.info(
+            f"Running in HEADLESS mode, trying OIDC PKCE flow with {REDIRECT_URI}"
+        )
+        # Use an existing refresh token to get a new access token
+        response = httpx.get(REDIRECT_URI)
+        response.raise_for_status()
+        response_data = response.json()
+        if "access_token" in response_data:
+            return response_data["access_token"]
+        code_challenge = response_data["code_challenge"]
+        state = response_data["state"]
+        url = build_url(code_challenge, state)
+        console.print("Open a webbrowser and go to:")
+        print(url)
+        return ""
+    # code verifier, code_challenge are part of PKCE standard.  state is a CSRF prevention.
+    code_verifier, code_challenge, state = gen_things()
+    # Check if the local web server is running. If it's not, launch it
+    # launch the local web server.  then launch a browser that auths you and sends the code to the
+    # local web server.
+
+    code = local_http_server(code_challenge, state)
+    # swap the code for a token via http calls inside of this script
+    access_token, _, _ = code_to_token(code, code_verifier)
+    return access_token
+
+
+def launch_browser(code_challenge, state):
+    url = build_url(code_challenge, state)
+    logger.debug(
+        f"Launching your browser to go to {url}.  "
+        f"Code will be returned to the script spawned local http server via redirect_uri"
+    )
+    webbrowser.open(url)

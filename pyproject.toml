@@ -36,3 +36,6 @@ lint = []
 
 [tool.ruff]
 line-length = 88
+
+[tool.uv.workspace]
+members = ["src/trustshell/oidc"]
