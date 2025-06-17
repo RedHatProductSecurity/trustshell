@@ -7,7 +7,7 @@ from urllib.parse import (
     urlparse,
 )
 
-from oidc_pkce_authcode import code_to_token, gen_things, get_fresh_token
+from oidc_pkce_authcode import code_to_token, gen_things, get_fresh_token, AUTH_ENDPOINT
 
 PORT = int(os.getenv("LISTEN_PORT"))
 
@@ -30,7 +30,11 @@ class Handler(SimpleHTTPRequestHandler):
         if not codes:
             # Check refresh_token on the server instance
             if not self.server.refresh_token:
-                response_data = {"code_challenge": code_challenge, "state": state}
+                response_data = {
+                    "code_challenge": code_challenge,
+                    "state": state,
+                    "auth_server": AUTH_ENDPOINT,
+                }
             else:
                 # Use the refresh_token from the server instance to get a fresh token
                 access_token, refresh_token = get_fresh_token(self.server.refresh_token)

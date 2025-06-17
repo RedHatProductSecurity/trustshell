@@ -26,6 +26,7 @@ CONFIG_DIR = os.path.expanduser("~/.config/trustshell/")
 os.makedirs(CONFIG_DIR, exist_ok=True)
 TOKEN_FILE = os.path.join(CONFIG_DIR, "access_token.jwt")
 HEADLESS = "DISPLAY" not in os.environ
+LOCAL_AUTH_SERVER_PORT = ""
 if "LOCAL_AUTH_SERVER_PORT" in os.environ:
     LOCAL_AUTH_SERVER_PORT = os.getenv("LOCAL_AUTH_SERVER_PORT")
 
@@ -180,7 +181,8 @@ def get_access_token():
             return response_data["access_token"]
         code_challenge = response_data["code_challenge"]
         state = response_data["state"]
-        url = build_url(code_challenge, state)
+        auth_server = response_data["auth_server"]
+        url = build_url(code_challenge, state, auth_server)
         console.print("Open a webbrowser and go to:")
         print(url)
         return ""

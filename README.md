@@ -91,6 +91,18 @@ pkg:oci/quay-builder-qemu-rhcos-rhel8
 Use the `--latest` flag to include non-latest results. The default is to filter to the latest root components in a CPE. 
 Latest is calculated by comparing the published date of the product SBOM.
 
+Sometimes you might find a purl which is returned by `trust-purl` but doesn't have results when using `trust-products`. In that case, it usually mean the purl was not in the set of latest SBOMs. However you can check that by doing the `trust-products` query again with `-l` flag to search the entire set of SBOMs, not filtered by latest eg:
+
+```console
+$ trust-products -l pkg:oci/quay-builder-qemu-rhcos-rhel8
+```
+
+Other times there might be no results because the purl is not linked to any product level SBOMs. You can check which components the purl is found in by searching in debug mode, eg:
+
+```console
+$ trust-products -d pkg:oci/quay-builder-qemu-rhcos-rhel8
+```
+
 ### Prime the Trustify graph:
 If components are found with the trust-purl command, but they are not being linked to products with
 trust-products, it could be because the Trustify graph cache is not yet primed. To prime the graph
