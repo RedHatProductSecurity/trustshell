@@ -181,7 +181,8 @@ def get_access_token():
             return response_data["access_token"]
         code_challenge = response_data["code_challenge"]
         state = response_data["state"]
-        url = build_url(code_challenge, state)
+        auth_server = response_data["auth_server"]
+        url = build_url(code_challenge, state, auth_server)
         console.print("Open a webbrowser and go to:")
         print(url)
         return ""

@@ -22,11 +22,11 @@ CODE_CHALLENGE_METHOD = "S256"
 RESPONSE_TYPE = "code"
 GRANT_TYPE = "authorization_code"
 
-auth_endpoint = os.getenv("AUTH_ENDPOINT")
+AUTH_ENDPOINT = os.getenv("AUTH_ENDPOINT")
 HEADLESS = "DISPLAY" not in os.environ
 
-authz_endpoint = f"{auth_endpoint}/auth"
-token_endpoint = f"{auth_endpoint}/token"
+authz_endpoint = f"{AUTH_ENDPOINT}/auth"
+token_endpoint = f"{AUTH_ENDPOINT}/token"
 
 
 def gen_things():
@@ -39,7 +39,7 @@ def gen_things():
     return code_verifier, code_challenge, state
 
 
-def build_url(code_challenge, state):
+def build_url(code_challenge, state, auth_server=""):
     params = {
         "response_type": RESPONSE_TYPE,
         "client_id": CLIENT_ID,
@@ -50,6 +50,8 @@ def build_url(code_challenge, state):
         "state": state,
     }
     encoded_params = urllib.parse.urlencode(params)
+    if auth_server:
+        authz_endpoint = f"{auth_server}/auth"
     url = f"{authz_endpoint}?{encoded_params}"
     return url
 
