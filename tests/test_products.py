@@ -74,7 +74,10 @@ def test_trees_with_cpes_container_cdx():
     result = _trees_with_cpes(data)
     assert len(result) == 1
     _render_tree(result[0])
-    assert result[0].name == "pkg:oci/quay-builder-qemu-rhcos-rhel8?tag=v3.12.8-1"
+    assert (
+        result[0].name
+        == "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12.8-1"
+    )
     expected_cpe = ["cpe:/a:redhat:quay:3:*:el8:*"]
     _check_node_names_at_depth(result[0], 1, expected_cpe)
 
@@ -86,7 +89,11 @@ def test_trees_with_cpes_dependency():
     assert len(result) == 1
     _render_tree(result[0])
     _check_node_names_at_depth(
-        result[0], 1, ["pkg:oci/quay-builder-qemu-rhcos-rhel8?tag=v3.12.8-1"]
+        result[0],
+        1,
+        [
+            "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12.8-1"
+        ],
     )
     expected_cpe = ["cpe:/a:redhat:quay:3:*:el8:*"]
     _check_node_names_at_depth(result[0], 2, expected_cpe)
@@ -99,7 +106,11 @@ def test_trees_with_cpes_spdx_dependency():
     assert len(result) == 1
     _render_tree(result[0])
     _check_node_names_at_depth(
-        result[0], 1, ["pkg:oci/bootc-nvidia-rhel9?tag=1.4.3-1743086940"]
+        result[0],
+        1,
+        [
+            "pkg:oci/bootc-nvidia-rhel9?repository_url=registry.redhat.io/rhelai1&tag=1.4.3-1743086940"
+        ],
     )
     _check_node_names_at_depth(
         result[0], 2, ["cpe:/a:redhat:enterprise_linux_ai:1.4:*:el9:*"]
@@ -114,13 +125,19 @@ def test_trees_with_cpes_multi_versions():
 
     print("first_result")
     _render_tree(result[0])
-    assert result[0].name == "pkg:oci/quay-builder-qemu-rhcos-rhel8?tag=v3.14.0-4"
+    assert (
+        result[0].name
+        == "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4"
+    )
     expected_cpes = ["cpe:/a:redhat:quay:3:*:el8:*"]
     _check_node_names_at_depth(result[0], 1, expected_cpes)
 
     print("second_result")
     _render_tree(result[1])
-    assert result[1].name == "pkg:oci/quay-builder-qemu-rhcos-rhel8?tag=v3.12.8-1"
+    assert (
+        result[1].name
+        == "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12.8-1"
+    )
     _check_node_names_at_depth(result[1], 1, expected_cpes)
 
 

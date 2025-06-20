@@ -6,9 +6,10 @@ import sys
 import tempfile
 
 import click
+from requests import HTTPError
 from trustshell import console
 import osidb_bindings
-from osidb_bindings.bindings.python_client.models.affect import Affect
+from osidb_bindings.bindings.python_client.models import Flaw
 
 logger = logging.getLogger(__name__)
 
@@ -69,17 +70,17 @@ class OSIDB:
         try:
             subprocess.run([editor, temp_filepath], check=True)
         except FileNotFoundError:
-            print(
+            console.print(
                 f"Error: Editor '{editor}' not found. Please set your EDITOR environment variable.",
-                file=sys.stderr,
+                style="error",
             )
-            sys.exit(1)
+            exit(1)
         except subprocess.CalledProcessError:
-            print(
+            console.print(
                 "Editor exited with an error. Changes might not be saved.",
-                file=sys.stderr,
+                style="error",
             )
-            sys.exit(1)
+            exit(1)
 
         with open(temp_filepath, "r") as tf:
             modified_content = tf.read()
@@ -92,16 +93,35 @@ class OSIDB:
         ]
         return OSIDB.parse_module_purl_tuples(modified_lines)
 
-    def edit_flaw_affects(
-        self, flaw_id: str, ps_module_purls: list[tuple[str, str]], replace_mode=False
-    ):
-        """
-        Handles the 'flaw affects' command for trustshell.
+    def add_affects(self, flaw: Flaw, affects_to_add: set[tuple[str, str]]) -> None:
+        console.print("Adding affects...")
+        affects_data = []
+        for affect in affects_to_add:
+            osidb_affect = {
+                "flaw": flaw.uuid,
+                "embargoed": flaw.embargoed,
+                "ps_module": affect[0],
+                "ps_component": None,
+                "purl": affect[1],
+            }
+            affects_data.append(osidb_affect)
+        try:
+            bulk_create_response = self.session.affects.bulk_create(
+                form_data=affects_data
+            )
+        except HTTPError as e:
+            msg = e.response.text
+            console.print(f"Failed to update flaw: {e}: {msg}")
+            exit(1)
+        console.print(f"Added {len(bulk_create_response.results)} new affects")
 
-        Args:
-            args: An argparse.Namespace object containing command-line arguments.
-            osidb_api: An instance of the OsidbApi client (or a mock for testing).
-        """
+    def edit_flaw_affects(
+        self, flaw_id: str, ps_module_purls: set[tuple[str, str]], replace_mode=False
+    ):
+        if not ps_module_purls:
+            console.print("No new affects to add", style="warning")
+            return
+
         console.print(f"Processing flaw affects for flaw: {flaw_id}")
 
         try:
@@ -110,22 +130,17 @@ class OSIDB:
             console.print(f"Could not retrieve flaw {flaw_id}: {e}")
             return
 
-        # TODO fix unhashable type error
-        existing_affects: set[Affect] = set(flaw.affects)
-        existing_new_affects: set[Affect] = {
-            a for a in existing_affects if a.state == "NEW"
-        }
-        existing_non_new_affects: set[Affect] = existing_affects - existing_new_affects
+        affects_by_state = defaultdict(set)
+        for affect in flaw.affects:
+            affects_by_state[affect.affectedness].add(
+                (
+                    affect.ps_module,
+                    affect.purl,
+                )
+            )
 
         console.print("\n--- Existing Flaw Affects ---")
-        if existing_affects:
-            # Group by state for better readability
-            affects_by_state = defaultdict(list)
-            for affect in existing_affects:
-                affects_by_state[affect.state].append(
-                    f"  - {affect.ps_module},{affect.purl}"
-                )
-
+        if affects_by_state:
             for state, affects_list in affects_by_state.items():
                 console.print(f"State: {state}")
                 for affect_str in affects_list:
@@ -134,31 +149,25 @@ class OSIDB:
             console.print("  No affects found for this flaw.")
         console.print("-----------------------------\n")
 
-        # Parse input tuples
-        input_tuples = self.parse_module_purl_tuples(ps_module_purls)
+        console.print("New affects:")
+        for ps_module_purl in ps_module_purls:
+            console.print(ps_module_purl)
 
         # Optionally edit tuples in editor
         if click.confirm("Do you want to edit these affects?"):
             console.print("Entering editor mode to modify input tuples...")
-            input_tuples = self.edit_tuples_in_editor(input_tuples)
+            ps_module_purls = self.edit_tuples_in_editor(ps_module_purls)
             console.print("\n--- Modified Tuples from Editor ---")
-            if input_tuples:
-                for m, p in input_tuples:
+            if ps_module_purls:
+                for m, p in ps_module_purls:
                     console.print(f"  - {m},{p}")
             else:
                 console.print("  (No tuples provided after editing)")
             console.print("-----------------------------------\n")
 
-        # Convert input tuples to MockAffect objects (state is always NEW for new affects)
-        desired_new_affects_from_input: set[Affect] = {
-            Affect(m, p, state="NEW") for m, p in input_tuples
-        }
-
-        final_affects_to_update: list[Affect] = []
-
         if not replace_mode:
             affects_to_add = (
-                desired_new_affects_from_input - existing_affects
+                ps_module_purls - affects_by_state["NEW"]
             )  # Only truly new ones
             if not affects_to_add:
                 console.print(
@@ -168,35 +177,31 @@ class OSIDB:
 
             console.print("\n--- Affects to be ADDED ---")
             for affect in affects_to_add:
-                console.print(f"  - {affect.ps_module},{affect.purl}")
+                console.print(f"  - {affect[0]},{affect[1]}")
             console.print("---------------------------\n")
 
             click.confirm("Confirm adding the above affects?", abort=True)
-
-            final_affects_to_update = list(
-                existing_affects | affects_to_add
-            )  # Combine existing and new
-            console.print("Adding affects...")
+            self.add_affects(flaw, affects_to_add)
 
         else:
-            if not existing_new_affects and not desired_new_affects_from_input:
+            if not affects_by_state["NEW"] and not ps_module_purls:
                 console.print(
                     "No existing 'NEW' affects to replace and no new affects provided. Nothing to do."
                 )
                 return
 
             console.print("\n--- Existing 'NEW' Affects to be REPLACED ---")
-            if existing_new_affects:
-                for affect in existing_new_affects:
-                    console.print(f"  - {affect.ps_module},{affect.purl}")
+            if affects_by_state["NEW"]:
+                for affect in affects_by_state["NEW"]:
+                    console.print(affect)
             else:
                 console.print("  (No existing affects with state 'NEW')")
             console.print("--------------------------------------------\n")
 
             console.print("\n--- New Affects that will REPLACE the above ---")
-            if desired_new_affects_from_input:
-                for affect in desired_new_affects_from_input:
-                    console.print(f"  - {affect.ps_module},{affect.purl}")
+            if ps_module_purls:
+                for affect in ps_module_purls:
+                    console.print(affect)
             else:
                 console.print("  (No new affects provided)")
             console.print("---------------------------------------------\n")
@@ -205,18 +210,32 @@ class OSIDB:
                 "Confirm replacing existing 'NEW' affects with the new set?", abort=True
             )
 
-            # Replace existing 'NEW' affects with the desired new ones, keep others as is
-            final_affects_to_update = list(
-                existing_non_new_affects | desired_new_affects_from_input
-            )
             console.print("Replacing affects...")
+            existing_affects = {}
+            for affect in flaw.affects:
+                if affect.purl:
+                    existing_affects[(affect.ps_module, affect.purl)] = (
+                        affect.uuid,
+                        affect.affectedness,
+                    )
 
-        # Perform the update
-        updated_flaw = self.osidb_api.update_flaw(flaw, affects=final_affects_to_update)
-        console.print(f"\nSuccessfully updated flaw {updated_flaw.uuid}.")
-        console.print("Current Affects on Flaw after update:")
-        for affect in updated_flaw.affects:
-            console.print(
-                f"  - {affect.ps_module},{affect.purl} (State: {affect.state})"
-            )
-        console.print("\n")
+            # Check for existing affects in new state to remove
+            for existing_key, existing_value in existing_affects.items():
+                existing_uuid, existing_affectedness = existing_value
+                # Don't delete and re-add existing new affects
+                if (
+                    existing_key not in ps_module_purls
+                    and existing_affectedness == "NEW"
+                ):
+                    try:
+                        self.session.affects.delete(id=existing_uuid)
+                    except HTTPError as e:
+                        msg = e.response.text
+                        console.print(
+                            f"Failed to delete flaw affect {existing_key}: {e}: {msg}",
+                            style="error",
+                        )
+                        exit(1)
+
+            # Add any new affects not already on the flaw in NEW state
+            self.add_affects(flaw, ps_module_purls)
