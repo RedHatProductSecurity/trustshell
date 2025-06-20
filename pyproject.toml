@@ -11,6 +11,7 @@ dependencies = [
     "anytree>=2.12.1",
     "click>=8.1.8",
     "httpx>=0.28.1",
+    "osidb-bindings>=4.11.0",
     "packageurl-python>=0.16.0",
     "pkce>=1.0.3",
     "pyjwt>=2.10.1",
