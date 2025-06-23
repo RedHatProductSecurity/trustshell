@@ -170,7 +170,7 @@ def local_http_server(code_challenge, state):
 
 def get_access_token():
     if HEADLESS or LOCAL_AUTH_SERVER_PORT:
-        logger.info(
+        logger.debug(
             f"Running in HEADLESS mode, trying OIDC PKCE flow with {REDIRECT_URI}"
         )
         # Use an existing refresh token to get a new access token
