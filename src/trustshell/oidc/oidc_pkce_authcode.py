@@ -25,7 +25,6 @@ GRANT_TYPE = "authorization_code"
 AUTH_ENDPOINT = os.getenv("AUTH_ENDPOINT")
 HEADLESS = "DISPLAY" not in os.environ
 
-authz_endpoint = f"{AUTH_ENDPOINT}/auth"
 token_endpoint = f"{AUTH_ENDPOINT}/token"
 
 
@@ -50,6 +49,7 @@ def build_url(code_challenge, state, auth_server=""):
         "state": state,
     }
     encoded_params = urllib.parse.urlencode(params)
+    authz_endpoint = f"{AUTH_ENDPOINT}/auth"
     if auth_server:
         authz_endpoint = f"{auth_server}/auth"
     url = f"{authz_endpoint}?{encoded_params}"
