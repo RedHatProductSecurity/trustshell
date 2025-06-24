@@ -22,6 +22,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install libkrb5-dev
+        run: sudo apt install -y libkrb5-dev
+
       - name: Install uv
         uses: astral-sh/setup-uv@v5
 

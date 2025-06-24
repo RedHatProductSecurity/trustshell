@@ -20,7 +20,8 @@ from trustshell import (
     print_version,
     urlencoded,
 )
-from trustshell.product_definitions import ProdDefs
+from trustshell.osidb import OSIDB
+from trustshell.product_definitions import ProdDefs, ProductModule
 
 LATEST_ENDPOINT = f"{TRUSTIFY_URL}analysis/latest/component"
 ANALYSIS_ENDPOINT = f"{TRUSTIFY_URL}analysis/component"
@@ -70,12 +71,20 @@ def prime_cache(check: bool, debug: bool):
     is_eager=True,
 )
 @click.option("--latest", "-l", is_flag=True, default=True)
+@click.option("--flaw", "-f", help="OSIDB flaw uuid or CVE")
+@click.option(
+    "--replace",
+    "-r",
+    is_flag=True,
+    help="Replace flaw affects. Requires --flaw to be set.",
+    callback=lambda ctx, param, value: _check_flaw(ctx, param, value, "replace"),
+)
 @click.option("--debug", "-d", is_flag=True, help="Debug log level.")
 @click.argument(
     "purl",
     type=click.STRING,
 )
-def search(purl: str, debug: bool, latest: bool):
+def search(purl: str, flaw: str, replace: bool, debug: bool, latest: bool):
     """Relate a purl to products in Trustify"""
     if not debug:
         config_logging(level="INFO")
@@ -98,6 +107,62 @@ def search(purl: str, debug: bool, latest: bool):
 
     for tree in ancestor_trees:
         _render_tree(tree.root)
+
+    if not flaw:
+        exit(0)
+
+    osidb = OSIDB()
+    affects = extract_affects(ancestor_trees)
+    osidb.edit_flaw_affects(flaw, affects, replace)
+
+
+def _check_flaw(ctx, param, value, dependent_option_name):
+    """
+    Callback function to check if --flaw is set.
+    """
+    if value and ctx.params.get("flaw") is None:
+        raise click.BadOptionUsage(
+            param, f"Option '{param.name}' requires '--flaw' to be set.", ctx
+        )
+    return value
+
+
+def extract_affects(ancestor_trees: list[Node]) -> set[tuple[str, str]]:
+    """Collect all the leaf and root node tuples. The root node is the direct parent of the CPE.
+    The leaf node type should be ProductModule"""
+    affects = set()
+    for tree in ancestor_trees:
+        ps_module_nodes = []
+        for leaf in tree.leaves:
+            if isinstance(leaf, ProductModule):
+                ps_module_nodes.append(leaf)
+        if len(ps_module_nodes) > 1:
+            raise ValueError(f"More than one ProductModule found in {tree.root.name}")
+        for ps_module_node in ps_module_nodes:
+            for ancestor in ps_module_node.ancestors:
+                if ancestor.name.startswith("cpe:/"):
+                    if ancestor.parent:
+                        purl = PackageURL.from_string(ancestor.parent.name)
+                        if purl.type == "oci" and "tag" in purl.qualifiers:
+                            purl.qualifiers.pop("tag")
+                        elif purl.type == "maven":
+                            # If it's a maven type, we set the purl to root
+                            purl = PackageURL.from_string(ps_module_node.root.name)
+                        purl_sans_version = _purl_sans_version(purl)
+                        affects.add(
+                            (
+                                ps_module_node.name,
+                                purl_sans_version.to_string(),
+                            )
+                        )
+    return affects
+
+
+def _purl_sans_version(purl: PackageURL):
+    purl_data = purl.to_dict()
+    purl_data["version"] = ""
+    purl_sans_version = PackageURL(**purl_data)
+    return purl_sans_version
 
 
 def _render_tree(root: Node):
@@ -365,11 +430,13 @@ def _build_node_names_by_type(purls: list[str]) -> tuple[set[PackageURL], str]:
 
 
 def _remove_qualifiers(purl: PackageURL, tag: str) -> PackageURL:
-    """Remove all qualifiers from a purl optionally setting a tag"""
+    """Remove all qualifiers from a purl keeping repository_url, optionally setting a tag"""
     qualifiers = {}
+    if "repository_url" in purl.qualifiers and purl.type == "oci":
+        qualifiers["repository_url"] = purl.qualifiers["repository_url"]
     version = ""
     if tag:
-        qualifiers = {"tag": tag}
+        qualifiers["tag"] = tag
     elif purl.version:
         version = purl.version
     return PackageURL(
