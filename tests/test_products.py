@@ -9,6 +9,7 @@ from trustshell.products import (
     _trees_with_cpes,
     _render_tree,
     _has_cpe_node,
+    container_in_tree,
 )
 
 
@@ -341,3 +342,12 @@ def test_remove_duplicate_parent_nodes():
     # Assert that the tree structure is as expected
     _check_node_names_at_depth(root, 1, ["child1"])
     _check_node_names_at_depth(root, 2, ["grandchild1"])
+
+
+def test_remove_rpms_in_containers():
+    # Create a tree with an rpm in a container
+    # pkg:rpm/redhat/openssl-libs
+    # └── pkg:oci/quay-builder-qemu-rhcos-rhel8
+    root = Node("pkg:rpm/redhat/openssl-libs")
+    Node("pkg:oci/quay-builder-qemu-rhcos-rhel8", parent=root)
+    assert container_in_tree(root)
