@@ -167,11 +167,8 @@ def _purl_sans_version(purl: PackageURL):
 
 def _render_tree(root: Node):
     """Pretty print a tree using name only"""
-    if root:
-        for pre, _, node in RenderTree(root):
-            console.print("%s%s" % (pre, node.name))
-    else:
-        console.print("No results")
+    for pre, _, node in RenderTree(root):
+        console.print("%s%s" % (pre, node.name))
 
 
 def _get_roots(base_purl: str, latest: bool = True) -> list[Node]:
@@ -345,7 +342,7 @@ def _remove_duplicate_branches(root):
 def _trees_with_cpes(ancestor_data: dict[str, Any]) -> list[Node]:
     """Builds a tree of ancestors with a target component root"""
     if "items" not in ancestor_data or not ancestor_data["items"]:
-        return
+        return []
     base_node = Node("root")
     build_ancestor_tree(base_node, ancestor_data["items"])
     _remove_duplicate_branches(base_node)
