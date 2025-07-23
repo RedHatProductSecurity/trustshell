@@ -132,10 +132,10 @@ def extract_affects(ancestor_trees: list[Node]) -> set[tuple[str, str]]:
     The leaf node type should be ProductModule"""
     affects = set()
     for tree in ancestor_trees:
-        ps_module_nodes = []
+        ps_module_nodes = set()
         for leaf in tree.leaves:
             if isinstance(leaf, ProductModule):
-                ps_module_nodes.append(leaf)
+                ps_module_nodes.add(leaf)
         if len(ps_module_nodes) > 1:
             raise ValueError(f"More than one ProductModule found in {tree.root.name}")
         for ps_module_node in ps_module_nodes:

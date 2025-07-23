@@ -140,18 +140,14 @@ class TestProdDefs(unittest.TestCase):
         # cpe:/a:redhat:quay:3
         # └── quay-3.13
         #     └── quay-3
-        # cpe:/a:redhat:quay:3
         # └── quay-3.12
         #     └── quay-3
-        assert len(result) == 2
+        assert len(result) == 1
         first_root = result[0].root
-        second_root = result[1].root
         assert first_root.name == component
-        assert second_root.name == component
-        _check_node_names_at_depth(first_root, 2, ["quay-3.13"])
-        _check_node_names_at_depth(second_root, 2, ["quay-3.12"])
-        _check_node_names_at_depth(first_root, 3, ["quay-3"])
-        _check_node_names_at_depth(second_root, 3, ["quay-3"])
+        _check_node_names_at_depth(first_root, 1, [cpe])
+        _check_node_names_at_depth(first_root, 2, ["quay-3.13", "quay-3.12"])
+        _check_node_names_at_depth(first_root, 3, ["quay-3", "quay-3"])
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
     def test_extend_with_product_mapping_multi_module_match(self, mock_service):
@@ -174,24 +170,20 @@ class TestProdDefs(unittest.TestCase):
         # └── cpe:/a:redhat:quay:3
         #     └── quay-3.13
         #         └── quay-3
-        # oci:quay@123
-        # └── cpe:/a:redhat:quay:3
         #     └── quay-3.12
         #         └── quay-3
         # oci:quay@345
         # └── cpe:/a:redhat:quay:3.13
         #     └── quay-3.13
         #         └── quay-3
-        assert len(result) == 3
+        assert len(result) == 2
         first_root = result[0].root
         second_root = result[1].root
-        third_root = result[2].root
         assert first_root.name == component_1
-        assert second_root.name == component_1
-        assert third_root.name == component_2
-        _check_node_names_at_depth(first_root, 2, ["quay-3.13"])
-        _check_node_names_at_depth(first_root, 3, ["quay-3"])
-        _check_node_names_at_depth(second_root, 2, ["quay-3.12"])
+        assert second_root.name == component_2
+        _check_node_names_at_depth(first_root, 1, [module_cpe])
+        _check_node_names_at_depth(first_root, 2, ["quay-3.13", "quay-3.12"])
+        _check_node_names_at_depth(first_root, 3, ["quay-3", "quay-3"])
+        _check_node_names_at_depth(second_root, 1, [stream_cpe])
+        _check_node_names_at_depth(second_root, 2, ["quay-3.13"])
         _check_node_names_at_depth(second_root, 3, ["quay-3"])
-        _check_node_names_at_depth(third_root, 2, ["quay-3.13"])
-        _check_node_names_at_depth(third_root, 3, ["quay-3"])

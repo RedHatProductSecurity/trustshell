@@ -17,11 +17,11 @@ class ProductBase(object):
         self.name = name
 
     def __hash__(self):
-        return hash(self.label)
+        return hash(self.name)
 
     def __eq__(self, other):
         if isinstance(other, ProductBase) and type(self) is type(other):
-            return self.label == other.label()
+            return self.name == other.name
         return False
 
 
@@ -236,20 +236,34 @@ class ProdDefs:
         return self._duplicate_leaves_and_set_parents(leaf, module_nodes)
 
     def _duplicate_leaves_and_set_parents(self, leaf, product_nodes) -> list[Node]:
-        """Assign each product as a ancestor of the leaf. Copy the leaf when assigning it another
-        parent because one leaf can exist in mutliple products"""
-        leaf_with_products: list[Node] = []
-        while product_nodes:
-            last_product = product_nodes.pop()
-            copy_of_leaf = copy.deepcopy(leaf)
-            copy_of_product = copy.deepcopy(last_product)
-            self._add_ancestor(copy_of_leaf, copy_of_product)
-            leaf_with_products.append(copy_of_leaf)
-            # For the last item in the product_nodes list no need to copy:
-            if len(product_nodes) == 1:
-                self._add_ancestor(leaf, product_nodes.pop())
-                leaf_with_products.append(leaf)
-        return leaf_with_products
+        """Convert product modules to their parent streams and attach all streams as children of the leaf.
+        Deduplicates streams to avoid multiple identical children. Returns the leaf in a list."""
+        if not product_nodes:
+            return []
+
+        # Convert modules to their parent streams
+        streams_to_attach = []
+        for product in product_nodes:
+            if isinstance(product, ProductModule):
+                # For modules, find the stream that contains this module
+                if product.parent:
+                    streams_to_attach.append(product.parent)
+            else:
+                # For streams, use directly
+                streams_to_attach.append(product)
+
+        # Remove duplicates while preserving order
+        unique_streams = []
+        seen = set()
+        for stream in streams_to_attach:
+            if stream not in seen:
+                unique_streams.append(stream)
+                seen.add(stream)
+
+        for stream in unique_streams:
+            stream.parent = leaf
+
+        return [leaf]
 
     def _add_ancestor(self, leaf, product):
         if product.parent:
