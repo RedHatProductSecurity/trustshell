@@ -61,11 +61,16 @@ def print_version(ctx, param, value):
 
 def config_logging(level="INFO"):
     message_format = "%(asctime)s %(name)s %(levelname)s %(message)s"
+
+    # Log to stderr
+    rich_handler = RichHandler(console=Console(stderr=True))
     logging.basicConfig(
-        level=level, format=message_format, datefmt="[%X]", handlers=[RichHandler()]
+        level=level,
+        format=message_format,
+        datefmt="[%X]",
+        handlers=[rich_handler],
     )
 
-    logging.basicConfig(level=level)
     httpx_logger = logging.getLogger("httpx")
     httpcore_logger = logging.getLogger("httpcore")
     httpx_logger.setLevel("WARNING")

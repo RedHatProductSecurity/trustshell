@@ -60,10 +60,7 @@ def api(endpoint: str, subpath: str, params: tuple[str], debug: bool):
     try:
         response = httpx.get(url, params=query_params, headers=auth_header, timeout=300)
         response.raise_for_status()
-
-        data = response.json()
-        console.print(json.dumps(data, indent=2))
-
+        console.print_json(response.text)
     except httpx.HTTPStatusError as exc:
         console.print(
             f"HTTP error {exc.response.status_code}: {exc.response.text}", style="error"
