@@ -33,7 +33,26 @@ build-backend = "hatchling.build"
 dev = [
     "pytest>=8.3.5",
 ]
-lint = []
+lint = [
+    "mypy>=1.0.0",
+    "types-requests",  # For httpx which may use requests-like interfaces
+]
+
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+# For libraries without stubs, ignore missing imports
+[[tool.mypy.overrides]]
+module = [
+    "univers.*",
+    "anytree.*",
+    "osidb_bindings.*",
+    "pkce.*",
+]
+ignore_missing_imports = true
 
 [tool.ruff]
 line-length = 88

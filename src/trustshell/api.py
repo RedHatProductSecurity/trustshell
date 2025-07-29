@@ -24,7 +24,7 @@ logger = logging.getLogger("trustshell")
 @click.argument("endpoint", type=click.STRING)
 @click.option("-s", "--subpath", type=click.STRING, required=False)
 @click.argument("params", nargs=-1, type=click.STRING)
-def api(endpoint: str, subpath: str, params: tuple[str], debug: bool):
+def api(endpoint: str, subpath: str, params: tuple[str], debug: bool) -> None:
     """Make direct API calls to Trustify endpoints
 
     ENDPOINT: API endpoint path (e.g., 'analysis/latest/component', 'analysis/status')

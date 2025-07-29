@@ -4,6 +4,7 @@ import os
 import subprocess
 import sys
 import tempfile
+from typing import Any
 
 import click
 from requests import HTTPError
@@ -15,13 +16,13 @@ logger = logging.getLogger(__name__)
 
 
 class OSIDB:
-    def __init__(self):
+    def __init__(self) -> None:
         endpoint = os.getenv("OSIDB_ENDPOINT")
         if endpoint is None:
             raise EnvironmentError(
                 "The environment variable 'OSIDB_ENDPOINT' is not set."
             )
-        self.session = osidb_bindings.new_session(osidb_server_uri=endpoint)
+        self.session = osidb_bindings.new_session(osidb_server_uri=endpoint)  # type: ignore[attr-defined]
 
     @staticmethod
     def parse_module_purl_tuples(tuples_list: list[str]) -> set[tuple[str, str]]:
@@ -61,7 +62,6 @@ class OSIDB:
         with tempfile.NamedTemporaryFile(mode="w+", suffix=".txt", delete=False) as tf:
             tf.write(original_content)
             temp_filepath = tf.name
-        tf.close()  # Ensure file is closed before opening with external editor
 
         console.print(f"Opening editor '{editor}' for file: {temp_filepath}")
         console.print("Please modify the ps_module,purl tuples and save the file.")
@@ -82,8 +82,8 @@ class OSIDB:
             )
             exit(1)
 
-        with open(temp_filepath, "r") as tf:
-            modified_content = tf.read()
+        with open(temp_filepath, "r") as file:
+            modified_content = file.read()
 
         os.remove(temp_filepath)  # Clean up the temporary file
 
@@ -95,7 +95,7 @@ class OSIDB:
 
     def add_affects(self, flaw: Flaw, affects_to_add: set[tuple[str, str]]) -> None:
         console.print("Adding affects...")
-        affects_data = []
+        affects_data: list[dict[str, Any]] = []
         for affect in affects_to_add:
             osidb_affect = {
                 "flaw": flaw.uuid,
@@ -116,8 +116,11 @@ class OSIDB:
         console.print(f"Added {len(bulk_create_response.results)} new affects")
 
     def edit_flaw_affects(
-        self, flaw_id: str, ps_module_purls: set[tuple[str, str]], replace_mode=False
-    ):
+        self,
+        flaw_id: str,
+        ps_module_purls: set[tuple[str, str]],
+        replace_mode: bool = False,
+    ) -> None:
         if not ps_module_purls:
             console.print("No new affects to add", style="warning")
             return
@@ -130,7 +133,7 @@ class OSIDB:
             console.print(f"Could not retrieve flaw {flaw_id}: {e}")
             return
 
-        affects_by_state = defaultdict(set)
+        affects_by_state: dict[str, set[tuple[str, str]]] = defaultdict(set)
         for affect in flaw.affects:
             affects_by_state[affect.affectedness].add(
                 (
@@ -211,7 +214,7 @@ class OSIDB:
             )
 
             console.print("Replacing affects...")
-            existing_affects = {}
+            existing_affects: dict[tuple[str, str], tuple[str, str]] = {}
             for affect in flaw.affects:
                 if affect.purl:
                     existing_affects[(affect.ps_module, affect.purl)] = (

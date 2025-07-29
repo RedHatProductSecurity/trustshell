@@ -8,3 +8,22 @@ dependencies = [
     "pyjwt>=2.10.1"
 ]
 
+[dependency-groups]
+lint = [
+    "mypy>=1.0.0",
+    "types-requests",
+]
+
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+# For libraries without stubs, ignore missing imports
+[[tool.mypy.overrides]]
+module = [
+    "pkce.*",
+]
+ignore_missing_imports = true
+
