@@ -18,7 +18,7 @@ from trustshell import (
     get_tag_from_purl,
     render_tree,
 )
-from trustshell.products import LATEST_ENDPOINT
+from trustshell.products import ANALYSIS_ENDPOINT, LATEST_ENDPOINT
 
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
@@ -49,12 +49,15 @@ def _create_base_purl(purl_obj: PackageURL) -> str:
     is_eager=True,
 )
 @click.option("--debug", "-d", is_flag=True, help="Debug log level.")
-@click.option("--all-versions", "-a", is_flag=True, help="Include all versions")
+@click.option("--include-versions", "-i", is_flag=True, help="Include all versions")
+@click.option("--non-latest", "-l", is_flag=True, help="Search non-latest SBOMs")
 @click.argument(
     "component",
     type=click.STRING,
 )
-def search(component: str, all_versions: bool, debug: bool) -> None:
+def search(
+    component: str, include_versions: bool, debug: bool, non_latest: bool
+) -> None:
     """Search for a component in Trustify"""
     if not debug:
         config_logging(level="INFO")
@@ -66,9 +69,9 @@ def search(component: str, all_versions: bool, debug: bool) -> None:
         access_token = check_or_get_access_token()
         auth_header = {"Authorization": f"Bearer {access_token}"}
 
-    purls = _query_trustify_packages(component, auth_header)
+    purls = _query_trustify_packages(component, auth_header, non_latest)
 
-    if all_versions:
+    if include_versions:
         # Group purls by their base form (sans version) to create trees
         purl_groups = defaultdict(list)
 
@@ -112,7 +115,7 @@ def search(component: str, all_versions: bool, debug: bool) -> None:
 
 
 def _query_trustify_packages(
-    component: str, auth_header: dict[str, str]
+    component: str, auth_header: dict[str, str], non_latest: bool
 ) -> list[PackageURL]:
     """
     Given a search string 'component' use the Trustify analysis/latest/component endpoint to find packages in PURL
@@ -121,8 +124,12 @@ def _query_trustify_packages(
     """
     package_query = {"q": f"purl~{component}"}
     console.print(f"Querying Trustify for packages matching {component}")
+    if non_latest:
+        endpoint = ANALYSIS_ENDPOINT
+    else:
+        endpoint = LATEST_ENDPOINT
     package_response = httpx.get(
-        LATEST_ENDPOINT, params=package_query, headers=auth_header, timeout=300
+        endpoint, params=package_query, headers=auth_header, timeout=300
     )
     package_response.raise_for_status()
     package_result = package_response.json()
