@@ -1,5 +1,4 @@
 import click
-import httpx
 import logging
 from collections import defaultdict
 
@@ -17,6 +16,7 @@ from trustshell import (
     config_logging,
     get_tag_from_purl,
     render_tree,
+    paginated_trustify_query,
 )
 from trustshell.products import ANALYSIS_ENDPOINT, LATEST_ENDPOINT
 
@@ -91,7 +91,7 @@ def search(
 
         if purl_groups:
             console.print("Found these matching packages in Trustify:")
-            for base_purl, versions in purl_groups.items():
+            for base_purl, versions in sorted(purl_groups.items()):
                 # Create anytree structure
                 root = Node(base_purl)
                 for version in sorted(set(versions)):  # Remove duplicates and sort
@@ -110,7 +110,7 @@ def search(
             distinct_purls.add(base_purl_string)
 
         console.print("Found these matching packages in Trustify:")
-        for purl in distinct_purls:
+        for purl in sorted(distinct_purls):
             console.print(purl)
 
 
@@ -122,22 +122,23 @@ def _query_trustify_packages(
     format matching the given package. Accepts requests such as k8s.io/api that have both a PURL
     namespace and name.
     """
-    package_query = {"q": f"purl~{component}"}
     console.print(f"Querying Trustify for packages matching {component}")
     if non_latest:
         endpoint = ANALYSIS_ENDPOINT
     else:
         endpoint = LATEST_ENDPOINT
-    package_response = httpx.get(
-        endpoint, params=package_query, headers=auth_header, timeout=300
+
+    # Use the paginated query function
+    base_params = {"q": f"purl~{component}"}
+    package_result = paginated_trustify_query(
+        endpoint, base_params, auth_header, component_name=component
     )
-    package_response.raise_for_status()
-    package_result = package_response.json()
-    if len(package_result["items"]) == 0:
-        console.print(f"No packages found for {component}")
+
+    # Process all items and build PURL objects
     results = []
     for item in package_result["items"]:
         purl_obj = build_node_purl(item["purl"])
         if purl_obj:
             results.append(purl_obj)
+
     return results
