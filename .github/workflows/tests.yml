@@ -3,17 +3,29 @@ on: [push]
 
 jobs:
   lint:
-    name: ruff
+    name: lint
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install libkrb5-dev
+        run: sudo apt install -y libkrb5-dev
 
       - uses: astral-sh/ruff-action@v3
 
       - uses: astral-sh/ruff-action@v3
         with:
           args: "format --check --diff"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install lint dependencies
+        run: uv sync --group lint
+
+      - name: Run mypy type checking
+        run: uv run --group lint mypy src/
 
   tests:
     name: pytest

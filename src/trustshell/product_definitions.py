@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import re
+from typing import Any, Optional
 import httpx
 
 from anytree import Node, NodeMixin, LevelOrderGroupIter
@@ -13,26 +14,26 @@ logger = logging.getLogger(__name__)
 
 
 class ProductBase(object):
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         self.name = name
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self.name)
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         if isinstance(other, ProductBase) and type(self) is type(other):
             return self.name == other.name
         return False
 
 
 class ProductModule(ProductBase, NodeMixin):
-    def __init__(self, name, cpe_patterns):
+    def __init__(self, name: str, cpe_patterns: list[str]) -> None:
         super().__init__(name)
         self.cpe_patterns = [
             pattern.replace(".", "\\.").replace("*", ".*") for pattern in cpe_patterns
         ]
 
-    def match(self, cpe) -> bool:
+    def match(self, cpe: str) -> bool:
         # First try to match exactly, then substring
         for suffix in ("$", ""):
             # We must try in descending-length order so that X:10 matches before X:1.
@@ -43,12 +44,12 @@ class ProductModule(ProductBase, NodeMixin):
 
 
 class ProductStream(ProductBase, NodeMixin):
-    def __init__(self, name: str, cpes: list[str] = [], active=False):
+    def __init__(self, name: str, cpes: list[str] = [], active: bool = False) -> None:
         super().__init__(name)
         self.cpes = self._filter_rhel_mainline_cpes(cpes)
         self.active = active
 
-    def set_active(self, active: bool):
+    def set_active(self, active: bool) -> None:
         self.active = active
 
     @staticmethod
@@ -79,19 +80,20 @@ class ProdDefs:
     PRODUCT_FILE = os.path.join(CONFIG_DIR, "products.json")
 
     @classmethod
-    def get_etag(cls, url: str):
+    def get_etag(cls, url: str) -> Optional[str]:
         response = httpx.head(url)
-        return response.headers.get("etag")
+        etag = response.headers.get("etag")
+        return str(etag) if etag is not None else None
 
     # Assisted by watsonx Code Assistant
     @classmethod
-    def persist_etag(cls, etag: str, file_path: str):
+    def persist_etag(cls, etag: str, file_path: str) -> None:
         with open(file_path, "w") as f:
             f.write(etag)
 
     # Assisted by watsonx Code Assistant
     @classmethod
-    def load_etag(cls, file_path: str):
+    def load_etag(cls, file_path: str) -> Optional[str]:
         if os.path.exists(file_path):
             with open(file_path, "r") as f:
                 return f.read().strip()
@@ -99,14 +101,14 @@ class ProdDefs:
 
     # Assisted by watsonx Code Assistant
     @classmethod
-    def load_product_definitions(cls, url: str, file_path: str):
+    def load_product_definitions(cls, url: str, file_path: str) -> None:
         response = httpx.get(url)
         with open(file_path, "w") as f:
             f.write(response.text)
 
     @classmethod
-    def get_product_definitions_service(cls) -> dict:
-        proddefs_url = None
+    def get_product_definitions_service(cls) -> dict[str, Any]:
+        proddefs_url: Optional[str] = None
         if "PRODDEFS_URL" not in os.environ:
             console.print(
                 "PRODDEFS_URL not set, not product mappings will be available",
@@ -116,22 +118,26 @@ class ProdDefs:
         else:
             proddefs_url = os.getenv("PRODDEFS_URL")
 
+        if proddefs_url is None:
+            return {}
+
         etag = cls.load_etag(cls.ETAG_FILE)
         url_etag = cls.get_etag(proddefs_url)
 
         if etag == url_etag:
             with open(cls.PRODUCT_FILE, "r") as f:
-                product_definitions = json.load(f)
+                product_definitions: dict[str, Any] = json.load(f)
         else:
             cls.load_product_definitions(proddefs_url, cls.PRODUCT_FILE)
-            cls.persist_etag(url_etag, cls.ETAG_FILE)
+            if url_etag is not None:
+                cls.persist_etag(url_etag, cls.ETAG_FILE)
             with open(cls.PRODUCT_FILE, "r") as f:
                 product_definitions = json.load(f)
         return product_definitions
 
-    def __init__(self, active_only: bool = True):
-        self.stream_nodes_by_cpe = defaultdict(list)
-        product_streams_by_name = defaultdict(list)
+    def __init__(self, active_only: bool = True) -> None:
+        self.stream_nodes_by_cpe: dict[str, list[ProductStream]] = defaultdict(list)
+        product_streams_by_name: dict[str, list[ProductStream]] = defaultdict(list)
         self.product_trees: list[NodeMixin] = []
 
         data = self.get_product_definitions_service()
@@ -171,7 +177,7 @@ class ProdDefs:
                     self.product_trees.append(stream_node)
 
     @staticmethod
-    def _check_stream_name(seen_stream_names, stream):
+    def _check_stream_name(seen_stream_names: set[str], stream: str) -> None:
         if stream in seen_stream_names:
             console.print(
                 f"Warning: duplicate stream: {stream} detected.", style="warning"
@@ -235,14 +241,16 @@ class ProdDefs:
         module_nodes = self.match_module_pattern(cpe)
         return self._duplicate_leaves_and_set_parents(leaf, module_nodes)
 
-    def _duplicate_leaves_and_set_parents(self, leaf, product_nodes) -> list[Node]:
+    def _duplicate_leaves_and_set_parents(
+        self, leaf: Node, product_nodes: list[Any]
+    ) -> list[Node]:
         """Convert product modules to their parent streams and attach all streams as children of the leaf.
         Deduplicates streams to avoid multiple identical children. Returns the leaf in a list."""
         if not product_nodes:
             return []
 
         # Convert modules to their parent streams
-        streams_to_attach = []
+        streams_to_attach: list[Any] = []
         for product in product_nodes:
             if isinstance(product, ProductModule):
                 # For modules, find the stream that contains this module
@@ -253,8 +261,8 @@ class ProdDefs:
                 streams_to_attach.append(product)
 
         # Remove duplicates while preserving order
-        unique_streams = []
-        seen = set()
+        unique_streams: list[Any] = []
+        seen: set[Any] = set()
         for stream in streams_to_attach:
             if stream not in seen:
                 unique_streams.append(stream)
@@ -265,7 +273,7 @@ class ProdDefs:
 
         return [leaf]
 
-    def _add_ancestor(self, leaf, product):
+    def _add_ancestor(self, leaf: Node, product: Any) -> None:
         if product.parent:
             product.parent.parent = leaf
         else:

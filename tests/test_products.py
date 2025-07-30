@@ -4,12 +4,12 @@ from unittest.mock import patch
 
 from anytree import Node
 
+from trustshell import build_node_purl
 from trustshell.products import (
-    _build_node_purl,
     _remove_duplicate_parent_nodes,
     _remove_non_cpe_branches,
     _trees_with_cpes,
-    _render_tree,
+    render_tree,
     _has_cpe_node,
     container_in_tree,
     extract_affects,
@@ -33,7 +33,7 @@ class TestProducts(unittest.TestCase):
             "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream"
             "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream"
         ]
-        result = _build_node_purl(purls).to_string()
+        result = build_node_purl(purls).to_string()
         assert result == "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9"
 
     def test_build_node_purl_oci(self):
@@ -43,7 +43,7 @@ class TestProducts(unittest.TestCase):
             "pkg:oci/quay@sha256:9?repo_url=x.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12.8",
             "pkg:oci/quay@sha256:9?repo_url=x.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12",
         ]
-        result = _build_node_purl(purls).to_string()
+        result = build_node_purl(purls).to_string()
         print(result)
         assert result == "pkg:oci/quay?tag=v3.12.8-1"
 
@@ -52,7 +52,7 @@ class TestProducts(unittest.TestCase):
             data = json.load(file)
         result = _trees_with_cpes(data)
         assert len(result) == 1
-        _render_tree(result[0])
+        render_tree(result[0])
         assert result[0].name == "pkg:rpm/redhat/openssl@3.0.7-18.el9_2"
         expected_cpes = [
             "cpe:/a:redhat:rhel_eus:9.2:*:appstream:*",
@@ -65,7 +65,7 @@ class TestProducts(unittest.TestCase):
             data = json.load(file)
         result = _trees_with_cpes(data)
         assert len(result) == 1
-        _render_tree(result[0])
+        render_tree(result[0])
         assert result[0].name == "pkg:rpm/redhat/openssl-libs@3.0.7-18.el9_2"
         _check_node_names_at_depth(
             result[0], 1, ["pkg:rpm/redhat/openssl@3.0.7-18.el9_2"]
@@ -81,7 +81,7 @@ class TestProducts(unittest.TestCase):
             data = json.load(file)
         result = _trees_with_cpes(data)
         assert len(result) == 1
-        _render_tree(result[0])
+        render_tree(result[0])
         assert (
             result[0].name
             == "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12.8-1"
@@ -94,7 +94,7 @@ class TestProducts(unittest.TestCase):
             data = json.load(file)
         result = _trees_with_cpes(data)
         assert len(result) == 1
-        _render_tree(result[0])
+        render_tree(result[0])
         _check_node_names_at_depth(
             result[0],
             1,
@@ -110,7 +110,7 @@ class TestProducts(unittest.TestCase):
             data = json.load(file)
         result = _trees_with_cpes(data)
         assert len(result) == 1
-        _render_tree(result[0])
+        render_tree(result[0])
         _check_node_names_at_depth(
             result[0],
             1,
@@ -129,7 +129,7 @@ class TestProducts(unittest.TestCase):
         assert len(result) == 2
 
         print("first_result")
-        _render_tree(result[0])
+        render_tree(result[0])
         assert (
             result[0].name
             == "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.14.0-4"
@@ -138,7 +138,7 @@ class TestProducts(unittest.TestCase):
         _check_node_names_at_depth(result[0], 1, expected_cpes)
 
         print("second_result")
-        _render_tree(result[1])
+        render_tree(result[1])
         assert (
             result[1].name
             == "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8&tag=v3.12.8-1"
@@ -151,7 +151,7 @@ class TestProducts(unittest.TestCase):
         result = _trees_with_cpes(data)
 
         print("first_result")
-        _render_tree(result[0])
+        render_tree(result[0])
         assert len(result) == 1
         assert result[0].name == "pkg:maven/io.agroal/agroal-api@2.5.0.redhat-00002"
         _check_node_names_at_depth(
@@ -181,7 +181,7 @@ class TestProducts(unittest.TestCase):
         result = _trees_with_cpes(data)
 
         print("first_result")
-        _render_tree(result[0])
+        render_tree(result[0])
         assert len(result) == 1
         assert result[0].name == "pkg:maven/org.apache.santuario/xmlsec@3.0.4"
         _check_node_names_at_depth(
@@ -258,7 +258,7 @@ def _check_node_names_at_depth(result, depth, expected):
         Node("srpm", parent=base2)
         Node("cpe:/", parent=srpm)
         _remove_non_cpe_branches(root)
-        _render_tree(root)
+        render_tree(root)
 
         # Assert that the tree structure is as expected
         # root
@@ -288,7 +288,7 @@ def _check_node_names_at_depth(result, depth, expected):
         Node("srpm", parent=base3)
         Node("cpe:/", parent=srpm)
         _remove_non_cpe_branches(root)
-        _render_tree(root)
+        render_tree(root)
 
         # Assert that the tree structure is as expected
         # root
@@ -320,7 +320,7 @@ def _check_node_names_at_depth(result, depth, expected):
         Node("cpe:/", parent=srpm)
         Node("cpe:/", parent=srpm3)
         _remove_non_cpe_branches(root)
-        _render_tree(root)
+        render_tree(root)
 
         # Assert that the tree structure is as expected
         # root
@@ -342,7 +342,7 @@ def _check_node_names_at_depth(result, depth, expected):
         child3 = Node("child1", parent=child2)
         Node("grandchild1", parent=child3)
         _remove_duplicate_parent_nodes(root)
-        _render_tree(root)
+        render_tree(root)
         # Assert that the tree structure is as expected
         _check_node_names_at_depth(root, 1, ["child1"])
         _check_node_names_at_depth(root, 2, ["grandchild1"])
@@ -372,7 +372,7 @@ def _check_node_names_at_depth(result, depth, expected):
         # Print the tree structure for debugging
         for i, tree in enumerate(ancestor_trees):
             print(f"\n--- Tree {i} ---")
-            _render_tree(tree.root)
+            render_tree(tree.root)
 
         # Call extract_affects and print the result
         affects = extract_affects(ancestor_trees)

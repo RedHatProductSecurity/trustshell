@@ -2,7 +2,9 @@ import time
 import importlib.metadata
 import logging
 import os
+import sys
 from urllib.parse import urlparse, urlunparse, quote, parse_qs
+from typing import Optional, Any
 
 import httpx
 import jwt
@@ -11,6 +13,8 @@ from rich.console import Console
 from rich.logging import RichHandler
 from rich.theme import Theme
 import webbrowser
+from univers.versions import RpmVersion
+from anytree import Node, RenderTree
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
@@ -26,14 +30,14 @@ CONFIG_DIR = os.path.expanduser("~/.config/trustshell/")
 os.makedirs(CONFIG_DIR, exist_ok=True)
 TOKEN_FILE = os.path.join(CONFIG_DIR, "access_token.jwt")
 HEADLESS = "DISPLAY" not in os.environ
-LOCAL_AUTH_SERVER_PORT = ""
+LOCAL_AUTH_SERVER_PORT: str = ""
 if "LOCAL_AUTH_SERVER_PORT" in os.environ:
-    LOCAL_AUTH_SERVER_PORT = os.getenv("LOCAL_AUTH_SERVER_PORT")
+    LOCAL_AUTH_SERVER_PORT = os.getenv("LOCAL_AUTH_SERVER_PORT", "")
 
 
 TRUSTIFY_URL_PATH = "/api/v2/"
 if "TRUSTIFY_URL" in os.environ:
-    url_env = os.getenv("TRUSTIFY_URL")
+    url_env = os.getenv("TRUSTIFY_URL", "")
     parsed_url = urlparse(url_env)
     if not parsed_url.path or parsed_url.path != TRUSTIFY_URL_PATH:
         TRUSTIFY_URL = urlunparse(
@@ -52,14 +56,14 @@ version = importlib.metadata.version("trustshell")
 logger = logging.getLogger("trustshell")
 
 
-def print_version(ctx, param, value):
+def print_version(ctx: Any, param: Any, value: Any) -> None:
     if not value or ctx.resilient_parsing:
         return
     console.print(f"Current version: {version}")
     ctx.exit()
 
 
-def config_logging(level="INFO"):
+def config_logging(level: str = "INFO") -> None:
     message_format = "%(asctime)s %(name)s %(levelname)s %(message)s"
 
     # Log to stderr
@@ -95,6 +99,84 @@ def get_tag_from_purl(purl: PackageURL) -> str:
     else:
         logger.debug(f"Did not find tag qualifier in {purl.to_string()}")
     return tag
+
+
+def build_node_purl(purls: list[str]) -> Optional[PackageURL]:
+    """
+    Generate a base purl with a version or tag qualifier from a list of purls with homogenous
+    type/namespace, and name
+
+    Parameters:
+    purls (list[str]): A list of purls.
+
+    Returns:
+    Optional[PackageURL]: A PackageURL object or None
+    """
+    node_purls, type = _build_node_names_by_type(purls)
+    if not node_purls:
+        return None
+    elif len(node_purls) > 1:
+        if type == "oci":
+            purl_tags: dict[str, PackageURL] = {}
+            for purl in node_purls:
+                qualifiers = purl.qualifiers
+                if qualifiers and isinstance(qualifiers, dict) and "tag" in qualifiers:
+                    purl_tags[qualifiers["tag"]] = purl
+            if purl_tags:
+                sorted_purls = sorted(
+                    purl_tags.keys(), key=lambda x: RpmVersion(x), reverse=True
+                )
+                return purl_tags[sorted_purls[0]]
+        else:
+            console.print(f"multiple node purls found: {node_purls}", style="warning")
+    return node_purls.pop()
+
+
+def _build_node_names_by_type(purls: list[str]) -> tuple[set[PackageURL], str]:
+    """
+    Given some purl strings, return a unique set of base purls with versions or tag qualifiers
+    """
+    types = set()
+    node_purls: dict[PackageURL, str] = {}
+    for purl in purls:
+        purl_obj = PackageURL.from_string(purl)
+        tag = get_tag_from_purl(purl_obj)
+        base_purl = _remove_qualifiers(purl_obj, tag)
+        node_purls[base_purl] = purl_obj.type
+    types = set(node_purls.values())
+    if not types:
+        return (set(), "")
+    if len(types) > 1:
+        console.print("Non homogenous types when calculating node name", style="error")
+        sys.exit(1)
+    return set(node_purls.keys()), types.pop()
+
+
+def _remove_qualifiers(purl: PackageURL, tag: str) -> PackageURL:
+    """Remove all qualifiers from a purl keeping repository_url, optionally setting a tag"""
+    qualifiers = {}
+    if "repository_url" in purl.qualifiers and purl.type == "oci":
+        qualifiers["repository_url"] = purl.qualifiers["repository_url"]
+    version = ""
+    if tag:
+        qualifiers["tag"] = tag
+    elif purl.version:
+        version = purl.version
+    return PackageURL(
+        type=purl.type,
+        name=purl.name,
+        namespace=purl.namespace,
+        version=version,
+        qualifiers=qualifiers,
+    )
+
+
+def purl_sans_version(purl: PackageURL) -> PackageURL:
+    """Return a copy of the purl with version set to empty string"""
+    purl_data = purl.to_dict()
+    purl_data["version"] = ""
+    purl_sans_version = PackageURL(**purl_data)
+    return purl_sans_version
 
 
 def check_or_get_access_token() -> str:
@@ -139,14 +221,16 @@ def _get_and_store_access_token() -> str:
     return access_token
 
 
-def local_http_server(code_challenge, state):
+def local_http_server(code_challenge: str, state: str) -> str:
     logger.info(
         f"Starting the local web server on {LOCAL_SERVER_PORT}. Your web browser will send the code"
         " to it."
     )
 
     class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
-        def do_GET(self):
+        code: str  # Class variable to store the code
+
+        def do_GET(self) -> None:
             SimpleHTTPRequestHandler.code = parse_qs(urlparse(self.path).query)["code"][
                 0
             ]
@@ -160,7 +244,7 @@ def local_http_server(code_challenge, state):
                 b"<html><h2>You may now return to trustshell</h2></html>\n"
             )
 
-        def log_message(self, format, *args):
+        def log_message(self, format: str, *args: Any) -> None:
             logger.info("Received response from Auth Server")
 
     httpd = HTTPServer(("localhost", LOCAL_SERVER_PORT), SimpleHTTPRequestHandler)
@@ -173,7 +257,7 @@ def local_http_server(code_challenge, state):
     return SimpleHTTPRequestHandler.code
 
 
-def get_access_token():
+def get_access_token() -> str:
     if HEADLESS or LOCAL_AUTH_SERVER_PORT:
         logger.debug(
             f"Running in HEADLESS mode, trying OIDC PKCE flow with {REDIRECT_URI}"
@@ -183,7 +267,7 @@ def get_access_token():
         response.raise_for_status()
         response_data = response.json()
         if "access_token" in response_data:
-            return response_data["access_token"]
+            return str(response_data["access_token"])
         code_challenge = response_data["code_challenge"]
         state = response_data["state"]
         auth_server = response_data["auth_server"]
@@ -203,10 +287,16 @@ def get_access_token():
     return access_token
 
 
-def launch_browser(code_challenge, state):
+def launch_browser(code_challenge: str, state: str) -> None:
     url = build_url(code_challenge, state)
     logger.debug(
         f"Launching your browser to go to {url}.  "
         f"Code will be returned to the script spawned local http server via redirect_uri"
     )
     webbrowser.open(url)
+
+
+def render_tree(root: Node) -> None:
+    """Pretty print a tree using name only"""
+    for pre, _, node in RenderTree(root):
+        console.print("%s%s" % (pre, node.name))

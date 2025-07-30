@@ -22,13 +22,13 @@ CODE_CHALLENGE_METHOD = "S256"
 RESPONSE_TYPE = "code"
 GRANT_TYPE = "authorization_code"
 
-AUTH_ENDPOINT = os.getenv("AUTH_ENDPOINT")
+AUTH_ENDPOINT = os.getenv("AUTH_ENDPOINT", "")
 HEADLESS = "DISPLAY" not in os.environ
 
 token_endpoint = f"{AUTH_ENDPOINT}/token"
 
 
-def gen_things():
+def gen_things() -> tuple[str, str, str]:
     logging.debug("Generating verifier, challenge, state")
     code_verifier, code_challenge = pkce.generate_pkce_pair()
     state = secrets.token_urlsafe(16)
@@ -38,7 +38,7 @@ def gen_things():
     return code_verifier, code_challenge, state
 
 
-def build_url(code_challenge, state, auth_server=""):
+def build_url(code_challenge: str, state: str, auth_server: str = "") -> str:
     params = {
         "response_type": RESPONSE_TYPE,
         "client_id": CLIENT_ID,
@@ -56,7 +56,7 @@ def build_url(code_challenge, state, auth_server=""):
     return url
 
 
-def code_to_token(code, code_verifier):
+def code_to_token(code: str, code_verifier: str) -> tuple[str, str, str]:
     logger.debug(
         "Exchanging the code for a token via http calls inside of this script."
     )
@@ -103,7 +103,7 @@ def code_to_token(code, code_verifier):
     return access_token, refresh_token, id_token
 
 
-def get_fresh_token(refresh_token):
+def get_fresh_token(refresh_token: str) -> tuple[str, str]:
     logger.debug(
         "Exchange the refresh token for a new access token via http calls inside of this script."
     )

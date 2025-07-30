@@ -3,21 +3,22 @@ import click
 import httpx
 import logging
 import sys
+from typing import Any
 
-from anytree import Node, RenderTree, PreOrderIter
+from anytree import Node, PreOrderIter
 from anytree.walker import Walker, WalkError
 from packageurl import PackageURL
 from rich.console import Console
 from rich.theme import Theme
-from typing import Any, Optional
-from univers.versions import RpmVersion
 from trustshell import (
     AUTH_ENABLED,
     TRUSTIFY_URL,
+    build_node_purl,
     check_or_get_access_token,
     config_logging,
-    get_tag_from_purl,
     print_version,
+    purl_sans_version,
+    render_tree,
     urlencoded,
 )
 from trustshell.osidb import OSIDB
@@ -35,7 +36,7 @@ logger = logging.getLogger("trustshell")
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
 @click.option("--check", "-c", is_flag=True, help="Check the status only, don't prime")
 @click.option("--debug", "-d", is_flag=True, help="Debug log level.")
-def prime_cache(check: bool, debug: bool):
+def prime_cache(check: bool, debug: bool) -> None:
     """Prime the analysis/component graph cache"""
     if not debug:
         config_logging(level="INFO")
@@ -84,7 +85,7 @@ def prime_cache(check: bool, debug: bool):
     "purl",
     type=click.STRING,
 )
-def search(purl: str, flaw: str, replace: bool, debug: bool, latest: bool):
+def search(purl: str, flaw: str, replace: bool, debug: bool, latest: bool) -> None:
     """Relate a purl to products in Trustify"""
     if not debug:
         config_logging(level="INFO")
@@ -106,7 +107,7 @@ def search(purl: str, flaw: str, replace: bool, debug: bool, latest: bool):
     ancestor_trees = prod_defs.extend_with_product_mappings(ancestor_trees)
 
     for tree in ancestor_trees:
-        _render_tree(tree.root)
+        render_tree(tree.root)
 
     if not flaw:
         exit(0)
@@ -116,7 +117,7 @@ def search(purl: str, flaw: str, replace: bool, debug: bool, latest: bool):
     osidb.edit_flaw_affects(flaw, affects, replace)
 
 
-def _check_flaw(ctx, param, value, dependent_option_name):
+def _check_flaw(ctx: Any, param: Any, value: Any, dependent_option_name: str) -> Any:
     """
     Callback function to check if --flaw is set.
     """
@@ -148,27 +149,14 @@ def extract_affects(ancestor_trees: list[Node]) -> set[tuple[str, str]]:
                         elif purl.type == "maven":
                             # If it's a maven type, we set the purl to root
                             purl = PackageURL.from_string(ps_module_node.root.name)
-                        purl_sans_version = _purl_sans_version(purl)
+                        purl_sans_version_obj = purl_sans_version(purl)
                         affects.add(
                             (
                                 ps_module_node.name,
-                                purl_sans_version.to_string(),
+                                purl_sans_version_obj.to_string(),
                             )
                         )
     return affects
-
-
-def _purl_sans_version(purl: PackageURL):
-    purl_data = purl.to_dict()
-    purl_data["version"] = ""
-    purl_sans_version = PackageURL(**purl_data)
-    return purl_sans_version
-
-
-def _render_tree(root: Node):
-    """Pretty print a tree using name only"""
-    for pre, _, node in RenderTree(root):
-        console.print("%s%s" % (pre, node.name))
 
 
 def _get_roots(base_purl: str, latest: bool = True) -> list[Node]:
@@ -190,12 +178,12 @@ def _get_roots(base_purl: str, latest: bool = True) -> list[Node]:
     return _trees_with_cpes(ancestors)
 
 
-def build_ancestor_tree(parent: Node, ancestors):
+def build_ancestor_tree(parent: Node, ancestors: list[dict[str, Any]]) -> None:
     """
     Recursive function to build an ancestor tree from a nested set of purls, or CPEs.
     """
     for component in ancestors:
-        base_purl = _build_node_purl(component["purl"])
+        base_purl = build_node_purl(component["purl"])
         if not base_purl:
             cpes = component["cpe"]
             if not cpes:
@@ -210,7 +198,7 @@ def build_ancestor_tree(parent: Node, ancestors):
             # else try the next ancestor
 
 
-def _remove_root_return_children(root):
+def _remove_root_return_children(root: Node) -> list[Node]:
     """
     Removes the root node and returns a list of its direct children.
 
@@ -231,7 +219,7 @@ def _remove_root_return_children(root):
     return children
 
 
-def _get_branch_signature(node):
+def _get_branch_signature(node: Node) -> str:
     """
     Create a unique signature for a branch structure starting from the given node.
     The signature represents the structure and node names in the branch.
@@ -245,7 +233,7 @@ def _get_branch_signature(node):
     # Use a list to collect branch elements in pre-order traversal
     elements = []
 
-    def traverse(current_node, path=""):
+    def traverse(current_node: Node, path: str = "") -> None:
         # Add node name and its level in the path
         node_sig = f"{path}{current_node.name}"
         elements.append(node_sig)
@@ -259,7 +247,7 @@ def _get_branch_signature(node):
     return "|".join(elements)
 
 
-def _has_cpe_node(node):
+def _has_cpe_node(node: Node) -> bool:
     """
     Check if the node or any of its descendants have a name starting with "cpe:/".
 
@@ -281,7 +269,7 @@ def _has_cpe_node(node):
     return False
 
 
-def _remove_non_cpe_branches(root):
+def _remove_non_cpe_branches(root: Node) -> Node:
     # Inspect all the leaves for ones not starting with cpe:/
     leaves_to_remove = set()
     leaves_to_keep = set()
@@ -306,7 +294,7 @@ def _remove_non_cpe_branches(root):
     return root
 
 
-def _remove_duplicate_branches(root):
+def _remove_duplicate_branches(root: Node) -> Node:
     """
     Removes duplicate branch structures from an Anytree tree
 
@@ -374,7 +362,7 @@ def container_in_tree(root: Node) -> bool:
     return False
 
 
-def _remove_duplicate_parent_nodes(node: Node):
+def _remove_duplicate_parent_nodes(node: Node) -> None:
     """
     Removes nodes in an anytree tree that have the same name as their direct parent,
     and reparents their children to the remaining node.
@@ -387,73 +375,3 @@ def _remove_duplicate_parent_nodes(node: Node):
             new_children.extend(descandant.children)
             descandant.parent.children = new_children
             descandant.parent = None
-
-
-def _build_node_purl(purls: list[str]) -> Optional[PackageURL]:
-    """
-    Generate a base purl with a version or tag qualifier from a list of purls with homogenous
-    type/namespace, and name
-
-    Parameters:
-    purls (list[str]): A list of purls.
-
-    Returns:
-    set[str]: A set of base purls
-    """
-    node_purls, type = _build_node_names_by_type(purls)
-    if not node_purls:
-        return None
-    elif len(node_purls) > 1:
-        if type == "oci":
-            purl_tags: dict[str, PackageURL] = {}
-            for purl in node_purls:
-                qualifiers = purl.qualifiers
-                if qualifiers and isinstance(qualifiers, dict) and "tag" in qualifiers:
-                    purl_tags[qualifiers["tag"]] = purl
-            if purl_tags:
-                sorted_purls = sorted(
-                    purl_tags.keys(), key=lambda x: RpmVersion(x), reverse=True
-                )
-                return purl_tags[sorted_purls[0]]
-        else:
-            console.print(f"multiple node purls found: {node_purls}", style="warning")
-    return node_purls.pop()
-
-
-def _build_node_names_by_type(purls: list[str]) -> tuple[set[PackageURL], str]:
-    """
-    Given some purl strings, return a unique set of base purls with versions or tag qualifiers
-    """
-    types = set()
-    node_purls: dict[PackageURL, str] = {}
-    for purl in purls:
-        purl_obj = PackageURL.from_string(purl)
-        tag = get_tag_from_purl(purl_obj)
-        base_purl = _remove_qualifiers(purl_obj, tag)
-        node_purls[base_purl] = purl_obj.type
-    types = set(node_purls.values())
-    if not types:
-        return (set(), "")
-    if len(types) > 1:
-        console.print("Non homogenous types when calculating node name", style="error")
-        sys.exit(1)
-    return set(node_purls.keys()), types.pop()
-
-
-def _remove_qualifiers(purl: PackageURL, tag: str) -> PackageURL:
-    """Remove all qualifiers from a purl keeping repository_url, optionally setting a tag"""
-    qualifiers = {}
-    if "repository_url" in purl.qualifiers and purl.type == "oci":
-        qualifiers["repository_url"] = purl.qualifiers["repository_url"]
-    version = ""
-    if tag:
-        qualifiers["tag"] = tag
-    elif purl.version:
-        version = purl.version
-    return PackageURL(
-        type=purl.type,
-        name=purl.name,
-        namespace=purl.namespace,
-        version=version,
-        qualifiers=qualifiers,
-    )
