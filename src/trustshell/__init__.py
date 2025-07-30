@@ -296,6 +296,90 @@ def launch_browser(code_challenge: str, state: str) -> None:
     webbrowser.open(url)
 
 
+def paginated_trustify_query(
+    endpoint: str,
+    base_params: dict[str, Any],
+    auth_header: dict[str, str],
+    component_name: str = "",
+    limit: int = 100,
+) -> dict[str, Any]:
+    """
+    Perform a paginated query to a Trustify API endpoint.
+
+    Args:
+        endpoint: The API endpoint URL
+        base_params: Base query parameters (will add limit/offset)
+        auth_header: Authentication headers
+        component_name: Component name for progress messages (optional)
+        limit: Number of items per request
+
+    Returns:
+        dict with 'items' and 'total' keys containing all paginated results
+    """
+    all_items = []
+    offset = 0
+    total_fetched = 0
+    total_available = None
+
+    def make_request_with_retry(
+        query_params: dict[str, Any], headers: dict[str, str]
+    ) -> httpx.Response:
+        """Make HTTP request with 401 retry logic"""
+        try:
+            response = httpx.get(
+                endpoint, params=query_params, headers=headers, timeout=300
+            )
+            response.raise_for_status()
+            return response
+        except httpx.HTTPStatusError as e:
+            if e.response.status_code == 401 and AUTH_ENABLED:
+                # Get new access token and retry once
+                logger.debug("Got 401 response, refreshing access token...")
+                new_access_token = get_access_token()
+                if new_access_token:
+                    headers["Authorization"] = f"Bearer {new_access_token}"
+                    response = httpx.get(
+                        endpoint, params=query_params, headers=headers, timeout=300
+                    )
+                    response.raise_for_status()
+                    return response
+            raise
+
+    while True:
+        # Add pagination parameters to base params
+        query_params = {**base_params, "limit": limit, "offset": offset}
+
+        response = make_request_with_retry(query_params, auth_header)
+        result = response.json()
+
+        # Set total on first request
+        if total_available is None:
+            total_available = result.get("total", 0)
+            if total_available == 0:
+                if component_name:
+                    console.print(f"No items found for {component_name}")
+                break
+
+        # Process items from this page
+        items_in_page = result.get("items", [])
+        all_items.extend(items_in_page)
+        total_fetched += len(items_in_page)
+
+        # Check if we've fetched all available items or this page was empty
+        if total_fetched >= total_available or len(items_in_page) == 0:
+            break
+
+        # Prepare for next page
+        offset += limit
+
+    if total_available and total_available > 0 and component_name:
+        console.print(
+            f"Retrieved {len(all_items)} items out of {total_available} total for {component_name}"
+        )
+
+    return {"items": all_items, "total": total_available or 0}
+
+
 def render_tree(root: Node) -> None:
     """Pretty print a tree using name only"""
     for pre, _, node in RenderTree(root):

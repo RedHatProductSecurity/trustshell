@@ -20,6 +20,7 @@ from trustshell import (
     purl_sans_version,
     render_tree,
     urlencoded,
+    paginated_trustify_query,
 )
 from trustshell.osidb import OSIDB
 from trustshell.product_definitions import ProdDefs, ProductModule
@@ -171,12 +172,13 @@ def _get_roots(base_purl: str, latest: bool = True) -> list[Node]:
         endpoint = LATEST_ENDPOINT
     else:
         endpoint = ANALYSIS_ENDPOINT
-    request_url = (
-        f"{endpoint}?ancestors={ANCESTOR_COUNT}&q={urlencoded(f'purl~{base_purl}@')}"
+
+    # Use the paginated query function
+    base_params = {"ancestors": ANCESTOR_COUNT, "q": urlencoded(f"purl~{base_purl}@")}
+    ancestors = paginated_trustify_query(
+        endpoint, base_params, auth_header, component_name=base_purl
     )
-    ancestors_response = httpx.get(request_url, headers=auth_header, timeout=300)
-    ancestors_response.raise_for_status()
-    ancestors = ancestors_response.json()
+
     logger.debug(f"Number of matches for {base_purl}: {ancestors['total']}")
     return _trees_with_cpes(ancestors)
 
