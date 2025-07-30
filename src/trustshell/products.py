@@ -168,9 +168,12 @@ def _get_roots(base_purl: str, latest: bool = True) -> list[Node]:
         auth_header = {"Authorization": f"Bearer {access_token}"}
 
     if latest:
-        request_url = f"{LATEST_ENDPOINT}?ancestors={ANCESTOR_COUNT}&q={urlencoded(f'purl~{base_purl}@')}"
+        endpoint = LATEST_ENDPOINT
     else:
-        request_url = f"{ANALYSIS_ENDPOINT}?ancestors={ANCESTOR_COUNT}&q={urlencoded(f'purl~{base_purl}@')}"
+        endpoint = ANALYSIS_ENDPOINT
+    request_url = (
+        f"{endpoint}?ancestors={ANCESTOR_COUNT}&q={urlencoded(f'purl~{base_purl}@')}"
+    )
     ancestors_response = httpx.get(request_url, headers=auth_header, timeout=300)
     ancestors_response.raise_for_status()
     ancestors = ancestors_response.json()
