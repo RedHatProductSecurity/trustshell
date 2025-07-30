@@ -41,6 +41,12 @@ If that check fails, you can format the files with:
 $ uvx ruff format
 ```
 
+Static type checking is also available and run in CI using:
+
+```
+$ uv run --group lint mypy src/
+```
+
 # Tests
 
 ```
