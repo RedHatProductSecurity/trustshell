@@ -12,6 +12,7 @@ from trustshell import (
     TRUSTIFY_URL,
     check_or_get_access_token,
     config_logging,
+    paginated_trustify_query,
 )
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
@@ -58,17 +59,28 @@ def api(endpoint: str, subpath: str, params: tuple[str], debug: bool) -> None:
         url += f"/{quote(subpath, safe='')}"
 
     try:
-        response = httpx.get(url, params=query_params, headers=auth_header, timeout=300)
-        response.raise_for_status()
-        console.print_json(response.text)
+        result = paginated_trustify_query(
+            endpoint=url,
+            base_params=query_params,
+            auth_header=auth_header,
+            component_name="",
+            limit=100,
+        )
+
+        # Print the results - if it's paginated data, print the items
+        if "items" in result:
+            console.print_json(json.dumps(result["items"], indent=2))
+        else:
+            console.print_json(json.dumps(result, indent=2))
+
     except httpx.HTTPStatusError as exc:
         console.print(
             f"HTTP error {exc.response.status_code}: {exc.response.text}", style="error"
         )
     except httpx.RequestError as exc:
         console.print(f"Request error: {str(exc)}", style="error")
-    except json.JSONDecodeError:
+    except json.JSONDecodeError as exc:
         console.print("Response is not valid JSON:", style="warning")
-        console.print(response.text)
+        console.print(f"JSON decode error: {str(exc)}")
     except Exception as exc:
         console.print(f"Unexpected error: {str(exc)}", style="error")
