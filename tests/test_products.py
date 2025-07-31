@@ -214,10 +214,21 @@ class TestProducts(unittest.TestCase):
             result[0], 5, ["cpe:/a:redhat:camel_quarkus:3:*:*:*"]
         )
 
-
-def _check_node_names_at_depth(result, depth, expected):
-    node_names = [node.name for node in result.descendants if node.depth == depth]
-    assert sorted(expected) == sorted(node_names)
+    def test_trees_with_cpes_firefox(self):
+        with open("tests/testdata/firefox.json") as file:
+            data = json.load(file)
+        result = _trees_with_cpes(data)
+        assert len(result) == 1
+        render_tree(result[0])
+        assert result[0].name == "pkg:rpm/redhat/firefox@128.12.0-1.el8_10"
+        _check_node_names_at_depth(
+            result[0],
+            1,
+            [
+                "cpe:/a:redhat:enterprise_linux:8.10:*:appstream:*",
+                "cpe:/a:redhat:enterprise_linux:8:*:appstream:*",
+            ],
+        )
 
     def test_has_cpe_node_with_cpe_name(self):
         root = Node("cpe:/a", children=[Node("cpe:/b"), Node("d")])
@@ -386,3 +397,8 @@ def _check_node_names_at_depth(result, depth, expected):
                 "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8",
             )
         }
+
+
+def _check_node_names_at_depth(result, depth, expected):
+    node_names = [node.name for node in result.descendants if node.depth == depth]
+    assert sorted(expected) == sorted(node_names)
