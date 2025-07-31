@@ -1,0 +1,88 @@
+{
+    "items":[
+        {
+          "sbom_id": "01985a21-6c95-74d0-ac40-0f6fad42eb2e",
+          "node_id": "pkg:rpm/redhat/firefox@128.12.0-1.el8_10?arch=src",
+          "purl": [
+            "pkg:rpm/redhat/firefox@128.12.0-1.el8_10?arch=src",
+            "pkg:rpm/redhat/firefox@128.12.0-1.el8_10?arch=src&repository_id=rhel-8-for-aarch64-appstream-source-rpms__8",
+            "pkg:rpm/redhat/firefox@128.12.0-1.el8_10?arch=src&repository_id=rhel-8-for-x86_64-appstream-source-rpms__8_DOT_10",
+            "pkg:rpm/redhat/firefox@128.12.0-1.el8_10?arch=src&repository_id=rhel-8-for-ppc64le-appstream-source-rpms__8",
+            "pkg:rpm/redhat/firefox@128.12.0-1.el8_10?arch=src&repository_id=rhel-8-for-x86_64-appstream-source-rpms__8",
+            "pkg:rpm/redhat/firefox@128.12.0-1.el8_10?arch=src&repository_id=rhel-8-for-s390x-appstream-source-rpms__8_DOT_10",
+            "pkg:rpm/redhat/firefox@128.12.0-1.el8_10?arch=src&repository_id=rhel-8-for-s390x-appstream-source-rpms__8",
+            "pkg:rpm/redhat/firefox@128.12.0-1.el8_10?arch=src&repository_id=rhel-8-for-aarch64-appstream-source-rpms__8_DOT_10",
+            "pkg:rpm/redhat/firefox@128.12.0-1.el8_10?arch=src&repository_id=rhel-8-for-ppc64le-appstream-source-rpms__8_DOT_10"
+          ],
+          "cpe": [],
+          "name": "firefox",
+          "version": "128.12.0-1.el8_10",
+          "published": "2025-07-01 12:07:53+00",
+          "document_id": "urn:uuid:b7ee7d76-e59d-3ec7-8ff0-82230d0ad57b/1",
+          "product_name": "Red Hat Enterprise Linux 8",
+          "product_version": "RHEL-8.10.0.Z.MAIN+EUS",
+          "ancestors": [
+            {
+              "sbom_id": "01985a21-6c95-74d0-ac40-0f6fad42eb2e",
+              "node_id": "RHEL-8.10.0.Z.MAIN+EUS",
+              "purl": [],
+              "cpe": [
+                "cpe:/a:redhat:enterprise_linux:8.10:*:appstream:*",
+                "cpe:/a:redhat:enterprise_linux:8:*:appstream:*"
+              ],
+              "name": "Red Hat Enterprise Linux 8",
+              "version": "RHEL-8.10.0.Z.MAIN+EUS",
+              "published": "2025-07-01 12:07:53+00",
+              "document_id": "urn:uuid:b7ee7d76-e59d-3ec7-8ff0-82230d0ad57b/1",
+              "product_name": "Red Hat Enterprise Linux 8",
+              "product_version": "RHEL-8.10.0.Z.MAIN+EUS",
+              "relationship": "generates",
+              "ancestors": [
+                {
+                  "sbom_id": "01985a21-6c95-74d0-ac40-0f6fad42eb2e",
+                  "node_id": "CycloneDX-doc-ref",
+                  "purl": [],
+                  "cpe": [],
+                  "name": "Red Hat Enterprise Linux 8",
+                  "version": "",
+                  "published": "2025-07-01 12:07:53+00",
+                  "document_id": "urn:uuid:b7ee7d76-e59d-3ec7-8ff0-82230d0ad57b/1",
+                  "product_name": "Red Hat Enterprise Linux 8",
+                  "product_version": "RHEL-8.10.0.Z.MAIN+EUS",
+                  "relationship": "describes",
+                  "ancestors": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "sbom_id": "01985a21-6c95-74d0-ac40-0f6fad42eb2e",
+          "node_id": "RHEL-8.10.0.Z.MAIN+EUS:pkg:rpm/redhat/firefox@128.12.0-1.el8_10?arch=src",
+          "purl": [],
+          "cpe": [],
+          "name": "pkg:rpm/redhat/firefox@128.12.0-1.el8_10?arch=src",
+          "version": "",
+          "published": "2025-07-01 12:07:53+00",
+          "document_id": "urn:uuid:b7ee7d76-e59d-3ec7-8ff0-82230d0ad57b/1",
+          "product_name": "Red Hat Enterprise Linux 8",
+          "product_version": "RHEL-8.10.0.Z.MAIN+EUS",
+          "ancestors": [
+            {
+              "sbom_id": "01985a21-73bf-7bf0-9afa-58e92f28c204",
+              "node_id": "CycloneDX-doc-ref",
+              "purl": [],
+              "cpe": [],
+              "name": "firefox",
+              "version": "",
+              "published": "2025-07-23 11:09:13+00",
+              "document_id": "urn:uuid:5205c8c1-cb5f-420f-a622-4594b5067f3c/1",
+              "product_name": "firefox",
+              "product_version": "128.12.0-1.el8_10",
+              "relationship": "describes",
+              "ancestors": []
+            }
+          ]
+        }
+    ]
+}

@@ -19,7 +19,6 @@ from trustshell import (
     print_version,
     purl_sans_version,
     render_tree,
-    urlencoded,
     paginated_trustify_query,
 )
 from trustshell.osidb import OSIDB
@@ -174,11 +173,10 @@ def _get_roots(base_purl: str, latest: bool = True) -> list[Node]:
         endpoint = ANALYSIS_ENDPOINT
 
     # Use the paginated query function
-    base_params = {"ancestors": ANCESTOR_COUNT, "q": urlencoded(f"purl~{base_purl}@")}
+    base_params = {"ancestors": ANCESTOR_COUNT, "q": f"{base_purl}@"}
     ancestors = paginated_trustify_query(
         endpoint, base_params, auth_header, component_name=base_purl
     )
-
     logger.debug(f"Number of matches for {base_purl}: {ancestors['total']}")
     return _trees_with_cpes(ancestors)
 
