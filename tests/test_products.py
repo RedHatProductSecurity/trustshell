@@ -214,11 +214,6 @@ class TestProducts(unittest.TestCase):
             result[0], 5, ["cpe:/a:redhat:camel_quarkus:3:*:*:*"]
         )
 
-
-def _check_node_names_at_depth(result, depth, expected):
-    node_names = [node.name for node in result.descendants if node.depth == depth]
-    assert sorted(expected) == sorted(node_names)
-
     def test_has_cpe_node_with_cpe_name(self):
         root = Node("cpe:/a", children=[Node("cpe:/b"), Node("d")])
         assert _has_cpe_node(root)
@@ -386,3 +381,8 @@ def _check_node_names_at_depth(result, depth, expected):
                 "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8",
             )
         }
+
+
+def _check_node_names_at_depth(result, depth, expected):
+    node_names = [node.name for node in result.descendants if node.depth == depth]
+    assert sorted(expected) == sorted(node_names)
