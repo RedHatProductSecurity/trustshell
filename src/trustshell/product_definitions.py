@@ -72,7 +72,7 @@ class ProductStream(ProductBase, NodeMixin):
                 break
         if not has_eatus:
             return cpes
-        return [cpe for cpe in cpes if ":redhat:enterprise_linux:" not in cpe]
+        return [cpe for cpe in cpes if not re.search(r":redhat:enterprise_linux:\d:", cpe)]
 
 
 class ProdDefs:
