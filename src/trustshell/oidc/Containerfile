@@ -11,10 +11,6 @@ ENV PYTHONUNBUFFERED=1 \
 
 EXPOSE 8650
 
-WORKDIR /opt/app-root/src/
-WORKDIR /opt/app-root
-ADD . /opt/app-root
-
 # Download the UV installer
 ADD https://astral.sh/uv/0.7.12/install.sh /uv-installer.sh
 
@@ -24,5 +20,13 @@ RUN sh /uv-installer.sh && rm /uv-installer.sh
 # Ensure the installed binary is on the `PATH`
 ENV PATH="/root/.local/bin/:$PATH"
 
-# Run app.py when the container launches
-CMD ["uv", "run", "oidc_pkce_server.py"]
+# Copy the entire trustshell project (run from project root)
+WORKDIR /opt/app-root
+COPY . /opt/app-root/
+
+# Install Python dependencies from main project
+RUN uv sync
+
+# Set working directory to oidc directory and run the server
+WORKDIR /opt/app-root/src/trustshell/oidc
+CMD ["uv", "run", "python", "oidc_pkce_server.py"]
