@@ -46,7 +46,11 @@ class ProductModule(ProductBase, NodeMixin):
 class ProductStream(ProductBase, NodeMixin):
     def __init__(self, name: str, cpes: list[str] = [], active: bool = False) -> None:
         super().__init__(name)
-        self.cpes = self._filter_rhel_mainline_cpes(cpes)
+        # In rhel 10 we don't use mainline CPEs, so we need to filter them out
+        if name.startswith("rhel-") and not name.startswith("rhel-10"):
+            self.cpes = self._filter_rhel_mainline_cpes(cpes)
+        else:
+            self.cpes = cpes
         self.active = active
 
     def set_active(self, active: bool) -> None:

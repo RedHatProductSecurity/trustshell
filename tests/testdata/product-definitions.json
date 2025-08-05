@@ -9,6 +9,15 @@
     }
   },
   "ps_modules": {
+    "rhel-10": {
+      "public_description": "Red Hat Enterprise Linux 10",
+      "ps_update_streams": [
+        "rhel-10.0.z"
+      ],
+      "active_ps_update_streams": [
+        "rhel-10.0.z"
+      ]
+    },
     "rhel-9": {
       "public_description": "Red Hat Enterprise Linux 9",
       "ps_update_streams": [
@@ -69,6 +78,14 @@
     }
   },
   "ps_update_streams": {
+    "rhel-10.0.z": {
+      "pp_label": "rhel-10.0.z",
+      "version": "rhel-10.0.z",
+      "cpe": [
+        "cpe:/o:redhat:enterprise_linux:10.0",
+        "cpe:/o:redhat:enterprise_linux_eus:10.0"
+      ]
+    },
     "rhel-9.2.0.z": {
       "pp_label": "rhel-9.2.0.z",
       "version": "rhel-9.2.0.z",
