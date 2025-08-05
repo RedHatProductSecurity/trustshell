@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import json
 import os
 from http.server import SimpleHTTPRequestHandler
@@ -8,12 +10,22 @@ from urllib.parse import (
     urlparse,
 )
 
-from .oidc_pkce_authcode import (
-    code_to_token,
-    gen_things,
-    get_fresh_token,
-    AUTH_ENDPOINT,
-)
+try:
+    # When run as part of the trustshell package
+    from .oidc_pkce_authcode import (
+        code_to_token,
+        gen_things,
+        get_fresh_token,
+        AUTH_ENDPOINT,
+    )
+except ImportError:
+    # When run as a standalone script
+    from oidc_pkce_authcode import (  # type: ignore[import-not-found,no-redef]
+        code_to_token,
+        gen_things,
+        get_fresh_token,
+        AUTH_ENDPOINT,
+    )
 
 PORT: int = int(os.getenv("LISTEN_PORT", "8080"))
 
@@ -95,7 +107,13 @@ class Handler(SimpleHTTPRequestHandler):
         )
 
 
-# Use the CustomHTTPServer for your server instance
-with CustomHTTPServer(("", PORT), Handler) as httpd:
-    print(f"Serving HTTP on port {PORT}")
-    httpd.serve_forever()
+def main() -> None:
+    """Main function to start the OIDC PKCE server."""
+    # Use the CustomHTTPServer for your server instance
+    with CustomHTTPServer(("", PORT), Handler) as httpd:
+        print(f"Serving HTTP on port {PORT}")
+        httpd.serve_forever()
+
+
+if __name__ == "__main__":
+    main()
