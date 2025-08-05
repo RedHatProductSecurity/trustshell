@@ -41,6 +41,21 @@ class TestProdDefs(unittest.TestCase):
         assert len(rhel_mainline_streams) == 1
         assert rhel_mainline_streams[0].name == "rhel-9.6.z"
 
+    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
+    def test_prod_defs_stream_nodes_by_cpe_rhel_10(self, mock_service):
+        mock_service.return_value = self.mock_proddefs_data
+        prod_defs = ProdDefs()
+        assert "cpe:/o:redhat:enterprise_linux:10.0" in prod_defs.stream_nodes_by_cpe
+        assert (
+            "cpe:/o:redhat:enterprise_linux_eus:10.0" in prod_defs.stream_nodes_by_cpe
+        )
+        rhel_mainline_streams = prod_defs.stream_nodes_by_cpe[
+            "cpe:/o:redhat:enterprise_linux:10.0"
+        ]
+        print([s.name for s in rhel_mainline_streams])
+        assert len(rhel_mainline_streams) == 1
+        assert rhel_mainline_streams[0].name == "rhel-10.0.z"
+
     # Expected tree structure is:
     # rhel-9.2.0.z
     # └── rhel-9
@@ -56,13 +71,13 @@ class TestProdDefs(unittest.TestCase):
     def test_prod_defs_product_trees(self, mock_service):
         mock_service.return_value = self.mock_proddefs_data
         prod_defs = ProdDefs()
-        assert len(prod_defs.product_trees) == 5
+        assert len(prod_defs.product_trees) == 6
         for tree in prod_defs.product_trees:
             render_tree(tree)
-        rhel_9_2_z_stream = prod_defs.product_trees[0]
+        rhel_9_2_z_stream = prod_defs.product_trees[1]
         assert rhel_9_2_z_stream.name == "rhel-9.2.0.z"
         _check_node_names_at_depth(rhel_9_2_z_stream, 1, ["rhel-9"])
-        quay_3_12_stream = prod_defs.product_trees[3]
+        quay_3_12_stream = prod_defs.product_trees[4]
         assert quay_3_12_stream.name == "quay-3.12"
         _check_node_names_at_depth(quay_3_12_stream, 1, ["quay-3"])
 
