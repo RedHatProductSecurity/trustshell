@@ -47,6 +47,18 @@ class TestProducts(unittest.TestCase):
         print(result)
         assert result == "pkg:oci/quay?tag=v3.12.8-1"
 
+    def test_build_node_purl_maven_type(self):
+        purls = [
+            "pkg:maven/io.agroal/agroal-api@1.3.0.redhat-00001?repository_url=https%3A%2F%2Fmaven.repository.redhat.com%2Fga%2F&type=jar"
+            "pkg:maven/io.agroal/agroal-api@1.3.0.redhat-00001?repository_url=https%3A%2F%2Fmaven.repository.redhat.com%2Fga%2F&type=jar&hash=sha256:1234567890"
+        ]
+        result = build_node_purl(purls).to_string()
+        print(result)
+        assert (
+            result
+            == "pkg:maven/io.agroal/agroal-api@1.3.0.redhat-00001?hash=sha256:1234567890&type=jar"
+        )
+
     def test_trees_with_cpes_srpm(self):
         with open("tests/testdata/openssl.json", "r") as file:
             data = json.load(file)
@@ -153,22 +165,27 @@ class TestProducts(unittest.TestCase):
         print("first_result")
         render_tree(result[0])
         assert len(result) == 1
-        assert result[0].name == "pkg:maven/io.agroal/agroal-api@2.5.0.redhat-00002"
+        assert (
+            result[0].name
+            == "pkg:maven/io.agroal/agroal-api@2.5.0.redhat-00002?type=jar"
+        )
         _check_node_names_at_depth(
-            result[0], 1, ["pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002"]
+            result[0],
+            1,
+            ["pkg:maven/io.quarkus/quarkus-agroal@3.20.0.redhat-00002?type=jar"],
         )
         _check_node_names_at_depth(
             result[0],
             2,
             [
-                "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql@3.15.0.redhat-00007"
+                "pkg:maven/org.apache.camel.quarkus/camel-quarkus-sql@3.15.0.redhat-00007?type=jar"
             ],
         )
         _check_node_names_at_depth(
             result[0],
             3,
             [
-                "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001"
+                "pkg:maven/com.redhat.quarkus.platform/quarkus-camel-bom@3.20.0.redhat-00001?type=pom"
             ],
         )
         _check_node_names_at_depth(
@@ -183,31 +200,33 @@ class TestProducts(unittest.TestCase):
         print("first_result")
         render_tree(result[0])
         assert len(result) == 1
-        assert result[0].name == "pkg:maven/org.apache.santuario/xmlsec@3.0.4"
+        assert result[0].name == "pkg:maven/org.apache.santuario/xmlsec@3.0.4?type=jar"
         _check_node_names_at_depth(
             result[0],
             1,
-            ["pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec@3.15.3"],
+            [
+                "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec@3.15.3?type=jar"
+            ],
         )
         _check_node_names_at_depth(
             result[0],
             2,
             [
-                "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec-deployment@3.15.3"
+                "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-santuario-xmlsec-deployment@3.15.3?type=jar"
             ],
         )
         _check_node_names_at_depth(
             result[0],
             3,
             [
-                "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security-deployment@3.15.3.redhat-00008"
+                "pkg:maven/io.quarkiverse.cxf/quarkus-cxf-rt-ws-security-deployment@3.15.3.redhat-00008?type=jar"
             ],
         )
         _check_node_names_at_depth(
             result[0],
             4,
             [
-                "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001"
+                "pkg:maven/com.redhat.quarkus.platform/quarkus-cxf-bom@3.15.4.redhat-00001?type=pom"
             ],
         )
         _check_node_names_at_depth(
