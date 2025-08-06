@@ -156,8 +156,13 @@ def _build_node_names_by_type(purls: list[str]) -> tuple[set[PackageURL], str]:
 def _remove_qualifiers(purl: PackageURL, tag: str) -> PackageURL:
     """Remove all qualifiers from a purl keeping repository_url, optionally setting a tag"""
     qualifiers = {}
-    if "repository_url" in purl.qualifiers and purl.type == "oci":
+    if purl.type == "oci" and "repository_url" in purl.qualifiers:
+        # remove other oci qualifiers, but keep repository_url in order to record namespace
         qualifiers["repository_url"] = purl.qualifiers["repository_url"]
+    elif purl.type == "maven" and purl.qualifiers:
+        qualifiers = purl.qualifiers
+        # repository_url is superfluous for maven purls, remove it in the interest of brevity
+        qualifiers.pop("repository_url", None)
     version = ""
     if tag:
         qualifiers["tag"] = tag
