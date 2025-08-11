@@ -417,6 +417,37 @@ class TestProducts(unittest.TestCase):
             )
         }
 
+    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
+    def test_extract_affects_maven(self, mock_service):
+        mock_service.return_value = self.mock_proddefs_data
+        """Test extract_affects maven special handling"""
+        with open("tests/testdata/maven-special-handling.json") as file:
+            data = json.load(file)
+
+        # Build the initial trees
+        ancestor_trees = _trees_with_cpes(data)
+
+        # Extend with product mappings to add ProductModule nodes
+        prod_defs = ProdDefs()
+        ancestor_trees = prod_defs.extend_with_product_mappings(ancestor_trees)
+
+        # Print the tree structure for debugging
+        for i, tree in enumerate(ancestor_trees):
+            print(f"\n--- Tree {i} ---")
+            render_tree(tree.root)
+
+        # Call extract_affects and print the result
+        affects = extract_affects(ancestor_trees)
+        print(f"\nExtracted affects: {affects}")
+
+        # We expect the root level maven PURL, not the generic one
+        assert affects == {
+            (
+                "quay-3",
+                "pkg:maven/io.quay/hey?type=jar",
+            )
+        }
+
 
 def _check_node_names_at_depth(result, depth, expected):
     node_names = [node.name for node in result.descendants if node.depth == depth]
