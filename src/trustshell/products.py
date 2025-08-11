@@ -146,8 +146,14 @@ def extract_affects(ancestor_trees: list[Node]) -> set[tuple[str, str]]:
                         purl = PackageURL.from_string(ancestor.parent.name)
                         if purl.type == "oci" and "tag" in purl.qualifiers:
                             purl.qualifiers.pop("tag")
-                        elif purl.type == "maven":
-                            # If it's a maven type, we set the purl to root
+                        elif (
+                            purl.type == "maven"
+                            or purl.type == "generic"
+                            and PackageURL.from_string(ps_module_node.root.name).type
+                            == "maven"
+                        ):
+                            # If it's a maven type or a generic one based on maven,
+                            # we set the purl to root
                             purl = PackageURL.from_string(ps_module_node.root.name)
                         purl_sans_version_obj = purl_sans_version(purl)
                         affects.add(

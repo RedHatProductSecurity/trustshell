@@ -1,0 +1,37 @@
+{
+    "items": [
+      {
+        "purl": [
+          "pkg:maven/io.quay/hey@1.2.3.redhat-00001?type=jar"
+        ],
+        "cpe": [],
+        "name": "Qauy Hey 1",
+        "ancestors": [
+          {
+            "purl": [
+              "pkg:generic/io.quay/hey@1.2.3.redhat-00002?type=jar"
+            ],
+            "cpe": [],
+            "name": "Qauy Hey 2",
+            "ancestors": [
+              {
+                "purl": [],
+                "cpe": [
+                  "cpe:/a:redhat:quay:3"
+                ],
+                "name": "Random Red Hat Build",
+                "ancestors": [
+                  {
+                    "purl": [],
+                    "cpe": [],
+                    "ancestors": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "total": 1
+  }
