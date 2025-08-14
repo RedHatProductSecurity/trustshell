@@ -344,6 +344,8 @@ def _trees_with_cpes(ancestor_data: dict[str, Any]) -> list[Node]:
     build_ancestor_tree(base_node, ancestor_data["items"])
     _remove_duplicate_branches(base_node)
     _remove_duplicate_parent_nodes(base_node)
+    # re-parenting the tree can introduce new duplicate branches
+    _remove_duplicate_branches(base_node)
     first_children = _remove_root_return_children(base_node)
     trees_with_cpes: list[Node] = []
     for tree in first_children:

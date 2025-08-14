@@ -6,6 +6,7 @@ from anytree import Node
 
 from trustshell import build_node_purl
 from trustshell.products import (
+    _get_branch_signature,
     _remove_duplicate_parent_nodes,
     _remove_non_cpe_branches,
     _trees_with_cpes,
@@ -471,6 +472,52 @@ class TestProducts(unittest.TestCase):
         # We expect that the number of the trees
         # will not be changed by the product mappings
         assert len(ancestor_trees) == original_len
+
+    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
+    def test_no_duplicates_from_unsorted_branches(self, mock_service):
+        mock_service.return_value = self.mock_proddefs_data
+        """
+        Test that there are duplicates from unsorted branches - eg.
+
+        ...
+        --- Tree 41 ---
+        pkg:rpm/redhat/libxml2@2.9.7-16.el8_8.12
+        ├── cpe:/o:redhat:rhel_e4s:8.8:*:baseos:*
+        ├── cpe:/a:redhat:rhel_e4s:8.8:*:appstream:*
+        ├── cpe:/a:redhat:rhel_tus:8.8:*:appstream:*
+        └── cpe:/o:redhat:rhel_tus:8.8:*:baseos:*
+
+        --- Tree 42 ---
+        pkg:rpm/redhat/libxml2@2.9.7-16.el8_8.12
+        ├── cpe:/a:redhat:rhel_tus:8.8:*:appstream:*
+        ├── cpe:/o:redhat:rhel_tus:8.8:*:baseos:*
+        ├── cpe:/o:redhat:rhel_e4s:8.8:*:baseos:*
+        └── cpe:/a:redhat:rhel_e4s:8.8:*:appstream:*
+        """
+        # with open("tests/testdata/remove-duplicate-trees.json") as file:
+        with open("tests/testdata/libxml2.json") as file:
+            data = json.load(file)
+
+        # Build the initial trees
+        ancestor_trees = _trees_with_cpes(data)
+
+        # Print the tree structure for debugging
+        for i, tree in enumerate(ancestor_trees):
+            print(f"\n--- Tree {i} ---")
+            render_tree(tree.root)
+
+        def sort_tree_recursively(node):
+            if node.children:
+                node.children = sorted(node.children, key=lambda child: child.name)
+                for child in node.children:
+                    sort_tree_recursively(child)
+
+        sorted_tree_signatures = {
+            _get_branch_signature(tree) for tree in ancestor_trees
+        }
+        # We expect that the signatures of the sorted tree
+        # will preserve the count even when put into a set
+        assert len(ancestor_trees) == len(sorted_tree_signatures)
 
 
 def _check_node_names_at_depth(result, depth, expected):
