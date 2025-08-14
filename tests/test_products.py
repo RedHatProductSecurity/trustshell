@@ -448,6 +448,30 @@ class TestProducts(unittest.TestCase):
             )
         }
 
+    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
+    def test_no_duplicates_from_product_mappings(self, mock_service):
+        mock_service.return_value = self.mock_proddefs_data
+        """Test that the product mappings does not create duplicates"""
+        with open("tests/testdata/libxml2.json") as file:
+            data = json.load(file)
+
+        # Build the initial trees
+        ancestor_trees = _trees_with_cpes(data)
+        original_len = len(ancestor_trees)
+
+        # Extend with product mappings to add ProductModule nodes
+        prod_defs = ProdDefs()
+        ancestor_trees = prod_defs.extend_with_product_mappings(ancestor_trees)
+
+        # Print the tree structure for debugging
+        for i, tree in enumerate(ancestor_trees):
+            print(f"\n--- Tree {i} ---")
+            render_tree(tree.root)
+
+        # We expect that the number of the trees
+        # will not be changed by the product mappings
+        assert len(ancestor_trees) == original_len
+
 
 def _check_node_names_at_depth(result, depth, expected):
     node_names = [node.name for node in result.descendants if node.depth == depth]
