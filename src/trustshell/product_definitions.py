@@ -215,7 +215,6 @@ class ProdDefs:
         if not self.product_trees:
             # ProdDefs service is unavailable, don't attempt any product mapping
             return ancestor_trees
-        ancestors_with_products: list[Node] = []
         for tree in ancestor_trees:
             for leaf in tree.leaves:
                 cleaned_leaf_name = self._clean_cpe(leaf.name)
@@ -227,8 +226,9 @@ class ProdDefs:
                         f"Warning, didn't find any products matching {cleaned_leaf_name}",
                         style="warning",
                     )
-                ancestors_with_products.extend(leaf_with_products)
-        return ancestors_with_products
+                # the tree is modified as a side effect of the checking streams|modules
+                # therefore we do not need to explicitly store and return it elsewhere
+        return ancestor_trees
 
     def _check_streams(self, leaf: Node, cpe: str) -> list[Node]:
         """Check if cpe matches exactly to any ProductStreams, if it does add the CPE as a parent
