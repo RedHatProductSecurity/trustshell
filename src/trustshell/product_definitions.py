@@ -213,7 +213,7 @@ class ProdDefs:
     def extend_with_product_mappings(
         self, ancestor_trees: list[Node], keep_cpes: bool = False
     ) -> None:
-        """Create a new list of results with any matching streams or module as ancestors
+        """Update the ancestor_trees with any matching streams or module as descendants
 
         Args:
             ancestor_trees: List of Node trees to extend with product mappings

@@ -72,6 +72,7 @@ def prime_cache(check: bool, debug: bool) -> None:
     is_eager=True,
 )
 @click.option("--latest", "-l", is_flag=True, default=True)
+@click.option("--cpes", "-c", is_flag=True, default=False)
 @click.option("--flaw", "-f", help="OSIDB flaw uuid or CVE")
 @click.option(
     "--replace",
@@ -85,7 +86,9 @@ def prime_cache(check: bool, debug: bool) -> None:
     "purl",
     type=click.STRING,
 )
-def search(purl: str, flaw: str, replace: bool, debug: bool, latest: bool) -> None:
+def search(
+    purl: str, flaw: str, replace: bool, debug: bool, latest: bool, cpes: bool
+) -> None:
     """Relate a purl to products in Trustify"""
     if not debug:
         config_logging(level="INFO")
@@ -104,9 +107,15 @@ def search(purl: str, flaw: str, replace: bool, debug: bool, latest: bool) -> No
         return
 
     prod_defs = ProdDefs()
-    prod_defs.extend_with_product_mappings(ancestor_trees)
+    prod_defs.extend_with_product_mappings(ancestor_trees, keep_cpes=cpes)
 
+    seen_trees = set()
     for tree in ancestor_trees:
+        _remove_duplicate_branches(tree)
+        tree_signature = _get_branch_signature(tree.root)
+        if tree_signature in seen_trees:
+            continue
+        seen_trees.add(tree_signature)
         render_tree(tree.root)
 
     if not flaw:
@@ -141,27 +150,31 @@ def extract_affects(ancestor_trees: list[Node]) -> set[tuple[str, str]]:
             raise ValueError(f"More than one ProductModule found in {tree.root.name}")
         for ps_module_node in ps_module_nodes:
             for ancestor in ps_module_node.ancestors:
-                if ancestor.name.startswith("cpe:/"):
-                    if ancestor.parent:
-                        purl = PackageURL.from_string(ancestor.parent.name)
-                        if purl.type == "oci" and "tag" in purl.qualifiers:
-                            purl.qualifiers.pop("tag")
-                        elif (
-                            purl.type == "maven"
-                            or purl.type == "generic"
-                            and PackageURL.from_string(ps_module_node.root.name).type
-                            == "maven"
-                        ):
-                            # If it's a maven type or a generic one based on maven,
-                            # we set the purl to root
-                            purl = PackageURL.from_string(ps_module_node.root.name)
-                        purl_sans_version_obj = purl_sans_version(purl)
-                        affects.add(
-                            (
-                                ps_module_node.name,
-                                purl_sans_version_obj.to_string(),
-                            )
-                        )
+                # Find the root component
+                if ancestor.name.startswith("pkg:"):
+                    purl = PackageURL.from_string(ancestor.name)
+                else:
+                    continue
+                # Clean up the purl ready for use in affects
+                if purl.type == "oci" and "tag" in purl.qualifiers:
+                    purl.qualifiers.pop("tag")
+                elif (
+                    purl.type == "maven"
+                    or purl.type == "generic"
+                    and PackageURL.from_string(ps_module_node.root.name).type == "maven"
+                ):
+                    # If it's a maven type or a generic one based on maven,
+                    # we set the purl to root
+                    purl = PackageURL.from_string(ps_module_node.root.name)
+                else:
+                    purl = purl_sans_version(purl)
+
+                affects.add(
+                    (
+                        ps_module_node.name,
+                        purl.to_string(),
+                    )
+                )
     return affects
 
 
@@ -353,6 +366,7 @@ def _trees_with_cpes(ancestor_data: dict[str, Any]) -> list[Node]:
         if tree.name.startswith("pkg:rpm/"):
             if container_in_tree(tree):
                 continue
+        _remove_non_cpe_branches(tree)
         if not _has_cpe_node(tree):
             for leaf in tree.leaves:
                 logger.debug(
@@ -360,7 +374,7 @@ def _trees_with_cpes(ancestor_data: dict[str, Any]) -> list[Node]:
                 )
         else:
             trees_with_cpes.append(tree)
-    return [_remove_non_cpe_branches(tree) for tree in trees_with_cpes]
+    return trees_with_cpes
 
 
 def container_in_tree(root: Node) -> bool:

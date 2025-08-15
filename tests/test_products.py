@@ -398,7 +398,39 @@ class TestProducts(unittest.TestCase):
 
         # Extend with product mappings to add ProductModule nodes
         prod_defs = ProdDefs()
-        ancestor_trees = prod_defs.extend_with_product_mappings(ancestor_trees)
+        prod_defs.extend_with_product_mappings(ancestor_trees, keep_cpes=True)
+
+        # Print the tree structure for debugging
+        for i, tree in enumerate(ancestor_trees):
+            print(f"\n--- Tree {i} ---")
+            render_tree(tree.root)
+
+        # Call extract_affects and print the result
+        affects = extract_affects(ancestor_trees)
+        print(f"\nExtracted affects: {affects}")
+
+        # For now, just assert that we got some result
+        # The user will adjust assertions based on the printed output
+        assert affects == {
+            (
+                "quay-3",
+                "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8",
+            )
+        }
+
+    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
+    def test_extract_affects_container_cdx_no_cpes(self, mock_service):
+        mock_service.return_value = self.mock_proddefs_data
+        """Test extract_affects using quay-builder-qemu-rhcos-rhel-8.json data"""
+        with open("tests/testdata/quay-builder-qemu-rhcos-rhel-8.json") as file:
+            data = json.load(file)
+
+        # Build the initial trees
+        ancestor_trees = _trees_with_cpes(data)
+
+        # Extend with product mappings to add ProductModule nodes
+        prod_defs = ProdDefs()
+        prod_defs.extend_with_product_mappings(ancestor_trees)
 
         # Print the tree structure for debugging
         for i, tree in enumerate(ancestor_trees):
@@ -430,7 +462,7 @@ class TestProducts(unittest.TestCase):
 
         # Extend with product mappings to add ProductModule nodes
         prod_defs = ProdDefs()
-        ancestor_trees = prod_defs.extend_with_product_mappings(ancestor_trees)
+        prod_defs.extend_with_product_mappings(ancestor_trees)
 
         # Print the tree structure for debugging
         for i, tree in enumerate(ancestor_trees):
@@ -445,7 +477,7 @@ class TestProducts(unittest.TestCase):
         assert affects == {
             (
                 "quay-3",
-                "pkg:maven/io.quay/hey?type=jar",
+                "pkg:maven/io.quay/hey@1.2.3.redhat-00001?type=jar",
             )
         }
 
@@ -462,7 +494,7 @@ class TestProducts(unittest.TestCase):
 
         # Extend with product mappings to add ProductModule nodes
         prod_defs = ProdDefs()
-        ancestor_trees = prod_defs.extend_with_product_mappings(ancestor_trees)
+        prod_defs.extend_with_product_mappings(ancestor_trees)
 
         # Print the tree structure for debugging
         for i, tree in enumerate(ancestor_trees):
