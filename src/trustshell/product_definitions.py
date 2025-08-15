@@ -210,27 +210,42 @@ class ProdDefs:
         # Remove trailing ':' characters
         return cleaned_cpe.rstrip(":")
 
-    def extend_with_product_mappings(self, ancestor_trees: list[Node]) -> list[Node]:
-        """Create a new list of results with any matching streams or module as ancestors"""
+    def extend_with_product_mappings(
+        self, ancestor_trees: list[Node], keep_cpes: bool = False
+    ) -> None:
+        """Update the ancestor_trees with any matching streams or module as descendants
+
+        Args:
+            ancestor_trees: List of Node trees to extend with product mappings
+            keep_cpes: If False, replace CPE leaf nodes with product streams. If True, keep CPE nodes as parents of streams.
+        """
         if not self.product_trees:
             # ProdDefs service is unavailable, don't attempt any product mapping
-            return ancestor_trees
+            return None
+
         for tree in ancestor_trees:
             for leaf in tree.leaves:
                 cleaned_leaf_name = self._clean_cpe(leaf.name)
-                leaf_with_products = self._check_streams(leaf, cleaned_leaf_name)
+                leaf_with_products = self._check_streams(
+                    leaf, cleaned_leaf_name, keep_cpes
+                )
                 if not leaf_with_products:
-                    leaf_with_products = self._check_modules(leaf, cleaned_leaf_name)
+                    leaf_with_products = self._check_modules(
+                        leaf, cleaned_leaf_name, keep_cpes
+                    )
                 if not leaf_with_products:
                     console.print(
                         f"Warning, didn't find any products matching {cleaned_leaf_name}",
                         style="warning",
                     )
-                # the tree is modified as a side effect of the checking streams|modules
-                # therefore we do not need to explicitly store and return it elsewhere
-        return ancestor_trees
+                else:
+                    # When keep_cpes=False, we need to remove the CPE leaf from the tree
+                    # since it's been replaced by the product streams
+                    if not keep_cpes:
+                        # Remove the CPE leaf node from its parent
+                        leaf.parent = None
 
-    def _check_streams(self, leaf: Node, cpe: str) -> list[Node]:
+    def _check_streams(self, leaf: Node, cpe: str, keep_cpes: bool) -> list[Node]:
         """Check if cpe matches exactly to any ProductStreams, if it does add the CPE as a parent
         of the stream. If more than one stream matches, create copies of the stream and leaf"""
         if cpe not in self.stream_nodes_by_cpe:
@@ -240,18 +255,30 @@ class ProdDefs:
         # the original stream_nodes_by_cpe map which should be preserved incase we encounter the
         # same CPE twice
         copy_of_stream_nodes = copy.deepcopy(stream_nodes)
-        return self._duplicate_leaves_and_set_parents(leaf, copy_of_stream_nodes)
+        return self._duplicate_leaves_and_set_parents(
+            leaf, copy_of_stream_nodes, keep_cpes
+        )
 
-    def _check_modules(self, leaf: Node, cpe: str) -> list[Node]:
+    def _check_modules(self, leaf: Node, cpe: str, keep_cpes: bool) -> list[Node]:
         """Check if the cpe matches any ProductModule"""
         module_nodes = self.match_module_pattern(cpe)
-        return self._duplicate_leaves_and_set_parents(leaf, module_nodes)
+        return self._duplicate_leaves_and_set_parents(leaf, module_nodes, keep_cpes)
 
     def _duplicate_leaves_and_set_parents(
-        self, leaf: Node, product_nodes: list[Any]
+        self, leaf: Node, product_nodes: list[Any], keep_cpes: bool
     ) -> list[Node]:
         """Convert product modules to their parent streams and attach all streams as children of the leaf.
-        Deduplicates streams to avoid multiple identical children. Returns the leaf in a list."""
+        Deduplicates streams to avoid multiple identical children.
+
+        Args:
+            leaf: The leaf node to process
+            product_nodes: List of product nodes (modules or streams)
+            keep_cpes: If False, replace the leaf with streams in the tree. If True, set streams as children of the leaf.
+
+        Returns:
+            If keep_cpes=True: Returns the leaf in a list.
+            If keep_cpes=False: Returns the list of unique streams that replaced the leaf.
+        """
         if not product_nodes:
             return []
 
@@ -274,10 +301,17 @@ class ProdDefs:
                 unique_streams.append(stream)
                 seen.add(stream)
 
-        for stream in unique_streams:
-            stream.parent = leaf
-
-        return [leaf]
+        if keep_cpes:
+            # Original behavior: set streams as children of the leaf
+            for stream in unique_streams:
+                stream.parent = leaf
+            return [leaf]
+        else:
+            # New behavior: replace the leaf with the streams in the tree
+            # Each stream takes the place of the leaf in the tree hierarchy
+            for stream in unique_streams:
+                stream.parent = leaf.parent
+            return unique_streams
 
     def _add_ancestor(self, leaf: Node, product: Any) -> None:
         if product.parent:
