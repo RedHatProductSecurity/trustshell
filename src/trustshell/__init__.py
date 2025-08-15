@@ -16,6 +16,8 @@ from rich.theme import Theme
 import webbrowser
 from univers.versions import RpmVersion
 from anytree import Node, RenderTree
+from anytree.exporter import DictExporter
+from anytree.importer import DictImporter
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
@@ -447,7 +449,67 @@ def paginated_trustify_query(
     )
 
 
+def _prune_cpe_nodes_recursive(node: Node) -> None:
+    """
+    Recursively traverses the tree in-place. If a node is a CPE node,
+    it moves its children to its parent and removes itself.
+    This is done in a post-order traversal to handle nested CPEs correctly.
+    """
+    # Iterate over a copy of children as the list might be modified
+    for child in list(node.children):
+        _prune_cpe_nodes_recursive(child)
+
+    if node.name.startswith("cpe:/") and node.parent:
+        parent = node.parent
+        # Get children before detaching them from the current node
+        children_to_move = list(node.children)
+        # Detach the CPE node from its parent.
+        node.parent = None
+        # Re-parent the (now former) children to the grandparent
+        for child in children_to_move:
+            child.parent = parent
+
+
+def _prune_cpe_tree(root: Node) -> list[Node]:
+    """
+    Prunes all CPE nodes from a tree, returning a list of the resulting tree roots.
+    Handles the case where the original root is a CPE node.
+    """
+    # The recursive helper function prunes the tree in-place
+    _prune_cpe_nodes_recursive(root)
+
+    # If the root of the pruned tree is a CPE node, its children become the new roots.
+    if root.name.startswith("cpe:/"):
+        new_roots = list(root.children)
+        root.children = []  # Detach children from the old root
+        return new_roots
+    else:
+        return [root]
+
+
+def _copy_tree(root: Node) -> Node:
+    """Creates a deep copy of an anytree Node tree"""
+    exporter, importer = DictExporter(), DictImporter()
+    return importer.import_(exporter.export(root))
+
+
 def render_tree(root: Node) -> None:
     """Pretty print a tree using name only"""
     for pre, _, node in RenderTree(root):
         console.print("%s%s" % (pre, node.name))
+
+
+def process_and_render_tree(root: Node, show_cpe: bool = False) -> None:
+    """Process a product tree to optionally remove CPE nodes and then render it"""
+    if show_cpe:
+        render_tree(root)
+        return
+
+    # Create a copy of the tree to avoid modifying the original
+    tree_copy = _copy_tree(root)
+
+    # Prune CPE nodes from the copied tree and get the new roots
+    pruned_roots = _prune_cpe_tree(tree_copy)
+
+    for root_node in pruned_roots:
+        render_tree(root_node)

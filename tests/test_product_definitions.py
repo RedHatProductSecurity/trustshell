@@ -4,7 +4,7 @@ from anytree import Node
 from unittest.mock import patch
 from test_products import _check_node_names_at_depth
 from trustshell.product_definitions import ProdDefs, ProductStream
-from trustshell.products import render_tree
+from trustshell import render_tree
 
 
 class TestProdDefs(unittest.TestCase):

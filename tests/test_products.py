@@ -4,13 +4,12 @@ from unittest.mock import patch
 
 from anytree import Node
 
-from trustshell import build_node_purl
+from trustshell import build_node_purl, render_tree
 from trustshell.products import (
     _get_branch_signature,
     _remove_duplicate_parent_nodes,
     _remove_non_cpe_branches,
     _trees_with_cpes,
-    render_tree,
     _has_cpe_node,
     container_in_tree,
     extract_affects,

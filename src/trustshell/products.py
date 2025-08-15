@@ -18,7 +18,7 @@ from trustshell import (
     config_logging,
     print_version,
     purl_sans_version,
-    render_tree,
+    process_and_render_tree,
     paginated_trustify_query,
 )
 from trustshell.osidb import OSIDB
@@ -82,12 +82,19 @@ def prime_cache(check: bool, debug: bool) -> None:
     callback=lambda ctx, param, value: _check_flaw(ctx, param, value, "replace"),
 )
 @click.option("--debug", "-d", is_flag=True, help="Debug log level.")
+@click.option("--show-cpes", is_flag=True, help="Show CPEs in output.")
 @click.argument(
     "purl",
     type=click.STRING,
 )
 def search(
-    purl: str, flaw: str, replace: bool, debug: bool, latest: bool, cpes: bool
+    purl: str,
+    flaw: str,
+    replace: bool,
+    debug: bool,
+    latest: bool,
+    cpes: bool,
+    show_cpes: bool,
 ) -> None:
     """Relate a purl to products in Trustify"""
     if not debug:
@@ -116,7 +123,7 @@ def search(
         if tree_signature in seen_trees:
             continue
         seen_trees.add(tree_signature)
-        render_tree(tree.root)
+        process_and_render_tree(tree.root, show_cpes)
 
     if not flaw:
         exit(0)
