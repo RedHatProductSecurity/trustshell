@@ -104,7 +104,7 @@ def search(purl: str, flaw: str, replace: bool, debug: bool, latest: bool) -> No
         return
 
     prod_defs = ProdDefs()
-    ancestor_trees = prod_defs.extend_with_product_mappings(ancestor_trees)
+    prod_defs.extend_with_product_mappings(ancestor_trees)
 
     for tree in ancestor_trees:
         render_tree(tree.root)
