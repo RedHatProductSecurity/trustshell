@@ -1,15 +1,17 @@
 import json
+import tempfile
+import os
 import unittest
 from anytree import Node
 from unittest.mock import patch
 from test_products import _check_node_names_at_depth
-from trustshell.product_definitions import ProdDefs, ProductStream
+from trustshell.product_definitions import ProdDefs
 from trustshell.products import render_tree
 
 
 class TestProdDefs(unittest.TestCase):
     def setUp(self):
-        with open("tests/testdata/product-definitions.json", "r") as file:
+        with open("tests/testdata/products/product-definitions.json", "r") as file:
             self.mock_proddefs_data = json.load(file)
 
     def test_clean_cpe(self):
@@ -17,25 +19,16 @@ class TestProdDefs(unittest.TestCase):
         result = ProdDefs._clean_cpe(cpe)
         assert result == "cpe:/a:redhat:rhel_eus:9.2::appstream"
 
-    def test_filter_rhel_mainline_cpes(self):
-        mainline_cpe = "cpe:/a:redhat:enterprise_linux:9::appstream"
-        eus_cpe = "cpe:/a:redhat:rhel_eus:9.4::appstream"
-        test_cpes = [mainline_cpe, eus_cpe]
-        ps = ProductStream("test")
-        result = ps._filter_rhel_mainline_cpes(test_cpes)
-        assert mainline_cpe not in result
-        assert eus_cpe in result
-
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
     def test_prod_defs_stream_nodes_by_cpe(self, mock_service):
         mock_service.return_value = self.mock_proddefs_data
         prod_defs = ProdDefs()
         assert (
-            "cpe:/a:redhat:enterprise_linux:9::appstream"
+            "cpe:/a:redhat:enterprise_linux:9.6::appstream"
             in prod_defs.stream_nodes_by_cpe
         )
         rhel_mainline_streams = prod_defs.stream_nodes_by_cpe[
-            "cpe:/a:redhat:enterprise_linux:9::appstream"
+            "cpe:/a:redhat:enterprise_linux:9.6::appstream"
         ]
         print([s.name for s in rhel_mainline_streams])
         assert len(rhel_mainline_streams) == 1
@@ -117,49 +110,12 @@ class TestProdDefs(unittest.TestCase):
         _check_node_names_at_depth(root, 2, ["rhel-9"])
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
-    def test_extend_with_product_mappings_rhel_mainline_filter(self, mock_service):
-        """Tests that the mainline cpe is only matched against streams without (e)us CPEs"""
-        mock_service.return_value = self.mock_proddefs_data
-        component = "pkg:rpm/redhat/openssl"
-        component_node = Node(component)
-        cpe = "cpe:/a:redhat:enterprise_linux:9::appstream"
-        Node(cpe, parent=component_node)
-        test_trees = [component_node]
-        ProdDefs().extend_with_product_mappings(test_trees, keep_cpes=True)
-        assert len(test_trees) == 1
-        root = test_trees[0].root
-        render_tree(root)
-        assert root.name == component
-        _check_node_names_at_depth(root, 1, [cpe])
-        _check_node_names_at_depth(root, 2, ["rhel-9.6.z"])
-        _check_node_names_at_depth(root, 3, ["rhel-9"])
-
-    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
-    def test_extend_with_product_mappings_rhel_mainline_filter_no_cpes(
-        self, mock_service
-    ):
-        """Tests that the mainline cpe is only matched against streams without (e)us CPEs"""
-        mock_service.return_value = self.mock_proddefs_data
-        component = "pkg:rpm/redhat/openssl"
-        component_node = Node(component)
-        cpe = "cpe:/a:redhat:enterprise_linux:9::appstream"
-        Node(cpe, parent=component_node)
-        test_trees = [component_node]
-        ProdDefs().extend_with_product_mappings(test_trees)
-        assert len(test_trees) == 1
-        root = test_trees[0].root
-        render_tree(root)
-        assert root.name == component
-        _check_node_names_at_depth(root, 1, ["rhel-9.6.z"])
-        _check_node_names_at_depth(root, 2, ["rhel-9"])
-
-    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
     def test_extend_with_product_mappings_multi_products(self, mock_service):
         """Tests that duplicate CPEs return duplicates branches"""
         mock_service.return_value = self.mock_proddefs_data
         component_1 = "pkg:rpm/redhat/openssl"
         component_2 = "pkg:rpm/redhat/openssl-debug"
-        cpe = "cpe:/a:redhat:enterprise_linux:9::appstream"
+        cpe = "cpe:/a:redhat:enterprise_linux:9.6::appstream"
         component_node_1 = Node(component_1)
         Node(cpe, parent=component_node_1)
         component_node_2 = Node(component_2)
@@ -182,7 +138,7 @@ class TestProdDefs(unittest.TestCase):
         mock_service.return_value = self.mock_proddefs_data
         component_1 = "pkg:rpm/redhat/openssl"
         component_2 = "pkg:rpm/redhat/openssl-debug"
-        cpe = "cpe:/a:redhat:enterprise_linux:9::appstream"
+        cpe = "cpe:/a:redhat:enterprise_linux:9.6::appstream"
         component_node_1 = Node(component_1)
         Node(cpe, parent=component_node_1)
         component_node_2 = Node(component_2)
@@ -311,3 +267,260 @@ class TestProdDefs(unittest.TestCase):
         _check_node_names_at_depth(first_root, 2, ["quay-3", "quay-3"])
         _check_node_names_at_depth(second_root, 1, ["quay-3.13"])
         _check_node_names_at_depth(second_root, 2, ["quay-3"])
+
+    def _create_test_rhel_releases_yaml(self):
+        """Create a temporary RHEL releases YAML file for testing."""
+        test_data = """
+nodes:
+    RHEL-9.0.0.GA:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/a:redhat:enterprise_linux:9::crb
+
+    RHEL-9.0.0.Z.MAIN+EUS:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/a:redhat:enterprise_linux:9::crb
+
+    RHEL-9.0.0.Z.EUS:
+      type: eus
+      cpes:
+        - cpe:/a:redhat:rhel_eus:9.0::appstream
+        - cpe:/o:redhat:rhel_eus:9.0::baseos
+        - cpe:/a:redhat:rhel_eus:9.0::crb
+
+    RHEL-9.2.0.GA:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/a:redhat:enterprise_linux:9.2::appstream
+
+    RHEL-9.2.0.Z.EUS:
+      type: eus
+      cpes:
+        - cpe:/a:redhat:rhel_eus:9.2::appstream
+        - cpe:/o:redhat:rhel_eus:9.2::baseos
+
+edges:
+    RHEL-9.0.0.GA:
+        - RHEL-9.0.0.Z.MAIN+EUS
+    RHEL-9.0.0.Z.MAIN+EUS:
+        - RHEL-9.0.0.Z.EUS
+        - RHEL-9.2.0.GA
+    RHEL-9.2.0.GA:
+        - RHEL-9.2.0.Z.EUS
+"""
+        temp_file = tempfile.NamedTemporaryFile(mode="w", suffix=".yml", delete=False)
+        temp_file.write(test_data)
+        temp_file.flush()
+        temp_file.close()
+        return temp_file.name
+
+    def _create_enhanced_product_definitions(self):
+        """Create product definitions with enhanced RHEL streams for testing."""
+        return {
+            "ps_modules": {
+                "rhel-9": {
+                    "public_description": "Red Hat Enterprise Linux 9",
+                    "ps_update_streams": ["rhel-9.0.0.z", "rhel-9.2.0.z"],
+                    "active_ps_update_streams": ["rhel-9.0.0.z", "rhel-9.2.0.z"],
+                }
+            },
+            "ps_update_streams": {
+                "rhel-9.0.0.z": {
+                    "pp_label": "rhel-9.0.0.z",
+                    "version": "rhel-9.0.0.z",
+                    "cpe": [
+                        "cpe:/a:redhat:rhel_eus:9.0::appstream",
+                        "cpe:/o:redhat:rhel_eus:9.0::baseos",
+                        "cpe:/a:redhat:rhel_eus:9.0::crb",
+                    ],
+                },
+                "rhel-9.2.0.z": {
+                    "pp_label": "rhel-9.2.0.z",
+                    "version": "rhel-9.2.0.z",
+                    "cpe": [
+                        "cpe:/a:redhat:rhel_eus:9.2::appstream",
+                        "cpe:/o:redhat:rhel_eus:9.2::baseos",
+                    ],
+                },
+            },
+        }
+
+    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
+    def test_rhel_releases_direct_cpe_match(self, mock_service):
+        """Test that direct CPE matches work with RHEL release data."""
+        mock_service.return_value = self._create_enhanced_product_definitions()
+        rhel_yaml_path = self._create_test_rhel_releases_yaml()
+
+        try:
+            # Create ProdDefs with RHEL release data
+            prod_defs = ProdDefs(active_only=True, rhel_releases_path=rhel_yaml_path)
+
+            # Test direct CPE match
+            component = "pkg:rpm/redhat/openssl"
+            component_node = Node(component)
+            # This CPE exists directly in the rhel-9.0.0.z stream
+            cpe = "cpe:/a:redhat:rhel_eus:9.0::appstream"
+            Node(cpe, parent=component_node)
+            test_trees = [component_node]
+
+            prod_defs.extend_with_product_mappings(test_trees, keep_cpes=True)
+
+            # Verify the mapping worked
+            root = test_trees[0].root
+            render_tree(root)
+            assert root.name == component
+            _check_node_names_at_depth(root, 1, [cpe])
+            _check_node_names_at_depth(root, 2, ["rhel-9.0.0.z"])
+            _check_node_names_at_depth(root, 3, ["rhel-9"])
+
+        finally:
+            os.unlink(rhel_yaml_path)
+
+    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
+    def test_rhel_releases_parent_cpe_match(self, mock_service):
+        """Test that parent CPE matches work and map to leaf streams."""
+        mock_service.return_value = self._create_enhanced_product_definitions()
+        rhel_yaml_path = self._create_test_rhel_releases_yaml()
+
+        try:
+            # Create ProdDefs with RHEL release data
+            prod_defs = ProdDefs(active_only=True, rhel_releases_path=rhel_yaml_path)
+
+            # Test parent CPE match
+            component = "pkg:rpm/redhat/httpd"
+            component_node = Node(component)
+            # This CPE appears in parent nodes (GA, MAIN+EUS) but should now be filtered out
+            # so no matches should occur with single digit CPEs
+            cpe = "cpe:/a:redhat:enterprise_linux:9::appstream"
+            Node(cpe, parent=component_node)
+            test_trees = [component_node]
+
+            prod_defs.extend_with_product_mappings(test_trees, keep_cpes=True)
+
+            # Verify that single digit CPE is now filtered out and doesn't match
+            root = test_trees[0].root
+            render_tree(root)
+            assert root.name == component
+            _check_node_names_at_depth(root, 1, [cpe])
+
+            # Should NOT map to any streams since single digit CPE is filtered out
+            # from RHEL release data and falls back to module matching (which also fails)
+            assert len(root.children[0].children) == 0
+
+        finally:
+            os.unlink(rhel_yaml_path)
+
+    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
+    def test_rhel_releases_versioned_cpe_still_works(self, mock_service):
+        """Test that versioned CPEs (like 9.0::appstream) still work with RHEL release data."""
+        mock_service.return_value = self._create_enhanced_product_definitions()
+        rhel_yaml_path = self._create_test_rhel_releases_yaml()
+
+        try:
+            # Create ProdDefs with RHEL release data
+            prod_defs = ProdDefs(active_only=True, rhel_releases_path=rhel_yaml_path)
+
+            # Test versioned CPE that should work (not filtered out)
+            component = "pkg:rpm/redhat/httpd"
+            component_node = Node(component)
+            # This CPE has version (9.2) so should NOT be filtered out
+            cpe = "cpe:/a:redhat:enterprise_linux:9.2::appstream"
+            Node(cpe, parent=component_node)
+            test_trees = [component_node]
+
+            prod_defs.extend_with_product_mappings(test_trees, keep_cpes=True)
+
+            # Verify the versioned CPE can still map to streams through RHEL release data
+            root = test_trees[0].root
+            render_tree(root)
+            assert root.name == component
+            _check_node_names_at_depth(root, 1, [cpe])
+
+            # Should map to active streams since versioned CPE exists in RHEL release data
+            stream_names = [node.name for node in root.children[0].children]
+            assert "rhel-9.2.0.z" in stream_names
+
+        finally:
+            os.unlink(rhel_yaml_path)
+
+    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
+    def test_rhel_releases_no_match_behavior(self, mock_service):
+        """Test behavior when CPE doesn't match any RHEL release data."""
+        mock_service.return_value = self._create_enhanced_product_definitions()
+        rhel_yaml_path = self._create_test_rhel_releases_yaml()
+
+        try:
+            # Create ProdDefs with RHEL release data
+            prod_defs = ProdDefs(active_only=True, rhel_releases_path=rhel_yaml_path)
+
+            # Test with a CPE that doesn't match RHEL release data
+            component = "pkg:rpm/unknown/package"
+            component_node = Node(component)
+            # This CPE doesn't exist in our test RHEL release data
+            cpe = "cpe:/a:unknown:product:1.0"
+            Node(cpe, parent=component_node)
+            test_trees = [component_node]
+
+            prod_defs.extend_with_product_mappings(test_trees, keep_cpes=True)
+
+            # Should fall back to module pattern matching (which should also fail)
+            # and display a warning about no matching products
+            root = test_trees[0].root
+            assert root.name == component
+            # Should still have the original CPE node
+            assert len(root.children) == 1
+            assert root.children[0].name == cpe
+            # But no product mappings should be added
+            assert len(root.children[0].children) == 0
+
+        finally:
+            os.unlink(rhel_yaml_path)
+
+    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
+    def test_rhel_releases_with_missing_file(self, mock_service):
+        """Test that ProdDefs handles missing RHEL release file gracefully."""
+        mock_service.return_value = self.mock_proddefs_data
+
+        # Try to create ProdDefs with non-existent RHEL release file
+        non_existent_path = "/path/that/does/not/exist.yml"
+        prod_defs = ProdDefs(active_only=True, rhel_releases_path=non_existent_path)
+
+        # Should create enhanced_proddefs but with no RHEL release data
+        assert prod_defs.enhanced_proddefs is not None
+        assert prod_defs.enhanced_proddefs.rhel_releases is None
+
+        # Should still work normally
+        assert len(prod_defs.product_trees) > 0
+
+    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
+    def test_get_all_cpes_for_rhel_stream_enhanced(self, mock_service):
+        """Test getting all CPEs for a RHEL stream using the release graph."""
+        mock_service.return_value = self._create_enhanced_product_definitions()
+        rhel_yaml_path = self._create_test_rhel_releases_yaml()
+
+        try:
+            # Test with RHEL release data
+            prod_defs = ProdDefs(active_only=True, rhel_releases_path=rhel_yaml_path)
+
+            # Get all CPEs for rhel-9.0.0.z stream
+            all_cpes = prod_defs.get_all_cpes_for_rhel_stream("rhel-9.0.0.z")
+
+            # Should include direct stream CPEs
+            assert "cpe:/a:redhat:rhel_eus:9.0::appstream" in all_cpes
+            assert "cpe:/o:redhat:rhel_eus:9.0::baseos" in all_cpes
+
+            # Should also include CPEs from related RHEL release nodes
+            # The implementation should find RHEL-9.0.0.* nodes and their ancestors
+            assert len(all_cpes) > 2  # Should be more than just the direct CPEs
+
+            print(f"Enhanced CPEs for rhel-9.0.0.z: {sorted(all_cpes)}")
+
+        finally:
+            os.unlink(rhel_yaml_path)

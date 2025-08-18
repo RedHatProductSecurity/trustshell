@@ -1,0 +1,502 @@
+nodes:
+    RHEL-9.0.0.GA:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+        - cpe:/a:redhat:enterprise_linux:9.0::appstream
+
+    RHEL-9.0.0.Z.MAIN+EUS:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+        - cpe:/a:redhat:enterprise_linux:9.0::appstream
+
+    RHEL-9.0.0.Z.EUS:
+      type: eus
+      cpes:
+        - cpe:/a:redhat:rhel_eus:9.0::appstream
+        - cpe:/a:redhat:rhel_eus:9.0::crb
+        - cpe:/a:redhat:rhel_eus:9.0::highavailability
+        - cpe:/a:redhat:rhel_eus:9.0::nfv
+        - cpe:/a:redhat:rhel_eus:9.0::realtime
+        - cpe:/a:redhat:rhel_eus:9.0::resilientstorage
+        - cpe:/a:redhat:rhel_eus:9.0::sap
+        - cpe:/a:redhat:rhel_eus:9.0::sap_hana
+        - cpe:/a:redhat:rhel_eus:9.0::supplementary
+        - cpe:/o:redhat:rhel_eus:9.0::baseos
+
+    RHEL-9.0.0.Z.E4S:
+      type: e4s
+      cpes:
+        - cpe:/a:redhat:rhel_e4s:9.0::appstream
+        - cpe:/a:redhat:rhel_e4s:9.0::highavailability
+        - cpe:/a:redhat:rhel_e4s:9.0::nfv
+        - cpe:/a:redhat:rhel_e4s:9.0::realtime
+        - cpe:/a:redhat:rhel_e4s:9.0::resilientstorage
+        - cpe:/a:redhat:rhel_e4s:9.0::sap
+        - cpe:/a:redhat:rhel_e4s:9.0::sap_hana
+        - cpe:/o:redhat:rhel_e4s:9.0::baseos
+
+    RHEL-9.1.0.GA:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+
+    RHEL-9.1.0.Z.MAIN:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+
+    RHEL-9.2.0.GA:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+        - cpe:/a:redhat:enterprise_linux:9.2::appstream
+
+    RHEL-9.2.0.Z.MAIN+EUS:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+        - cpe:/a:redhat:enterprise_linux:9.2::appstream
+
+    RHEL-9.2.0.Z.EUS:
+      type: eus
+      cpes:
+        - cpe:/a:redhat:rhel_eus:9.2::appstream
+        - cpe:/a:redhat:rhel_eus:9.2::crb
+        - cpe:/a:redhat:rhel_eus:9.2::highavailability
+        - cpe:/a:redhat:rhel_eus:9.2::nfv
+        - cpe:/a:redhat:rhel_eus:9.2::realtime
+        - cpe:/a:redhat:rhel_eus:9.2::resilientstorage
+        - cpe:/a:redhat:rhel_eus:9.2::sap
+        - cpe:/a:redhat:rhel_eus:9.2::sap_hana
+        - cpe:/a:redhat:rhel_eus:9.2::supplementary
+        - cpe:/o:redhat:rhel_eus:9.2::baseos
+
+    RHEL-9.2.0.Z.AUS:
+      type: aus
+      cpes:
+        - cpe:/a:redhat:rhel_aus:9.2::appstream
+        - cpe:/o:redhat:rhel_aus:9.2::baseos
+
+    RHEL-9.2.0.Z.E4S:
+      type: e4s
+      cpes:
+        - cpe:/a:redhat:rhel_e4s:9.2::appstream
+        - cpe:/a:redhat:rhel_e4s:9.2::highavailability
+        - cpe:/a:redhat:rhel_e4s:9.2::nfv
+        - cpe:/a:redhat:rhel_e4s:9.2::realtime
+        - cpe:/a:redhat:rhel_e4s:9.2::resilientstorage
+        - cpe:/a:redhat:rhel_e4s:9.2::sap
+        - cpe:/a:redhat:rhel_e4s:9.2::sap_hana
+        - cpe:/o:redhat:rhel_e4s:9.2::baseos
+
+    RHEL-9.3.0.GA:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+
+    RHEL-9.3.0.Z.MAIN:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+
+    RHEL-9.4.0.GA:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+        - cpe:/a:redhat:enterprise_linux:9.4::appstream
+
+    RHEL-9.4.0.Z.MAIN+EUS:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+        - cpe:/a:redhat:enterprise_linux:9.4::appstream
+
+    RHEL-9.4.0.Z.EUS:
+      type: eus
+      cpes:
+        - cpe:/a:redhat:rhel_eus:9.4::appstream
+        - cpe:/a:redhat:rhel_eus:9.4::crb
+        - cpe:/a:redhat:rhel_eus:9.4::highavailability
+        - cpe:/a:redhat:rhel_eus:9.4::nfv
+        - cpe:/a:redhat:rhel_eus:9.4::realtime
+        - cpe:/a:redhat:rhel_eus:9.4::resilientstorage
+        - cpe:/a:redhat:rhel_eus:9.4::sap
+        - cpe:/a:redhat:rhel_eus:9.4::sap_hana
+        - cpe:/a:redhat:rhel_eus:9.4::supplementary
+        - cpe:/o:redhat:rhel_eus:9.4::baseos
+
+    RHEL-9.4.0.Z.AUS:
+      type: aus
+      cpes:
+        - cpe:/a:redhat:rhel_aus:9.4::appstream
+        - cpe:/o:redhat:rhel_aus:9.4::baseos
+
+    RHEL-9.4.0.Z.E4S:
+      type: e4s
+      cpes:
+        - cpe:/a:redhat:rhel_e4s:9.4::appstream
+        - cpe:/a:redhat:rhel_e4s:9.4::highavailability
+        - cpe:/a:redhat:rhel_e4s:9.4::nfv
+        - cpe:/a:redhat:rhel_e4s:9.4::realtime
+        - cpe:/a:redhat:rhel_e4s:9.4::resilientstorage
+        - cpe:/a:redhat:rhel_e4s:9.4::sap
+        - cpe:/a:redhat:rhel_e4s:9.4::sap_hana
+        - cpe:/o:redhat:rhel_e4s:9.4::baseos
+
+    RHEL-9.5.0.GA:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+
+    RHEL-9.5.0.Z.MAIN:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+
+    RHEL-9.6.0.GA:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+        - cpe:/a:redhat:enterprise_linux:9.6::appstream
+
+    RHEL-9.6.0.Z.MAIN+EUS:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+        - cpe:/a:redhat:enterprise_linux:9.6::appstream
+
+    RHEL-9.6.0.Z.EUS:
+      type: eus
+      cpes:
+        - cpe:/a:redhat:rhel_eus:9.6::appstream
+        - cpe:/a:redhat:rhel_eus:9.6::crb
+        - cpe:/a:redhat:rhel_eus:9.6::highavailability
+        - cpe:/a:redhat:rhel_eus:9.6::nfv
+        - cpe:/a:redhat:rhel_eus:9.6::realtime
+        - cpe:/a:redhat:rhel_eus:9.6::resilientstorage
+        - cpe:/a:redhat:rhel_eus:9.6::sap
+        - cpe:/a:redhat:rhel_eus:9.6::sap_hana
+        - cpe:/a:redhat:rhel_eus:9.6::supplementary
+        - cpe:/o:redhat:rhel_eus:9.6::baseos
+
+    RHEL-9.6.0.Z.AUS:
+      type: aus
+      cpes:
+        - cpe:/a:redhat:rhel_aus:9.6::appstream
+        - cpe:/o:redhat:rhel_aus:9.6::baseos
+
+    RHEL-9.6.0.Z.E4S:
+      type: e4s
+      cpes:
+        - cpe:/a:redhat:rhel_e4s:9.6::appstream
+        - cpe:/a:redhat:rhel_e4s:9.6::highavailability
+        - cpe:/a:redhat:rhel_e4s:9.6::nfv
+        - cpe:/a:redhat:rhel_e4s:9.6::realtime
+        - cpe:/a:redhat:rhel_e4s:9.6::resilientstorage
+        - cpe:/a:redhat:rhel_e4s:9.6::sap
+        - cpe:/a:redhat:rhel_e4s:9.6::sap_hana
+        - cpe:/o:redhat:rhel_e4s:9.6::baseos
+
+    RHEL-9.7.0.GA:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+
+    RHEL-9.7.0.Z.MAIN:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/o:redhat:enterprise_linux:9::fastdatapath
+        - cpe:/o:redhat:enterprise_linux:9::hypervisor
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+
+    RHEL-9.8.0.GA:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+
+    RHEL-9.8.0.Z.MAIN+EUS:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/o:redhat:enterprise_linux:9::baseos
+        - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9::highavailability
+        - cpe:/a:redhat:enterprise_linux:9::nfv
+        - cpe:/a:redhat:enterprise_linux:9::realtime
+        - cpe:/a:redhat:enterprise_linux:9::resilientstorage
+        - cpe:/a:redhat:enterprise_linux:9::sap
+        - cpe:/a:redhat:enterprise_linux:9::sap_hana
+        - cpe:/a:redhat:enterprise_linux:9::supplementary
+
+    RHEL-9.8.0.Z.EUS:
+      type: eus
+      cpes:
+        - cpe:/a:redhat:rhel_eus:9.8::appstream
+        - cpe:/a:redhat:rhel_eus:9.8::crb
+        - cpe:/a:redhat:rhel_eus:9.8::highavailability
+        - cpe:/a:redhat:rhel_eus:9.8::nfv
+        - cpe:/a:redhat:rhel_eus:9.8::realtime
+        - cpe:/a:redhat:rhel_eus:9.8::resilientstorage
+        - cpe:/a:redhat:rhel_eus:9.8::sap
+        - cpe:/a:redhat:rhel_eus:9.8::sap_hana
+        - cpe:/a:redhat:rhel_eus:9.8::supplementary
+        - cpe:/o:redhat:rhel_eus:9.8::baseos
+
+    RHEL-9.8.0.Z.AUS:
+      type: aus
+      cpes:
+        - cpe:/a:redhat:rhel_aus:9.8::appstream
+        - cpe:/o:redhat:rhel_aus:9.8::baseos
+
+    RHEL-9.8.0.Z.E4S:
+      type: e4s
+      cpes:
+        - cpe:/a:redhat:rhel_e4s:9.8::appstream
+        - cpe:/a:redhat:rhel_e4s:9.8::highavailability
+        - cpe:/a:redhat:rhel_e4s:9.8::nfv
+        - cpe:/a:redhat:rhel_e4s:9.8::realtime
+        - cpe:/a:redhat:rhel_e4s:9.8::resilientstorage
+        - cpe:/a:redhat:rhel_e4s:9.8::sap
+        - cpe:/a:redhat:rhel_e4s:9.8::sap_hana
+        - cpe:/o:redhat:rhel_e4s:9.8::baseos
+
+edges:
+    RHEL-9.0.0.GA:
+        - RHEL-9.0.0.Z.MAIN+EUS
+    RHEL-9.0.0.Z.MAIN+EUS:
+        - RHEL-9.0.0.Z.EUS
+        - RHEL-9.1.0.GA
+    RHEL-9.0.0.Z.EUS:
+        - RHEL-9.0.0.Z.E4S
+    RHEL-9.1.0.GA:
+        - RHEL-9.1.0.Z.MAIN
+    RHEL-9.1.0.Z.MAIN:
+        - RHEL-9.2.0.GA
+    RHEL-9.2.0.GA:
+        - RHEL-9.2.0.Z.MAIN+EUS
+    RHEL-9.2.0.Z.MAIN+EUS:
+        - RHEL-9.2.0.Z.EUS
+        - RHEL-9.3.0.GA
+    RHEL-9.2.0.Z.EUS:
+        - RHEL-9.2.0.Z.AUS
+        - RHEL-9.2.0.Z.E4S
+    RHEL-9.3.0.GA:
+        - RHEL-9.3.0.Z.MAIN
+    RHEL-9.3.0.Z.MAIN:
+        - RHEL-9.4.0.GA
+    RHEL-9.4.0.GA:
+        - RHEL-9.4.0.Z.MAIN+EUS
+    RHEL-9.4.0.Z.MAIN+EUS:
+        - RHEL-9.4.0.Z.EUS
+        - RHEL-9.5.0.GA
+    RHEL-9.4.0.Z.EUS:
+        - RHEL-9.4.0.Z.AUS
+        - RHEL-9.4.0.Z.E4S
+    RHEL-9.5.0.GA:
+        - RHEL-9.5.0.Z.MAIN
+    RHEL-9.5.0.Z.MAIN:
+        - RHEL-9.6.0.GA
+    RHEL-9.6.0.GA:
+        - RHEL-9.6.0.Z.MAIN+EUS
+    RHEL-9.6.0.Z.MAIN+EUS:
+        - RHEL-9.6.0.Z.EUS
+        - RHEL-9.7.0.GA
+    RHEL-9.6.0.Z.EUS:
+        - RHEL-9.6.0.Z.AUS
+        - RHEL-9.6.0.Z.E4S
+    RHEL-9.7.0.GA:
+        - RHEL-9.7.0.Z.MAIN
+    RHEL-9.7.0.Z.MAIN:
+        - RHEL-9.8.0.GA
+    RHEL-9.8.0.GA:
+        - RHEL-9.8.0.Z.MAIN+EUS
+    RHEL-9.8.0.Z.MAIN+EUS:
+        - RHEL-9.8.0.Z.EUS
+    RHEL-9.8.0.Z.EUS:
+        - RHEL-9.8.0.Z.AUS
+        - RHEL-9.8.0.Z.E4S

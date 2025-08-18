@@ -15,7 +15,9 @@ dependencies = [
     "packageurl-python>=0.16.0",
     "pkce>=1.0.3",
     "pyjwt>=2.10.1",
+    "pyyaml>=6.0",
     "rich>=14.0.0",
+    "types-pyyaml>=6.0.12.20250809",
     "univers>=30.12.1",
 ]
 

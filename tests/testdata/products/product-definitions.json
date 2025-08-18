@@ -21,11 +21,13 @@
     "rhel-9": {
       "public_description": "Red Hat Enterprise Linux 9",
       "ps_update_streams": [
+        "rhel-9.0.0.z",
         "rhel-9.2.0.z",
         "rhel-9.4.z",
         "rhel-9.6.z"
       ],
       "active_ps_update_streams": [
+        "rhel-9.0.0.z",
         "rhel-9.2.0.z",
         "rhel-9.4.z",
         "rhel-9.6.z"
@@ -113,7 +115,7 @@
       "pp_label": "rhel-9.4.z",
       "version": "rhel-9.4.z",
       "cpe": [
-        "cpe:/a:redhat:enterprise_linux:9::appstream",
+        "cpe:/a:redhat:enterprise_linux:9.4::appstream",
         "cpe:/a:redhat:rhel_eus:9.4::appstream",
         "cpe:/o:redhat:rhel_eus:9.4::baseos",
         "cpe:/a:redhat:rhel_eus:9.4::crb",
@@ -130,7 +132,7 @@
       "pp_label": "rhel-9.6.z",
       "version": "rhel-9.6.z",
       "cpe": [
-        "cpe:/a:redhat:enterprise_linux:9::appstream"
+        "cpe:/a:redhat:enterprise_linux:9.6::appstream"
       ]
     },
     "quay-3.12": {
