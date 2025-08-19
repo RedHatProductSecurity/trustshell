@@ -39,9 +39,10 @@ class RHELReleaseNode:
 class RHELReleaseData:
     """Parser and manager for RHEL release data from GitLab repository or local files."""
 
-    # Default GitLab repository configuration
-    DEFAULT_REPO_BASE = (
-        "https://gitlab.cee.redhat.com/api/v4/projects/prodsec%2Frhel-release-graph"
+    # GitLab repository configuration (can be overridden with RHEL_RELEASE_GRAPH_URL env var)
+    RHEL_RELEASE_GRAPH_BASE = os.environ.get(
+        "RHEL_RELEASE_GRAPH_URL",
+        "https://gitlab.cee.redhat.com/api/v4/projects/prodsec%2Frhel-release-graph",
     )
     DEFAULT_FILE_PATH = "rhel9-releases.yml"
     DEFAULT_BRANCH = "main"
@@ -124,9 +125,7 @@ class RHELReleaseData:
             # Build GitLab API URL for the file
             # URL format: /projects/:id/repository/files/:file_path/raw?ref=:branch
             encoded_file_path = self.file_path.replace("/", "%2F")
-            file_url = (
-                f"{self.DEFAULT_REPO_BASE}/repository/files/{encoded_file_path}/raw"
-            )
+            file_url = f"{self.RHEL_RELEASE_GRAPH_BASE}/repository/files/{encoded_file_path}/raw"
 
             # Load cached ETag if available
             cached_etag = self._load_cached_etag(etag_file)
