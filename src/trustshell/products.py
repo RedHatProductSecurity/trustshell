@@ -244,7 +244,8 @@ def _remove_root_return_children(root: Node) -> list[Node]:
 def _get_branch_signature(node: Node) -> str:
     """
     Create a unique signature for a branch structure starting from the given node.
-    The signature represents the structure and node names in the branch.
+    The signature includes the root component to ensure different components
+    with the same product mappings don't get deduplicated.
 
     Args:
         node (Node): Root node of the branch to signature
@@ -252,13 +253,18 @@ def _get_branch_signature(node: Node) -> str:
     Returns:
         str: A string signature representing the branch structure
     """
+    # Always include the root component name to prevent deduplication
+    # of different components with identical product mappings
+    root_component = node.name
+
     # Use a list to collect branch elements in pre-order traversal
-    elements = []
+    elements = [f"ROOT:{root_component}"]
 
     def traverse(current_node: Node, path: str = "") -> None:
-        # Add node name and its level in the path
-        node_sig = f"{path}{current_node.name}"
-        elements.append(node_sig)
+        # Add node name and its level in the path (skip root since it's already included)
+        if current_node != node:
+            node_sig = f"{path}{current_node.name}"
+            elements.append(node_sig)
 
         # Process children in a consistent order (sort by name)
         for i, child in enumerate(sorted(current_node.children, key=lambda x: x.name)):

@@ -408,11 +408,7 @@ edges:
             root = test_trees[0].root
             render_tree(root)
             assert root.name == component
-            _check_node_names_at_depth(root, 1, [cpe])
-
-            # Should NOT map to any streams since single digit CPE is filtered out
-            # from RHEL release data and falls back to module matching (which also fails)
-            assert len(root.children[0].children) == 0
+            _check_node_names_at_depth(root, 1, [])
 
         finally:
             os.unlink(rhel_yaml_path)

@@ -384,15 +384,22 @@ class ProdDefs:
 
         if keep_cpes:
             # Original behavior: set streams as children of the leaf
+            # Create copies to avoid modifying shared objects
+            stream_copies = []
             for stream in unique_streams:
-                stream.parent = leaf
+                stream_copy = copy.deepcopy(stream)
+                stream_copy.parent = leaf
+                stream_copies.append(stream_copy)
             return [leaf]
         else:
             # New behavior: replace the leaf with the streams in the tree
-            # Each stream takes the place of the leaf in the tree hierarchy
+            # Create copies to avoid modifying shared objects
+            stream_copies = []
             for stream in unique_streams:
-                stream.parent = leaf.parent
-            return unique_streams
+                stream_copy = copy.deepcopy(stream)
+                stream_copy.parent = leaf.parent
+                stream_copies.append(stream_copy)
+            return stream_copies
 
     def get_all_cpes_for_rhel_stream(self, stream_name: str) -> set[str]:
         """
