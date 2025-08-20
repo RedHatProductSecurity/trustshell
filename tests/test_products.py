@@ -20,7 +20,7 @@ from trustshell.product_definitions import ProdDefs
 
 class TestProducts(unittest.TestCase):
     def setUp(self):
-        with open("tests/testdata/product-definitions.json", "r") as file:
+        with open("tests/testdata/products/product-definitions.json", "r") as file:
             self.mock_proddefs_data = json.load(file)
 
     def test_build_node_purl_rpm(self):

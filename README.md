@@ -30,6 +30,7 @@ export AUTH_ENDPOINT="https://auth.stage.redhat.com/auth/realms/EmployeeIDP/prot
 Product Mapping:
 ```bash
 export PRODDEFS_URL="https://prodsec.pages.example.com/product-definitions/products.json"
+export RHEL_RELEASE_GRAPH_URL="https://gitlab.cee.example.com/api/v4/projects/prodsec%2Frhel-release-graph"
 export SSL_CERT_FILE=/etc/pki/tls/certs/ca-bundle.crt
 ```
 
