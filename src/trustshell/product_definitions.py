@@ -415,7 +415,7 @@ class ProdDefs:
         if not self.enhanced_proddefs:
             # Fallback to direct stream CPEs only
             result = set()
-            for cpe, stream_nodes in self.stream_nodes_by_cpe.items():
+            for stream_nodes in self.stream_nodes_by_cpe.values():
                 for stream_node in stream_nodes:
                     if stream_node.name == stream_name:
                         result.update(stream_node.cpes)
@@ -423,7 +423,7 @@ class ProdDefs:
 
         # Get stream CPEs mapping
         stream_cpes: dict[str, list[str]] = {}
-        for cpe, stream_nodes in self.stream_nodes_by_cpe.items():
+        for stream_nodes in self.stream_nodes_by_cpe.values():
             for stream_node in stream_nodes:
                 if stream_node.name not in stream_cpes:
                     stream_cpes[stream_node.name] = []
