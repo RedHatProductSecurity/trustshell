@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { email = "jason@jasonshepherd.net" }
 ]
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = [
     "anytree>=2.12.1",
     "click>=8.2.1",
@@ -41,7 +41,7 @@ lint = [
 ]
 
 [tool.mypy]
-python_version = "3.13"
+python_version = "3.12"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
