@@ -255,7 +255,8 @@ class RHELReleaseData:
 
             commits_data = response.json()
             if commits_data and len(commits_data) > 0:
-                return commits_data[0].get("id")
+                commit_id = commits_data[0].get("id")
+                return commit_id if isinstance(commit_id, str) else None
 
         except httpx.RequestError as e:
             logger.error(f"Network error getting latest commit: {e}")
@@ -268,8 +269,8 @@ class RHELReleaseData:
         self, file_paths: List[str]
     ) -> Optional[Dict[str, Any]]:
         """Fetch multiple YAML files and combine their data."""
-        combined_nodes = {}
-        combined_edges = {}
+        combined_nodes: Dict[str, Any] = {}
+        combined_edges: Dict[str, Any] = {}
 
         # SSL certificate path can be set via SSL_CERT_FILE environment variable
         ssl_cert_file = os.environ.get("SSL_CERT_FILE")
@@ -496,24 +497,27 @@ class RHELReleaseData:
         """
         result_streams = set()
 
-        # TODO once we add the other fake CPEs to the rhel release graph match all rhel streams here
-        # Check if any active streams start with 'rhel-9' - if so, always use RHEL release graph
-        has_rhel9_streams = any(
-            stream_name.startswith("rhel-9") for stream_name in active_streams
+        # Check if any active streams start with 'rhel-' followed by a digit (e.g., rhel-9, rhel-8)
+        # but exclude streams like 'rhel-br-' - if so, always use RHEL release graph
+        has_active_rhel_streams = any(
+            stream_name.startswith("rhel-")
+            and len(stream_name) > 5
+            and stream_name[5].isdigit()
+            for stream_name in active_streams
         )
 
-        if not has_rhel9_streams:
+        if not has_active_rhel_streams:
             # For non-RHEL 9 streams, use direct matching first
             for stream_name in active_streams:
                 if stream_name in stream_cpes:
                     if cpe in stream_cpes[stream_name]:
                         result_streams.add(stream_name)
 
-            # If we found direct matches for non-RHEL 9 streams, return them
+            # If we found direct matches for non-RHEL streams, return them
             if result_streams:
                 return result_streams
 
-        # For RHEL 9 streams or when no direct matches found, use RHEL release graph
+        # For RHEL streams or when no direct matches found, use RHEL release graph
         matching_nodes = self.find_matching_nodes_for_cpe(cpe)
 
         for node in matching_nodes:
