@@ -34,6 +34,12 @@ export RHEL_RELEASE_GRAPH_URL="https://gitlab.cee.example.com/api/v4/projects/pr
 export SSL_CERT_FILE=/etc/pki/tls/certs/ca-bundle.crt
 ```
 
+Optional Configuration:
+```bash
+# Set custom configuration directory (defaults to ~/.config/trustshell/)
+export TRUSTSHELL_SCRATCH="/path/to/custom/config/dir"
+```
+
 ### Running in a container
 
 The authentication flows tries to spawn a browser in order to authentication to Single-Sign On (SSO). If running in a 'headless' environment like a container image that won't work. When running in a container it's necessary to run the container image defined in [this Containerfile](src/trustshell/oidc/Containerfile).

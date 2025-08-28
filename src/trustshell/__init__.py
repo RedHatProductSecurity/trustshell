@@ -27,7 +27,9 @@ from trustshell.oidc.oidc_pkce_authcode import (
     gen_things,
 )
 
-CONFIG_DIR = os.path.expanduser("~/.config/trustshell/")
+CONFIG_DIR = os.path.expanduser(
+    os.getenv("TRUSTSHELL_SCRATCH", "~/.config/trustshell/")
+)
 os.makedirs(CONFIG_DIR, exist_ok=True)
 TOKEN_FILE = os.path.join(CONFIG_DIR, "access_token.jwt")
 HEADLESS = "DISPLAY" not in os.environ
