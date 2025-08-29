@@ -104,7 +104,9 @@ def get_tag_from_purl(purl: PackageURL) -> str:
     return tag
 
 
-def build_node_purl(purls: list[str]) -> Optional[PackageURL]:
+def build_node_purl(
+    purls: list[str], show_versions: bool = False
+) -> Optional[PackageURL]:
     """
     Generate a base purl with a version or tag qualifier from a list of purls with homogenous
     type/namespace, and name
@@ -115,7 +117,7 @@ def build_node_purl(purls: list[str]) -> Optional[PackageURL]:
     Returns:
     Optional[PackageURL]: A PackageURL object or None
     """
-    node_purls, type = _build_node_names_by_type(purls)
+    node_purls, type = _build_node_names_by_type(purls, show_versions)
     if not node_purls:
         return None
     elif len(node_purls) > 1:
@@ -135,7 +137,9 @@ def build_node_purl(purls: list[str]) -> Optional[PackageURL]:
     return node_purls.pop()
 
 
-def _build_node_names_by_type(purls: list[str]) -> tuple[set[PackageURL], str]:
+def _build_node_names_by_type(
+    purls: list[str], show_versions: bool
+) -> tuple[set[PackageURL], str]:
     """
     Given some purl strings, return a unique set of base purls with versions or tag qualifiers
     """
@@ -144,7 +148,7 @@ def _build_node_names_by_type(purls: list[str]) -> tuple[set[PackageURL], str]:
     for purl in purls:
         purl_obj = PackageURL.from_string(purl)
         tag = get_tag_from_purl(purl_obj)
-        base_purl = _remove_qualifiers(purl_obj, tag)
+        base_purl = _remove_qualifiers(purl_obj, tag, show_versions)
         node_purls[base_purl] = purl_obj.type
     types = set(node_purls.values())
     if not types:
@@ -155,7 +159,7 @@ def _build_node_names_by_type(purls: list[str]) -> tuple[set[PackageURL], str]:
     return set(node_purls.keys()), types.pop()
 
 
-def _remove_qualifiers(purl: PackageURL, tag: str) -> PackageURL:
+def _remove_qualifiers(purl: PackageURL, tag: str, show_versions: bool) -> PackageURL:
     """Remove all qualifiers from a purl keeping repository_url, optionally setting a tag"""
     qualifiers = {}
     if purl.type == "oci" and "repository_url" in purl.qualifiers:
@@ -168,7 +172,7 @@ def _remove_qualifiers(purl: PackageURL, tag: str) -> PackageURL:
     version = ""
     if tag:
         qualifiers["tag"] = tag
-    elif purl.version:
+    elif show_versions and purl.version:
         version = purl.version
     return PackageURL(
         type=purl.type,

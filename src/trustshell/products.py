@@ -71,6 +71,9 @@ def prime_cache(check: bool, debug: bool) -> None:
     expose_value=False,
     is_eager=True,
 )
+@click.option(
+    "--versions", "-v", is_flag=True, default=False, help="Show PURL versions."
+)
 @click.option("--latest", "-l", is_flag=True, default=True)
 @click.option("--cpes", "-c", is_flag=True, default=False)
 @click.option("--flaw", "-f", help="OSIDB flaw uuid or CVE")
@@ -87,7 +90,13 @@ def prime_cache(check: bool, debug: bool) -> None:
     type=click.STRING,
 )
 def search(
-    purl: str, flaw: str, replace: bool, debug: bool, latest: bool, cpes: bool
+    purl: str,
+    flaw: str,
+    replace: bool,
+    debug: bool,
+    latest: bool,
+    cpes: bool,
+    versions: bool,
 ) -> None:
     """Relate a purl to products in Trustify"""
     if not debug:
@@ -101,7 +110,7 @@ def search(
         console.print(f"{purl} is not a valid Package URL", style="error")
         sys.exit(1)
 
-    ancestor_trees = _get_roots(purl, latest)
+    ancestor_trees = _get_roots(purl, latest, show_versions=versions)
     if not ancestor_trees or len(ancestor_trees) == 0:
         console.print("No results")
         return
@@ -178,7 +187,9 @@ def extract_affects(ancestor_trees: list[Node]) -> set[tuple[str, str]]:
     return affects
 
 
-def _get_roots(base_purl: str, latest: bool = True) -> list[Node]:
+def _get_roots(
+    base_purl: str, latest: bool = True, show_versions: bool = False
+) -> list[Node]:
     """Look up base_purl ancestors in Trustify"""
 
     auth_header = {}
@@ -197,15 +208,17 @@ def _get_roots(base_purl: str, latest: bool = True) -> list[Node]:
         endpoint, base_params, auth_header, component_name=base_purl
     )
     logger.debug(f"Number of matches for {base_purl}: {ancestors['total']}")
-    return _trees_with_cpes(ancestors)
+    return _trees_with_cpes(ancestors, show_versions)
 
 
-def build_ancestor_tree(parent: Node, ancestors: list[dict[str, Any]]) -> None:
+def build_ancestor_tree(
+    parent: Node, ancestors: list[dict[str, Any]], show_versions: bool
+) -> None:
     """
     Recursive function to build an ancestor tree from a nested set of purls, or CPEs.
     """
     for component in ancestors:
-        base_purl = build_node_purl(component["purl"])
+        base_purl = build_node_purl(component["purl"], show_versions)
         if not base_purl:
             cpes = component["cpe"]
             if not cpes:
@@ -216,7 +229,7 @@ def build_ancestor_tree(parent: Node, ancestors: list[dict[str, Any]]) -> None:
         else:
             node = Node(base_purl.to_string(), parent=parent)
             if "ancestors" in component:
-                build_ancestor_tree(node, component["ancestors"])
+                build_ancestor_tree(node, component["ancestors"], show_versions)
             # else try the next ancestor
 
 
@@ -355,12 +368,12 @@ def _remove_duplicate_branches(root: Node) -> Node:
     return root
 
 
-def _trees_with_cpes(ancestor_data: dict[str, Any]) -> list[Node]:
+def _trees_with_cpes(ancestor_data: dict[str, Any], show_versions: bool) -> list[Node]:
     """Builds a tree of ancestors with a target component root"""
     if "items" not in ancestor_data or not ancestor_data["items"]:
         return []
     base_node = Node("root")
-    build_ancestor_tree(base_node, ancestor_data["items"])
+    build_ancestor_tree(base_node, ancestor_data["items"], show_versions)
     _remove_duplicate_branches(base_node)
     _remove_duplicate_parent_nodes(base_node)
     # re-parenting the tree can introduce new duplicate branches
