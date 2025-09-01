@@ -1,5 +1,6 @@
 import json
 import unittest
+from parameterized import parameterized
 from unittest.mock import patch
 
 from anytree import Node
@@ -23,7 +24,13 @@ class TestProducts(unittest.TestCase):
         with open("tests/testdata/products/product-definitions.json", "r") as file:
             self.mock_proddefs_data = json.load(file)
 
-    def test_build_node_purl_rpm(self):
+    @parameterized.expand(
+        [
+            (False, "pkg:rpm/redhat/webkit2gtk3"),
+            (True, "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9"),
+        ],
+    )
+    def test_build_node_purl_rpm(self, show_versions, expected_purl):
         purls = [
             "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstrea"
             "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-appstrea"
@@ -34,8 +41,8 @@ class TestProducts(unittest.TestCase):
             "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream"
             "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream"
         ]
-        result = build_node_purl(purls).to_string()
-        assert result == "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9"
+        result = build_node_purl(purls, show_versions=show_versions).to_string()
+        assert result == expected_purl
 
     def test_build_node_purl_oci(self):
         purls = [
@@ -48,22 +55,28 @@ class TestProducts(unittest.TestCase):
         print(result)
         assert result == "pkg:oci/quay?tag=v3.12.8-1"
 
-    def test_build_node_purl_maven_type(self):
+    @parameterized.expand(
+        [
+            (False, "pkg:maven/io.agroal/agroal-api?hash=sha256:1234567890&type=jar"),
+            (
+                True,
+                "pkg:maven/io.agroal/agroal-api@1.3.0.redhat-00001?hash=sha256:1234567890&type=jar",
+            ),
+        ],
+    )
+    def test_build_node_purl_maven_type(self, show_versions, expected_purl):
         purls = [
             "pkg:maven/io.agroal/agroal-api@1.3.0.redhat-00001?repository_url=https%3A%2F%2Fmaven.repository.redhat.com%2Fga%2F&type=jar"
             "pkg:maven/io.agroal/agroal-api@1.3.0.redhat-00001?repository_url=https%3A%2F%2Fmaven.repository.redhat.com%2Fga%2F&type=jar&hash=sha256:1234567890"
         ]
-        result = build_node_purl(purls).to_string()
+        result = build_node_purl(purls, show_versions=show_versions).to_string()
         print(result)
-        assert (
-            result
-            == "pkg:maven/io.agroal/agroal-api@1.3.0.redhat-00001?hash=sha256:1234567890&type=jar"
-        )
+        assert result == expected_purl
 
     def test_trees_with_cpes_srpm(self):
         with open("tests/testdata/openssl.json", "r") as file:
             data = json.load(file)
-        result = _trees_with_cpes(data)
+        result = _trees_with_cpes(data, show_versions=True)
         assert len(result) == 1
         render_tree(result[0])
         assert result[0].name == "pkg:rpm/redhat/openssl@3.0.7-18.el9_2"
@@ -76,7 +89,7 @@ class TestProducts(unittest.TestCase):
     def test_trees_with_cpes_binary_rpm(self):
         with open("tests/testdata/openssl-libs.json", "r") as file:
             data = json.load(file)
-        result = _trees_with_cpes(data)
+        result = _trees_with_cpes(data, show_versions=True)
         assert len(result) == 1
         render_tree(result[0])
         assert result[0].name == "pkg:rpm/redhat/openssl-libs@3.0.7-18.el9_2"
@@ -92,7 +105,7 @@ class TestProducts(unittest.TestCase):
     def test_trees_with_cpes_container_cdx(self):
         with open("tests/testdata/quay-builder-qemu-rhcos-rhel-8.json") as file:
             data = json.load(file)
-        result = _trees_with_cpes(data)
+        result = _trees_with_cpes(data, show_versions=True)
         assert len(result) == 1
         render_tree(result[0])
         assert (
@@ -105,7 +118,7 @@ class TestProducts(unittest.TestCase):
     def test_trees_with_cpes_dependency(self):
         with open("tests/testdata/chardet.json") as file:
             data = json.load(file)
-        result = _trees_with_cpes(data)
+        result = _trees_with_cpes(data, show_versions=True)
         assert len(result) == 1
         render_tree(result[0])
         _check_node_names_at_depth(
@@ -121,7 +134,7 @@ class TestProducts(unittest.TestCase):
     def test_trees_with_cpes_spdx_dependency(self):
         with open("tests/testdata/NGX.json") as file:
             data = json.load(file)
-        result = _trees_with_cpes(data)
+        result = _trees_with_cpes(data, show_versions=True)
         assert len(result) == 1
         render_tree(result[0])
         _check_node_names_at_depth(
@@ -138,7 +151,7 @@ class TestProducts(unittest.TestCase):
     def test_trees_with_cpes_multi_versions(self):
         with open("tests/testdata/quay-builder-qemu-multi.json") as file:
             data = json.load(file)
-        result = _trees_with_cpes(data)
+        result = _trees_with_cpes(data, show_versions=True)
         assert len(result) == 2
 
         print("first_result")
@@ -161,7 +174,7 @@ class TestProducts(unittest.TestCase):
     def test_trees_with_cpes_quarkus_agroal(self):
         with open("tests/testdata/quarkus-3.20-agroal-api.json") as file:
             data = json.load(file)
-        result = _trees_with_cpes(data)
+        result = _trees_with_cpes(data, show_versions=True)
 
         print("first_result")
         render_tree(result[0])
@@ -196,7 +209,7 @@ class TestProducts(unittest.TestCase):
     def test_trees_with_cpes_quarkus_xmlsec(self):
         with open("tests/testdata/quarkus-3.15-xmlsec.json") as file:
             data = json.load(file)
-        result = _trees_with_cpes(data)
+        result = _trees_with_cpes(data, show_versions=True)
 
         print("first_result")
         render_tree(result[0])
@@ -237,7 +250,7 @@ class TestProducts(unittest.TestCase):
     def test_trees_with_cpes_firefox(self):
         with open("tests/testdata/firefox.json") as file:
             data = json.load(file)
-        result = _trees_with_cpes(data)
+        result = _trees_with_cpes(data, show_versions=True)
         assert len(result) == 1
         render_tree(result[0])
         assert result[0].name == "pkg:rpm/redhat/firefox@128.12.0-1.el8_10"
@@ -394,7 +407,7 @@ class TestProducts(unittest.TestCase):
             data = json.load(file)
 
         # Build the initial trees
-        ancestor_trees = _trees_with_cpes(data)
+        ancestor_trees = _trees_with_cpes(data, show_versions=True)
 
         # Extend with product mappings to add ProductModule nodes
         prod_defs = ProdDefs()
@@ -426,7 +439,7 @@ class TestProducts(unittest.TestCase):
             data = json.load(file)
 
         # Build the initial trees
-        ancestor_trees = _trees_with_cpes(data)
+        ancestor_trees = _trees_with_cpes(data, show_versions=True)
 
         # Extend with product mappings to add ProductModule nodes
         prod_defs = ProdDefs()
@@ -458,7 +471,7 @@ class TestProducts(unittest.TestCase):
             data = json.load(file)
 
         # Build the initial trees
-        ancestor_trees = _trees_with_cpes(data)
+        ancestor_trees = _trees_with_cpes(data, show_versions=True)
 
         # Extend with product mappings to add ProductModule nodes
         prod_defs = ProdDefs()
@@ -489,7 +502,7 @@ class TestProducts(unittest.TestCase):
             data = json.load(file)
 
         # Build the initial trees
-        ancestor_trees = _trees_with_cpes(data)
+        ancestor_trees = _trees_with_cpes(data, show_versions=True)
         original_len = len(ancestor_trees)
 
         # Extend with product mappings to add ProductModule nodes
@@ -531,7 +544,7 @@ class TestProducts(unittest.TestCase):
             data = json.load(file)
 
         # Build the initial trees
-        ancestor_trees = _trees_with_cpes(data)
+        ancestor_trees = _trees_with_cpes(data, show_versions=True)
 
         # Print the tree structure for debugging
         for i, tree in enumerate(ancestor_trees):
@@ -550,6 +563,25 @@ class TestProducts(unittest.TestCase):
         # We expect that the signatures of the sorted tree
         # will preserve the count even when put into a set
         assert len(ancestor_trees) == len(sorted_tree_signatures)
+
+    @parameterized.expand(
+        [
+            (False, "pkg:rpm/redhat/openssl"),
+            (True, "pkg:rpm/redhat/openssl@3.0.7-18.el9_2"),
+        ],
+    )
+    def test_trees_with_cpes_srpm_no_versions(self, show_versions, expected_purl):
+        with open("tests/testdata/openssl.json", "r") as file:
+            data = json.load(file)
+        result = _trees_with_cpes(data, show_versions=show_versions)
+        assert len(result) == 1
+        render_tree(result[0])
+        assert result[0].name == expected_purl
+        expected_cpes = [
+            "cpe:/a:redhat:rhel_eus:9.2:*:appstream:*",
+            "cpe:/a:redhat:rhel_eus:9.2:*:baseos:*",
+        ]
+        _check_node_names_at_depth(result[0], 1, expected_cpes)
 
 
 def _check_node_names_at_depth(result, depth, expected):
