@@ -46,7 +46,7 @@ The authentication flows tries to spawn a browser in order to authentication to 
 
 One can build and run the container as follows:
 ```bash
-podman build -t oidc-pkce-server .
+podman build -f src/trustshell/oidc/Containerfile -t oidc-pkce-server .
 podman run -d -p 127.0.0.1:8650:8650 -e AUTH_ENDPOINT="https://auth.redhat.com/auth/realms/EmployeeIDP/protocol/openid-connect" oidc-pkce-server
 ```
 
