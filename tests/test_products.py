@@ -422,14 +422,13 @@ class TestProducts(unittest.TestCase):
         affects = extract_affects(ancestor_trees)
         print(f"\nExtracted affects: {affects}")
 
-        # For now, just assert that we got some result
-        # The user will adjust assertions based on the printed output
-        assert affects == {
-            (
-                "quay-3",
-                "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8",
+        assert len(affects) == 2
+        for affect in affects:
+            assert affect[0] in ["quay-3.12", "quay-3.13"]
+            assert (
+                affect[1]
+                == "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8"
             )
-        }
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
     def test_extract_affects_container_cdx_no_cpes(self, mock_service):
@@ -454,14 +453,13 @@ class TestProducts(unittest.TestCase):
         affects = extract_affects(ancestor_trees)
         print(f"\nExtracted affects: {affects}")
 
-        # For now, just assert that we got some result
-        # The user will adjust assertions based on the printed output
-        assert affects == {
-            (
-                "quay-3",
-                "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8",
+        assert len(affects) == 2
+        for affect in affects:
+            assert affect[0] in ["quay-3.12", "quay-3.13"]
+            assert (
+                affect[1]
+                == "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8"
             )
-        }
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
     def test_extract_affects_maven(self, mock_service):
@@ -487,12 +485,10 @@ class TestProducts(unittest.TestCase):
         print(f"\nExtracted affects: {affects}")
 
         # We expect the root level maven PURL, not the generic one
-        assert affects == {
-            (
-                "quay-3",
-                "pkg:maven/io.quay/hey@1.2.3.redhat-00001?type=jar",
-            )
-        }
+        assert len(affects) == 2
+        for affect in affects:
+            assert affect[0] in ["quay-3.12", "quay-3.13"]  # ps_update_stream
+            assert affect[1] == "pkg:maven/io.quay/hey@1.2.3.redhat-00001?type=jar"
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
     def test_no_duplicates_from_product_mappings(self, mock_service):

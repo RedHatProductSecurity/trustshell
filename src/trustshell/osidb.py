@@ -25,27 +25,27 @@ class OSIDB:
         self.session = osidb_bindings.new_session(osidb_server_uri=endpoint)  # type: ignore[attr-defined]
 
     @staticmethod
-    def parse_module_purl_tuples(tuples_list: list[str]) -> set[tuple[str, str]]:
+    def parse_stream_purl_tuples(tuples_list: list[str]) -> set[tuple[str, str]]:
         """
-        Parses a list of "ps_module,purl" strings into a set of (ps_module, purl) tuples.
+        Parses a list of "ps_update_stream,purl" strings into a set of (ps_update_stream, purl) tuples.
         """
         parsed_tuples = set()
         for item in tuples_list:
             parts = item.split(",", 1)  # Split only on the first comma
             if len(parts) != 2:
                 console.print(
-                    f"Error: Invalid tuple format '{item}'. Expected 'ps_module,purl'.",
+                    f"Error: Invalid tuple format '{item}'. Expected 'ps_update_stream,purl'.",
                     style="error",
                 )
                 sys.exit(1)
-            ps_module, purl = parts[0].strip(), parts[1].strip()
-            if not ps_module or not purl:
+            ps_update_stream, purl = parts[0].strip(), parts[1].strip()
+            if not ps_update_stream or not purl:
                 console.print(
-                    f"Error: ps_module or purl cannot be empty in '{item}'.",
+                    f"Error: ps_update_stream or purl cannot be empty in '{item}'.",
                     style="error",
                 )
                 sys.exit(1)
-            parsed_tuples.add((ps_module, purl))
+            parsed_tuples.add((ps_update_stream, purl))
         return parsed_tuples
 
     @staticmethod
@@ -53,7 +53,7 @@ class OSIDB:
         current_tuples: set[tuple[str, str]],
     ) -> set[tuple[str, str]]:
         """
-        Opens the default text editor for the user to modify the ps_module/purl tuples.
+        Opens the default text editor for the user to modify the ps_update_stream/purl tuples.
         Returns the modified set of tuples.
         """
         editor = os.environ.get("EDITOR", "vi")
@@ -64,7 +64,9 @@ class OSIDB:
             temp_filepath = tf.name
 
         console.print(f"Opening editor '{editor}' for file: {temp_filepath}")
-        console.print("Please modify the ps_module,purl tuples and save the file.")
+        console.print(
+            "Please modify the ps_update_stream,purl tuples and save the file."
+        )
         console.print("Each tuple should be on a new line.")
 
         try:
@@ -91,18 +93,20 @@ class OSIDB:
         modified_lines = [
             line.strip() for line in modified_content.splitlines() if line.strip()
         ]
-        return OSIDB.parse_module_purl_tuples(modified_lines)
+        return OSIDB.parse_stream_purl_tuples(modified_lines)
 
     def add_affects(self, flaw: Flaw, affects_to_add: set[tuple[str, str]]) -> None:
         console.print("Adding affects...")
         affects_data: list[dict[str, Any]] = []
         for affect in affects_to_add:
+            ps_update_stream, purl = affect
+
             osidb_affect = {
                 "flaw": flaw.uuid,
                 "embargoed": flaw.embargoed,
-                "ps_module": affect[0],
+                "ps_update_stream": ps_update_stream.strip(),
                 "ps_component": None,
-                "purl": affect[1],
+                "purl": purl.strip(),
             }
             affects_data.append(osidb_affect)
         try:
@@ -118,10 +122,10 @@ class OSIDB:
     def edit_flaw_affects(
         self,
         flaw_id: str,
-        ps_module_purls: set[tuple[str, str]],
+        ps_stream_purls: set[tuple[str, str]],
         replace_mode: bool = False,
     ) -> None:
-        if not ps_module_purls:
+        if not ps_stream_purls:
             console.print("No new affects to add", style="warning")
             return
 
@@ -136,10 +140,7 @@ class OSIDB:
         affects_by_state: dict[str, set[tuple[str, str]]] = defaultdict(set)
         for affect in flaw.affects:
             affects_by_state[affect.affectedness].add(
-                (
-                    affect.ps_module,
-                    affect.purl,
-                )
+                (affect.ps_update_stream, affect.purl)
             )
 
         console.print("\n--- Existing Flaw Affects ---")
@@ -153,16 +154,16 @@ class OSIDB:
         console.print("-----------------------------\n")
 
         console.print("New affects:")
-        for ps_module_purl in ps_module_purls:
-            console.print(ps_module_purl)
+        for ps_stream_purl in ps_stream_purls:
+            console.print(ps_stream_purl)
 
         # Optionally edit tuples in editor
         if click.confirm("Do you want to edit these affects?"):
             console.print("Entering editor mode to modify input tuples...")
-            ps_module_purls = self.edit_tuples_in_editor(ps_module_purls)
+            ps_stream_purls = self.edit_tuples_in_editor(ps_stream_purls)
             console.print("\n--- Modified Tuples from Editor ---")
-            if ps_module_purls:
-                for m, p in ps_module_purls:
+            if ps_stream_purls:
+                for m, p in ps_stream_purls:
                     console.print(f"  - {m},{p}")
             else:
                 console.print("  (No tuples provided after editing)")
@@ -170,11 +171,11 @@ class OSIDB:
 
         if not replace_mode:
             affects_to_add = (
-                ps_module_purls - affects_by_state["NEW"]
+                ps_stream_purls - affects_by_state["NEW"]
             )  # Only truly new ones
             if not affects_to_add:
                 console.print(
-                    "No new ps_module/purl tuples to add. All provided are already present or in different states."
+                    "No new ps_update_stream/purl tuples to add. All provided are already present or in different states."
                 )
                 return
 
@@ -187,7 +188,7 @@ class OSIDB:
             self.add_affects(flaw, affects_to_add)
 
         else:
-            if not affects_by_state["NEW"] and not ps_module_purls:
+            if not affects_by_state["NEW"] and not ps_stream_purls:
                 console.print(
                     "No existing 'NEW' affects to replace and no new affects provided. Nothing to do."
                 )
@@ -202,8 +203,8 @@ class OSIDB:
             console.print("--------------------------------------------\n")
 
             console.print("\n--- New Affects that will REPLACE the above ---")
-            if ps_module_purls:
-                for affect in ps_module_purls:
+            if ps_stream_purls:
+                for affect in ps_stream_purls:
                     console.print(affect)
             else:
                 console.print("  (No new affects provided)")
@@ -217,7 +218,7 @@ class OSIDB:
             existing_affects: dict[tuple[str, str], tuple[str, str]] = {}
             for affect in flaw.affects:
                 if affect.purl:
-                    existing_affects[(affect.ps_module, affect.purl)] = (
+                    existing_affects[(affect.ps_update_stream, affect.purl)] = (
                         affect.uuid,
                         affect.affectedness,
                     )
@@ -227,7 +228,7 @@ class OSIDB:
                 existing_uuid, existing_affectedness = existing_value
                 # Don't delete and re-add existing new affects
                 if (
-                    existing_key not in ps_module_purls
+                    existing_key not in ps_stream_purls
                     and existing_affectedness == "NEW"
                 ):
                     try:
@@ -241,4 +242,4 @@ class OSIDB:
                         exit(1)
 
             # Add any new affects not already on the flaw in NEW state
-            self.add_affects(flaw, ps_module_purls)
+            self.add_affects(flaw, ps_stream_purls)

@@ -22,7 +22,7 @@ from trustshell import (
     paginated_trustify_query,
 )
 from trustshell.osidb import OSIDB
-from trustshell.product_definitions import ProdDefs, ProductModule
+from trustshell.product_definitions import ProdDefs, ProductModule, ProductStream
 
 LATEST_ENDPOINT = f"{TRUSTIFY_URL}analysis/latest/component"
 ANALYSIS_ENDPOINT = f"{TRUSTIFY_URL}analysis/component"
@@ -147,17 +147,36 @@ def _check_flaw(ctx: Any, param: Any, value: Any, dependent_option_name: str) ->
 
 
 def extract_affects(ancestor_trees: list[Node]) -> set[tuple[str, str]]:
-    """Collect all the leaf and root node tuples. The root node is the direct parent of the CPE.
-    The leaf node type should be ProductModule"""
+    """Collect all the leaf and root node tuples for OSIDB affects.
+
+    Extracts (ps_update_stream, purl) tuples where:
+    - ps_update_stream comes from ProductStream parent of ProductModule leaf nodes
+    - purl comes from ancestor package components in the dependency tree
+    """
     affects = set()
+    seen_streams = set()
     for tree in ancestor_trees:
-        ps_module_nodes = set()
+        ps_module_nodes = []
         for leaf in tree.leaves:
             if isinstance(leaf, ProductModule):
-                ps_module_nodes.add(leaf)
-        if len(ps_module_nodes) > 1:
-            raise ValueError(f"More than one ProductModule found in {tree.root.name}")
+                ps_module_nodes.append(leaf)
+
         for ps_module_node in ps_module_nodes:
+            # Extract ps_update_stream from ProductStream parent
+            if not ps_module_node.parent or not isinstance(
+                ps_module_node.parent, ProductStream
+            ):
+                logger.debug(
+                    f"ProductModule {ps_module_node.name} has no ProductStream parent, skipping"
+                )
+                continue
+
+            ps_update_stream = ps_module_node.parent.name
+
+            if ps_update_stream in seen_streams:
+                continue
+            seen_streams.add(ps_update_stream)
+
             for ancestor in ps_module_node.ancestors:
                 # Find the root component
                 if ancestor.name.startswith("pkg:"):
@@ -180,7 +199,7 @@ def extract_affects(ancestor_trees: list[Node]) -> set[tuple[str, str]]:
 
                 affects.add(
                     (
-                        ps_module_node.name,
+                        ps_update_stream,
                         purl.to_string(),
                     )
                 )
