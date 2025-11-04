@@ -1,5 +1,6 @@
 from collections import defaultdict
 import copy
+from datetime import datetime
 import json
 import logging
 import os
@@ -128,6 +129,7 @@ class ProdDefs:
         active_only: bool = True,
         rhel_git_branch: str = "main",
         rhel_releases_path: str = "",
+        check_lifecycle: bool = False,
     ) -> None:
         self.stream_nodes_by_cpe: dict[str, list[ProductStream]] = defaultdict(list)
         product_streams_by_name: dict[str, list[ProductStream]] = defaultdict(list)
@@ -166,6 +168,29 @@ class ProdDefs:
         seen_stream_names: set[str] = set()
         for ps_module, module_data in data["ps_modules"].items():
             cpes = module_data.get("cpe", [])
+
+            # Check module-level active status based on lifecycle data
+            module_is_active = True
+            if check_lifecycle:
+                lifecycle = module_data.get("lifecycle", {})
+                if lifecycle:
+                    supported_from = lifecycle.get("supported_from")
+                    if supported_from:
+                        try:
+                            supported_from_date = datetime.strptime(
+                                supported_from, "%Y-%m-%d"
+                            ).date()
+                            current_date = datetime.now().date()
+                            # Module is only active if supported_from date is today or in the past
+                            module_is_active = supported_from_date <= current_date
+                        except ValueError as e:
+                            logger.warning(
+                                f"Invalid date format for {ps_module} supported_from: {supported_from}, error: {e}"
+                            )
+
+                # Skip this module if it's not active yet (based on lifecycle)
+                if active_only and not module_is_active:
+                    continue
 
             active_streams: set[str] = set()
             active_streams.update(module_data.get("active_ps_update_streams", []))
