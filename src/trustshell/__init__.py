@@ -335,7 +335,7 @@ async def paginated_trustify_query_async(
         """Make async HTTP request with 401 retry logic"""
         try:
             response = await client.get(
-                endpoint, params=query_params, headers=headers, timeout=300
+                endpoint, params=query_params, headers=headers, timeout=2400
             )
             response.raise_for_status()
             return response
