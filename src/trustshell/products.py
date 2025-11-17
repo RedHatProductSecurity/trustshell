@@ -222,7 +222,7 @@ def _get_roots(
         endpoint = ANALYSIS_ENDPOINT
 
     # Use the paginated query function
-    base_params = {"ancestors": ANCESTOR_COUNT, "q": f"purl~{base_purl}@"}
+    base_params = {"ancestors": ANCESTOR_COUNT, "q": f"purl~{base_purl}"}
     ancestors = paginated_trustify_query(
         endpoint, base_params, auth_header, component_name=base_purl
     )
