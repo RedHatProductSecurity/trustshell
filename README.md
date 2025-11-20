@@ -13,7 +13,17 @@ pip install git+https://github.com/RedHatProductSecurity/trustshell.git#egg=trus
 
 ## Configuration
 
-Ensure the following environment variables are set:
+### Required Environment Variables
+
+Set `TRUSTIFY_URL` to point to your Trustify instance:
+
+```bash
+export TRUSTIFY_URL="https://trustify.example.com"
+```
+
+### Authentication (Optional)
+
+If your Trustify instance requires authentication, also set `AUTH_ENDPOINT`:
 
 Atlas Production:
 ```bash
@@ -25,6 +35,13 @@ Atlas Stage:
 ```bash
 export TRUSTIFY_URL="https://atlas.release.stage.devshift.net"
 export AUTH_ENDPOINT="https://auth.stage.redhat.com/auth/realms/EmployeeIDP/protocol/openid-connect"
+```
+
+For local or public Trustify instances without authentication, simply omit `AUTH_ENDPOINT`:
+
+```bash
+export TRUSTIFY_URL="http://localhost:8080"
+# No AUTH_ENDPOINT needed - authentication will be skipped
 ```
 
 Product Mapping:
@@ -41,6 +58,8 @@ export TRUSTSHELL_SCRATCH="/path/to/custom/config/dir"
 ```
 
 ### Running in a container
+
+**Note:** This section only applies if you need authentication (i.e., if you set `AUTH_ENDPOINT`).
 
 The authentication flows tries to spawn a browser in order to authentication to Single-Sign On (SSO). If running in a 'headless' environment like a container image that won't work. When running in a container it's necessary to run the container image defined in [this Containerfile](src/trustshell/oidc/Containerfile).
 
@@ -62,6 +81,8 @@ https://auth.redhat.com/auth/realms/EmployeeIDP/protocol/openid-connect/auth?res
 Subsequent requests to Trustify will use an access_token stored or refreshed by the oidc-pkce-server. Restaring the oidc-pkce-server process will required re-authentication in the browser on restart.
 
 ### Running in 'headless' mode
+
+**Note:** This section only applies if you need authentication (i.e., if you set `AUTH_ENDPOINT`).
 
 If you want to run in 'headless' mode, and have the `oidc-pkce-server` maintain a persistent authentication session. You can run the `oidc-pkce-server` container as mentioned above and set the following environment variable. You will still have to authenticate in the browser each time the `oidc-pkce-server` container is restarted.
 
