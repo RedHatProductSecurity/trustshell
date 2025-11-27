@@ -58,6 +58,7 @@ def _create_base_purl(purl_obj: PackageURL) -> str:
     "--use-base-purl",
     "-b",
     is_flag=True,
+    default=True,
     help="Use base_purl endpoint instead of analysis endpoint, faster but less accurate",
 )
 @click.argument(
@@ -195,6 +196,11 @@ def _query_trustify_packages_base_purl(
     This uses a simple text search against base purls rather than the analysis endpoints.
     Uses pagination to handle large result sets efficiently.
 
+    Search strategy:
+    1. First try searching with name~{component}
+    2. If no results and component contains '/', split at last '/' and search with
+       namespace~{namespace}&name~{name}
+
     Parameters:
     component (str): The component name to search for
     auth_header (dict[str, str]): Authentication headers
@@ -203,7 +209,8 @@ def _query_trustify_packages_base_purl(
     Returns:
     list[PackageURL]: List of PackageURL objects found
     """
-    package_query = {"q": component}
+    # First attempt: search by name field
+    package_query = {"q": f"name~{component}"}
     console.print(f"Querying Trustify for packages matching {component}")
 
     try:
@@ -218,6 +225,28 @@ def _query_trustify_packages_base_purl(
         results = []
         items = response_data.get("items", [])
         total = response_data.get("total", 0)
+
+        # If no results and component contains '/', try splitting namespace and name
+        if total == 0 and "/" in component:
+            logger.debug(
+                f"No results for name~{component}, trying namespace+name split"
+            )
+            last_slash_idx = component.rfind("/")
+            namespace = component[:last_slash_idx]
+            name = component[last_slash_idx + 1 :]
+
+            console.print(f"Retrying with namespace '{namespace}' and name '{name}'")
+            package_query = {"q": f"namespace~{namespace}&name~{name}"}
+
+            response_data = paginated_trustify_query(
+                PURL_BASE_ENDPOINT,
+                package_query,
+                auth_header,
+                component_name=f"base PURLs matching namespace '{namespace}' and name '{name}'",
+            )
+
+            items = response_data.get("items", [])
+            total = response_data.get("total", 0)
 
         console.print(f"Found {total} base purls matching {component}")
 

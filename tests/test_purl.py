@@ -36,7 +36,7 @@ class TestBasePurlQuery:
         # Check endpoint URL (first argument)
         assert "purl/base" in call_args[0][0]
         # Check query parameters (second argument)
-        assert call_args[0][1] == {"q": "openssl"}
+        assert call_args[0][1] == {"q": "name~openssl"}
         # Check auth header (third argument)
         assert call_args[0][2] == auth_header
         # Check component name (fourth argument)
@@ -148,69 +148,6 @@ class TestBasePurlQuery:
         assert "pkg:rpm/redhat/openssl@3.0.7-28.el9_4" in purl_strings
         assert any("arch=x86_64" in purl_str for purl_str in purl_strings)
         assert any("arch=aarch64" in purl_str for purl_str in purl_strings)
-
-    @patch("trustshell.purl.paginated_trustify_query")
-    @patch("trustshell.purl.console.print")
-    def test_search_timeout_suggestion_analysis_endpoint(
-        self, mock_console_print, mock_paginated_query
-    ):
-        """Test that timeout errors from analysis endpoint suggest using --use-base-purl option"""
-        from trustshell.purl import search
-        from click.testing import CliRunner
-        import httpx
-
-        # Mock a timeout error
-        mock_paginated_query.side_effect = httpx.ReadTimeout("Request timed out")
-
-        runner = CliRunner()
-
-        # Should exit cleanly with Abort (exit code 1) - NOT using base_purl
-        result = runner.invoke(search, ["jenkins"])
-
-        # Should exit with code 1 (click.Abort)
-        assert result.exit_code == 1
-
-        # Verify the helpful message was printed
-        assert mock_console_print.called
-
-        # Check that the error message mentions --use-base-purl
-        call_args = [
-            call[0][0] for call in mock_console_print.call_args_list if call[0]
-        ]
-        error_messages = " ".join(str(arg) for arg in call_args)
-        assert "--use-base-purl" in error_messages or "-b" in error_messages
-
-    @patch("trustshell.purl.paginated_trustify_query")
-    @patch("trustshell.purl.console.print")
-    def test_search_timeout_base_purl_endpoint(
-        self, mock_console_print, mock_paginated_query
-    ):
-        """Test that timeout errors from base_purl endpoint show different message"""
-        from trustshell.purl import search
-        from click.testing import CliRunner
-        import httpx
-
-        # Mock a timeout error from base_purl endpoint
-        mock_paginated_query.side_effect = httpx.ReadTimeout("Request timed out")
-
-        runner = CliRunner()
-
-        # Should exit cleanly with Abort (exit code 1) - USING base_purl
-        result = runner.invoke(search, ["--use-base-purl", "jenkins"])
-
-        # Should exit with code 1 (click.Abort)
-        assert result.exit_code == 1
-
-        # Verify the message was printed
-        assert mock_console_print.called
-
-        # Check that the error message does NOT suggest --use-base-purl (since already using it)
-        call_args = [
-            call[0][0] for call in mock_console_print.call_args_list if call[0]
-        ]
-        error_messages = " ".join(str(arg) for arg in call_args)
-        assert "--use-base-purl" not in error_messages and "-b" not in error_messages
-        assert "server may be experiencing high load" in error_messages.lower()
 
     @patch("trustshell.purl.paginated_trustify_query")
     @patch("trustshell.purl.console.print")

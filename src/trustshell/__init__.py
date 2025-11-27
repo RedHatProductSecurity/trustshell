@@ -48,7 +48,8 @@ if "TRUSTIFY_URL" in os.environ:
         )
     else:
         TRUSTIFY_URL = url_env
-    AUTH_ENABLED = True
+    # Only enable authentication if AUTH_ENDPOINT is also set
+    AUTH_ENABLED = bool(os.getenv("AUTH_ENDPOINT"))
 else:
     TRUSTIFY_URL = "http://localhost:8080/api/v2/"
     AUTH_ENABLED = False

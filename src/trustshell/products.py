@@ -26,7 +26,7 @@ from trustshell.product_definitions import ProdDefs, ProductModule, ProductStrea
 
 LATEST_ENDPOINT = f"{TRUSTIFY_URL}analysis/latest/component"
 ANALYSIS_ENDPOINT = f"{TRUSTIFY_URL}analysis/component"
-ANCESTOR_COUNT = 10000
+ANCESTOR_COUNT = 100
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
 console = Console(color_system="auto", theme=custom_theme)
@@ -59,7 +59,29 @@ def prime_cache(check: bool, debug: bool) -> None:
     console.print(f"sbom_count: {sbom_count}")
     if not check:
         console.print("Priming graph cache...")
-        httpx.get(f"{TRUSTIFY_URL}analysis/component", headers=auth_header, timeout=300)
+        console.print(
+            f"This may take a while with {sbom_count} SBOMs...", style="warning"
+        )
+        try:
+            response = httpx.get(
+                f"{TRUSTIFY_URL}analysis/component",
+                headers=auth_header,
+                timeout=1800,  # 30 minutes - increased for large SBOM counts
+            )
+            response.raise_for_status()
+            console.print("Cache priming completed successfully!", style="bold green")
+        except httpx.TimeoutException:
+            console.print(
+                f"Request timed out after 30 minutes. The server may need more time to process {sbom_count} SBOMs.",
+                style="error",
+            )
+            sys.exit(1)
+        except httpx.HTTPStatusError as e:
+            console.print(f"HTTP error occurred: {e}", style="error")
+            sys.exit(1)
+        except Exception as e:
+            console.print(f"An error occurred: {e}", style="error")
+            sys.exit(1)
 
 
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
@@ -74,7 +96,7 @@ def prime_cache(check: bool, debug: bool) -> None:
 @click.option(
     "--versions", "-v", is_flag=True, default=False, help="Show PURL versions."
 )
-@click.option("--latest", "-l", is_flag=True, default=True)
+@click.option("--latest", "-l", is_flag=True, default=False)
 @click.option("--cpes", "-c", is_flag=True, default=False)
 @click.option("--flaw", "-f", help="OSIDB flaw uuid or CVE")
 @click.option(
@@ -209,7 +231,11 @@ def extract_affects(ancestor_trees: list[Node]) -> set[tuple[str, str]]:
 def _get_roots(
     base_purl: str, latest: bool = True, show_versions: bool = False
 ) -> list[Node]:
-    """Look up base_purl ancestors in Trustify"""
+    """Look up base_purl ancestors in Trustify
+
+    Uses purl~ query which Trustify automatically translates into optimized
+    field-specific queries (purl:ty, purl:name, purl:namespace, etc.)
+    """
 
     auth_header = {}
     if AUTH_ENABLED:
@@ -221,8 +247,9 @@ def _get_roots(
     else:
         endpoint = ANALYSIS_ENDPOINT
 
-    # Use the paginated query function
-    base_params = {"ancestors": ANCESTOR_COUNT, "q": f"purl~{base_purl}@"}
+    # purl~ is automatically translated by Trustify to field-specific queries
+    # e.g., purl~pkg:npm/foo becomes purl:ty=npm&purl:name=foo
+    base_params = {"ancestors": ANCESTOR_COUNT, "q": f"purl~{base_purl}"}
     ancestors = paginated_trustify_query(
         endpoint, base_params, auth_header, component_name=base_purl
     )
