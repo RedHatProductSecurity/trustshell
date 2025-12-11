@@ -168,5 +168,48 @@ It can also be run with `--check` to see the graph and sbom counts without actua
 It's possible to map CPEs to products using product metadata as demonstrated in the `docs/product-definitions.json` 
 file. This allows integration with a bug tracking system like Jira.
 
-The way this mapping works is to match against a ps_update_steam if such a map exists. If not, we try to match 
+The way this mapping works is to match against a ps_update_stream if such a map exists. If not, we try to match 
 against ps_modules.
+
+#### RHEL Release Graph Mapping
+
+For RHEL product streams (RHEL 9 and earlier), TrustShell uses an enhanced mapping mechanism that leverages the 
+RHEL release graph data from the `rhel-release-graph` repository. This feature addresses a specific issue with 
+how packages are distributed in RHEL minor releases.
+
+**Why this feature is needed:**
+
+SBOM data returned by Trustify already contain CPEs with minor versions (e.g., `cpe:/a:redhat:enterprise_linux:9.6::appstream`). 
+However, for RHEL 9 and earlier versions, packages are not re-released when a new minor version is created. Instead, 
+all packages are pushed into a DNF repository. This means that if a package was only released at the beginning of a RHEL stream (e.g., when RHEL 9 was at version 9.0), and subsequent releases occurred for 9.1, 9.2, etc., that package would not be visible to those later minor release streams when using direct CPE matching.
+
+The RHEL release graph mapping solves this by:
+1. Using the release hierarchy from the `rhel-release-graph` repository to understand parent-child relationships 
+   between RHEL releases
+2. When a CPE matches a parent release node, automatically associating it with all descendant leaf nodes whose 
+   CPEs are in active product streams
+3. This ensures that packages released in earlier minor versions are correctly associated with later minor version 
+   streams
+
+**EUS (Extended Update Support) Streams:**
+
+Another important justification for the RHEL release graph mapping is the handling of EUS streams. When an EUS stream 
+is created, it includes only packages that were previously released in the 'main' RHEL stream up to the EUS start date. 
+Any packages that are updated or newly released in the 'main' RHEL stream after the EUS start date should **not** be 
+included in the EUS stream.
+
+The rhel-release-graph mapping, along with special handling and minor version CPEs, ensures that:
+- EUS streams correctly inherit only packages from their parent release that existed before the EUS start date
+- Packages released after the EUS start date in the main stream are properly excluded from EUS streams
+- The release hierarchy accurately reflects the temporal relationships between main RHEL releases and their EUS variants
+
+**RHEL 10 and later:**
+
+This mapping feature is **not necessary** for RHEL 10 and later versions, as a separate CPE is created for each 
+minor release. The direct CPE matching works correctly for these versions.
+
+**Configuration:**
+
+The RHEL release graph data is automatically loaded from the GitLab repository specified by the `RHEL_RELEASE_GRAPH_URL` 
+environment variable (see the [Configuration](#configuration) section above). The system caches this data locally and 
+only refreshes when the repository is updated.
