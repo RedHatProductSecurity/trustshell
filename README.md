@@ -131,6 +131,23 @@ Other times there might be no results because the purl is not linked to any prod
 $ trust-products -d pkg:oci/quay-builder-qemu-rhcos-rhel8
 ```
 
+#### Including RPM packages in containers
+
+By default, `trust-products` filters out RPM packages that are found within container images to avoid false positives. However, many modern products (like MTV, OpenShift components) have RPM packages bundled in OCI containers. To include these results, use the `--include-rpm-containers` flag:
+
+```console
+$ trust-products --include-rpm-containers pkg:rpm/redhat/harfbuzz
+pkg:rpm/redhat/harfbuzz
+└── pkg:oci/mtv-must-gather-rhel8
+    └── cpe:/a:redhat:migration_toolkit_virtualization:2.10:*:el8:*
+```
+
+Or use the short form `-i`:
+
+```console
+$ trust-products -i pkg:rpm/redhat/harfbuzz
+```
+
 ### Prime the Trustify graph:
 If components are found with the trust-purl command, but they are not being linked to products with
 trust-products, it could be because the Trustify graph cache is not yet primed. To prime the graph

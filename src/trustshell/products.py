@@ -98,6 +98,13 @@ def prime_cache(check: bool, debug: bool) -> None:
 )
 @click.option("--latest", "-l", is_flag=True, default=False)
 @click.option("--cpes", "-c", is_flag=True, default=False)
+@click.option(
+    "--include-rpm-containers",
+    "-i",
+    is_flag=True,
+    default=False,
+    help="Include RPM packages found in container images.",
+)
 @click.option("--flaw", "-f", help="OSIDB flaw uuid or CVE")
 @click.option(
     "--replace",
@@ -119,6 +126,7 @@ def search(
     latest: bool,
     cpes: bool,
     versions: bool,
+    include_rpm_containers: bool,
 ) -> None:
     """Relate a purl to products in Trustify"""
     if not debug:
@@ -132,7 +140,12 @@ def search(
         console.print(f"{purl} is not a valid Package URL", style="error")
         sys.exit(1)
 
-    ancestor_trees = _get_roots(purl, latest, show_versions=versions)
+    ancestor_trees = _get_roots(
+        purl,
+        latest,
+        show_versions=versions,
+        include_rpm_containers=include_rpm_containers,
+    )
     if not ancestor_trees or len(ancestor_trees) == 0:
         console.print("No results")
         return
@@ -229,7 +242,10 @@ def extract_affects(ancestor_trees: list[Node]) -> set[tuple[str, str]]:
 
 
 def _get_roots(
-    base_purl: str, latest: bool = True, show_versions: bool = False
+    base_purl: str,
+    latest: bool = True,
+    show_versions: bool = False,
+    include_rpm_containers: bool = False,
 ) -> list[Node]:
     """Look up base_purl ancestors in Trustify
 
@@ -254,7 +270,7 @@ def _get_roots(
         endpoint, base_params, auth_header, component_name=base_purl
     )
     logger.debug(f"Number of matches for {base_purl}: {ancestors['total']}")
-    return _trees_with_cpes(ancestors, show_versions)
+    return _trees_with_cpes(ancestors, show_versions, include_rpm_containers)
 
 
 def build_ancestor_tree(
@@ -414,7 +430,11 @@ def _remove_duplicate_branches(root: Node) -> Node:
     return root
 
 
-def _trees_with_cpes(ancestor_data: dict[str, Any], show_versions: bool) -> list[Node]:
+def _trees_with_cpes(
+    ancestor_data: dict[str, Any],
+    show_versions: bool,
+    include_rpm_containers: bool = False,
+) -> list[Node]:
     """Builds a tree of ancestors with a target component root"""
     if "items" not in ancestor_data or not ancestor_data["items"]:
         return []
@@ -428,7 +448,7 @@ def _trees_with_cpes(ancestor_data: dict[str, Any], show_versions: bool) -> list
     trees_with_cpes: list[Node] = []
     for tree in first_children:
         # Remove this once https://issues.redhat.com/browse/TC-2659 is implemented
-        if tree.name.startswith("pkg:rpm/"):
+        if tree.name.startswith("pkg:rpm/") and not include_rpm_containers:
             if container_in_tree(tree):
                 continue
         _remove_non_cpe_branches(tree)
