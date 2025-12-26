@@ -96,7 +96,7 @@ def prime_cache(check: bool, debug: bool) -> None:
 @click.option(
     "--versions", "-v", is_flag=True, default=False, help="Show PURL versions."
 )
-@click.option("--latest", "-l", is_flag=True, default=False)
+@click.option("--latest", "-l", is_flag=True, default=True)
 @click.option("--cpes", "-c", is_flag=True, default=False)
 @click.option(
     "--include-rpm-containers",
