@@ -23,13 +23,22 @@ logger = logging.getLogger(__name__)
 class RHELReleaseNode:
     """Represents a RHEL release node with its metadata and relationships."""
 
-    def __init__(self, name: str, node_type: str, cpes: List[str]):
+    def __init__(
+        self,
+        name: str,
+        node_type: str,
+        cpes: List[str],
+        ps_update_stream: Optional[str] = None,
+    ):
         self.name = name
         self.node_type = node_type  # main, eus, aus, e4s
         # Remove any single digit like cpe:/a:redhat:enterprise_linux:9::appstream
         self.cpes = [
             cpe for cpe in cpes if not re.search(r":redhat:enterprise_linux:\d:", cpe)
         ]
+        self.ps_update_stream = (
+            ps_update_stream  # The ps_update_stream associated with this node
+        )
         self.children: Set[str] = set()
         self.parents: Set[str] = set()
 
@@ -412,8 +421,11 @@ class RHELReleaseData:
             for node_name, node_data in data["nodes"].items():
                 node_type = node_data.get("type", "unknown")
                 cpes = node_data.get("cpes", [])
+                ps_update_stream = node_data.get(
+                    "ps_update_stream"
+                )  # Extract stream field from YAML
 
-                node = RHELReleaseNode(node_name, node_type, cpes)
+                node = RHELReleaseNode(node_name, node_type, cpes, ps_update_stream)
                 self.nodes[node_name] = node
 
                 # Build CPE to node mapping (use node.cpes which are already filtered)
@@ -483,14 +495,14 @@ class RHELReleaseData:
         Find active ps_update_streams that should be associated with a given CPE.
 
         This implements the rules:
-        1. If CPE matches directly to an active ps_update_stream, use it
-        2. If CPE matches to a parent node, consider it part of each leaf node
-           whose CPEs are in active streams
+        1. For non-RHEL streams: If CPE matches directly to an active ps_update_stream, use it
+        2. For RHEL streams: Use the RHEL release graph to find nodes matching the CPE,
+           then match nodes to streams using their ps_update_stream attribute
 
         Args:
-            cpe: The CPE to match
+            cpe: The CPE to match (typically from an SBOM)
             active_streams: Set of active ps_update_stream names
-            stream_cpes: Mapping of stream names to their CPEs
+            stream_cpes: Mapping of stream names to their CPEs (from product-definitions)
 
         Returns:
             Set of active stream names that should be associated with this CPE
@@ -527,18 +539,16 @@ class RHELReleaseData:
             # Include the node itself if it's a leaf
             all_candidate_nodes = descendants | {node.name}
 
-            # Check if any leaf descendants have CPEs in active streams
+            # Check if any leaf descendants match active streams by ps_update_stream
             for candidate_node_name in all_candidate_nodes:
                 if candidate_node_name in self.nodes:
                     candidate_node = self.nodes[candidate_node_name]
 
-                    # Check if this is effectively a leaf (or the original node)
-                    # and if its CPEs are represented in active streams
-                    for candidate_cpe in candidate_node.cpes:
-                        for stream_name in active_streams:
-                            if stream_name in stream_cpes:
-                                if candidate_cpe in stream_cpes[stream_name]:
-                                    result_streams.add(stream_name)
+                    # Check if this node's ps_update_stream matches any active stream
+                    # This avoids relying on CPE matching between product-definitions and rhel_releases
+                    if candidate_node.ps_update_stream:
+                        if candidate_node.ps_update_stream in active_streams:
+                            result_streams.add(candidate_node.ps_update_stream)
 
         return result_streams
 
@@ -547,7 +557,7 @@ class RHELReleaseData:
     ) -> Set[str]:
         """
         Get all CPEs that should be associated with a given RHEL stream by traversing
-        the release graph to find related nodes using CPE-based matching.
+        the release graph to find related nodes using ps_update_stream attribute matching.
 
         Args:
             stream_name: The ps_update_stream name (e.g., "rhel-9.2.0.z")
@@ -562,25 +572,22 @@ class RHELReleaseData:
         if stream_name in stream_cpes:
             all_cpes.update(stream_cpes[stream_name])
 
-        # Use the stream's CPEs to find matching nodes in the RHEL release graph
-        if stream_name in stream_cpes:
-            matching_nodes = set()
+        # Find matching nodes by ps_update_stream attribute instead of CPE matching
+        matching_nodes = set()
+        for node in self.nodes.values():
+            if node.ps_update_stream == stream_name:
+                matching_nodes.add(node)
 
-            # For each CPE in the stream, find matching nodes in the release graph
-            for cpe in stream_cpes[stream_name]:
-                nodes_for_cpe = self.find_matching_nodes_for_cpe(cpe)
-                matching_nodes.update(nodes_for_cpe)
+        # For each matching node, collect CPEs from the node and its ancestors
+        for node in matching_nodes:
+            # Add CPEs from this node
+            all_cpes.update(node.cpes)
 
-            # For each matching node, collect CPEs from the node and its ancestors
-            for node in matching_nodes:
-                # Add CPEs from this node
-                all_cpes.update(node.cpes)
-
-                # Add CPEs from ancestor nodes (parent releases)
-                ancestors = self.get_ancestors(node.name)
-                for ancestor_name in ancestors:
-                    if ancestor_name in self.nodes:
-                        all_cpes.update(self.nodes[ancestor_name].cpes)
+            # Add CPEs from ancestor nodes (parent releases)
+            ancestors = self.get_ancestors(node.name)
+            for ancestor_name in ancestors:
+                if ancestor_name in self.nodes:
+                    all_cpes.update(self.nodes[ancestor_name].cpes)
 
         return all_cpes
 
