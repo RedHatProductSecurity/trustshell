@@ -1,6 +1,6 @@
 [project]
 name = "trustshell"
-version = "0.2.2"
+version = "0.2.3"
 description = "Command Line tool for Trustify"
 readme = "README.md"
 authors = [
