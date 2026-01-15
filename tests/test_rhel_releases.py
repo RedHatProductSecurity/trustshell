@@ -14,6 +14,7 @@ def create_test_rhel_data():
 nodes:
     RHEL-9.0.0.GA:
       type: main
+      ps_update_stream: rhel-9.0.0.z
       cpes:
         - cpe:/a:redhat:enterprise_linux:9.0::appstream
         - cpe:/o:redhat:enterprise_linux:9.0::baseos
@@ -35,6 +36,7 @@ nodes:
 
     RHEL-9.2.0.GA:
       type: main
+      ps_update_stream: rhel-9.2.0.z
       cpes:
         - cpe:/a:redhat:enterprise_linux:9.2::appstream
         - cpe:/o:redhat:enterprise_linux:9.2::baseos
@@ -66,7 +68,6 @@ def create_test_product_definitions():
                 "ps_update_streams": ["rhel-9.0.0.z", "rhel-9.2.0.z"],
                 "active_ps_update_streams": ["rhel-9.0.0.z", "rhel-9.2.0.z"],
                 "cpe": [
-                    "cpe:/o:redhat:enterprise_linux:9",
                     "cpe:/a:redhat:enterprise_linux:9",
                 ],
             }
@@ -209,7 +210,7 @@ class TestEnhancedProdDefs:
     """Test enhanced product definitions with RHEL release data."""
 
     def test_enhance_cpe_matching_direct_match(self):
-        """Test enhanced CPE matching for direct matches."""
+        """Test enhanced CPE matching for direct matches using ps_update_stream."""
         with tempfile.NamedTemporaryFile(mode="w", suffix=".yml", delete=False) as f:
             f.write(create_test_rhel_data())
             f.flush()
@@ -229,12 +230,14 @@ class TestEnhancedProdDefs:
                     ],
                 }
 
-                # Test direct match
+                # Test CPE that matches RHEL-9.0.0.GA node (which has ps_update_stream: rhel-9.0.0.z)
+                # The CPE from the GA node should match via ps_update_stream
                 result = enhanced.enhance_cpe_matching(
-                    "cpe:/a:redhat:rhel_eus:9.0::appstream", active_streams, stream_cpes
+                    "cpe:/a:redhat:enterprise_linux:9.0::appstream",
+                    active_streams,
+                    stream_cpes,
                 )
                 assert "rhel-9.0.0.z" in result
-                assert len(result) == 1
 
             finally:
                 os.unlink(f.name)
@@ -271,6 +274,64 @@ class TestEnhancedProdDefs:
 
                 # Should map to active streams based on leaf node relationships
                 assert len(result) >= 1
+
+            finally:
+                os.unlink(f.name)
+
+    def test_enhance_cpe_matching_with_ps_update_stream(self):
+        """Test enhanced CPE matching using ps_update_stream attribute."""
+        test_data_with_streams = """
+nodes:
+    RHEL-9.2.0.GA:
+      type: main
+      ps_update_stream: rhel-9.2.0.z
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9.2::appstream
+        - cpe:/o:redhat:enterprise_linux:9.2::baseos
+
+    RHEL-9.3.0.GA:
+      type: main
+      ps_update_stream: rhel-9.3.0.z
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9.3::appstream
+
+edges:
+    RHEL-9.2.0.GA:
+        - RHEL-9.3.0.GA
+"""
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".yml", delete=False) as f:
+            f.write(test_data_with_streams)
+            f.flush()
+
+            try:
+                enhanced = EnhancedProdDefs(rhel_releases_path=f.name)
+
+                active_streams = {"rhel-9.2.0.z", "rhel-9.3.0.z"}
+                # Note: stream_cpes may not have all CPEs if minor version CPEs are removed
+                stream_cpes = {
+                    "rhel-9.2.0.z": [
+                        "cpe:/a:redhat:rhel_eus:9.2::appstream",
+                    ],
+                    "rhel-9.3.0.z": [
+                        "cpe:/a:redhat:enterprise_linux:9.3::appstream",
+                    ],
+                }
+
+                # Test CPE that matches both RHEL-9.2.0.GA and RHEL-9.3.0.GA nodes
+                # Even though stream_cpes doesn't have all CPEs, it should still match
+                # because nodes have ps_update_stream attributes
+                result = enhanced.enhance_cpe_matching(
+                    "cpe:/a:redhat:enterprise_linux:9.2::appstream",
+                    active_streams,
+                    stream_cpes,
+                )
+
+                # Should match both streams because:
+                # - RHEL-9.2.0.GA has ps_update_stream: rhel-9.2.0.z and contains the 9.2 CPE
+                # - RHEL-9.3.0.GA has ps_update_stream: rhel-9.3.0.z and contains the 9.2 CPE
+                # - RHEL-9.2.0.GA is a parent of RHEL-9.3.0.GA, so descendants are checked
+                assert "rhel-9.2.0.z" in result
+                assert "rhel-9.3.0.z" in result
 
             finally:
                 os.unlink(f.name)

@@ -274,10 +274,14 @@ class TestProdDefs(unittest.TestCase):
 nodes:
     RHEL-9.0.0.GA:
       type: main
+      ps_update_stream: rhel-9.0.0.z
       cpes:
         - cpe:/a:redhat:enterprise_linux:9::appstream
         - cpe:/o:redhat:enterprise_linux:9::baseos
         - cpe:/a:redhat:enterprise_linux:9::crb
+        - cpe:/a:redhat:enterprise_linux:9.0::appstream
+        - cpe:/o:redhat:enterprise_linux:9.0::baseos
+        - cpe:/a:redhat:enterprise_linux:9.0::crb
 
     RHEL-9.0.0.Z.MAIN+EUS:
       type: main
@@ -295,6 +299,7 @@ nodes:
 
     RHEL-9.2.0.GA:
       type: main
+      ps_update_stream: rhel-9.2.0.z
       cpes:
         - cpe:/a:redhat:enterprise_linux:9::appstream
         - cpe:/o:redhat:enterprise_linux:9::baseos
@@ -306,6 +311,20 @@ nodes:
         - cpe:/a:redhat:rhel_eus:9.2::appstream
         - cpe:/o:redhat:rhel_eus:9.2::baseos
 
+    RHEL-9.2.0.Z.MAIN+EUS:
+      type: main
+      cpes:
+        - cpe:/a:redhat:enterprise_linux:9::appstream
+        - cpe:/a:redhat:enterprise_linux:9.2::appstream
+
+    RHEL-9.3.0.GA:
+        type: main
+        ps_update_stream: rhel-9.3.0.z
+        cpes:
+          - cpe:/a:redhat:enterprise_linux:9::appstream
+          - cpe:/a:redhat:enterprise_linux:9.2::appstream
+          - cpe:/a:redhat:enterprise_linux:9.3::appstream
+
 edges:
     RHEL-9.0.0.GA:
         - RHEL-9.0.0.Z.MAIN+EUS
@@ -314,6 +333,10 @@ edges:
         - RHEL-9.2.0.GA
     RHEL-9.2.0.GA:
         - RHEL-9.2.0.Z.EUS
+        - RHEL-9.2.0.Z.MAIN+EUS
+    RHEL-9.2.0.Z.MAIN+EUS:
+        - RHEL-9.2.0.Z.EUS
+        - RHEL-9.3.0.GA
 """
         temp_file = tempfile.NamedTemporaryFile(mode="w", suffix=".yml", delete=False)
         temp_file.write(test_data)
@@ -347,6 +370,14 @@ edges:
                     "cpe": [
                         "cpe:/a:redhat:rhel_eus:9.2::appstream",
                         "cpe:/o:redhat:rhel_eus:9.2::baseos",
+                    ],
+                },
+                "rhel-9.3.0.z": {
+                    "pp_label": "rhel-9.3.0.z",
+                    "version": "rhel-9.3.0.z",
+                    "cpe": [
+                        "cpe:/a:redhat:enterprise_linux:9::appstream",
+                        "cpe:/a:redhat:enterprise_linux:9.3::appstream",
                     ],
                 },
             },
@@ -517,6 +548,13 @@ edges:
             assert len(all_cpes) > 2  # Should be more than just the direct CPEs
 
             print(f"Enhanced CPEs for rhel-9.0.0.z: {sorted(all_cpes)}")
+
+            # Get all CPEs for rhel-9.3.0.z stream
+            all_93_cpes = prod_defs.get_all_cpes_for_rhel_stream("rhel-9.3.0.z")
+            print(f"Enhanced CPEs for rhel-9.3.0.z: {sorted(all_93_cpes)}")
+
+            assert "cpe:/a:redhat:enterprise_linux:9.2::appstream" in all_93_cpes
+            assert "cpe:/a:redhat:enterprise_linux:9.3::appstream" in all_93_cpes
 
         finally:
             os.unlink(rhel_yaml_path)
