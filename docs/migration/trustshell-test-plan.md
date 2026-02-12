@@ -24,7 +24,7 @@ There is no Epel, or Fedora content in Atlas.
 
 #### No pre-release content
 
-For most products in NewCLI we track upcoming releases, for example at the time of writting rhel-10.2 does not have any Errata yet, so it is not included in Atlas, and therefore TrustShell.
+For most products in NewCLI we track upcoming releases, for example at the time of writing rhel-10.2 does not have any Errata yet, so it is not included in Atlas, and therefore TrustShell.
 
 #### No managed services
 
@@ -115,9 +115,9 @@ There is a bug with the `--flaw` option described in https://issues.redhat.com/b
 
 Use these examples as a template to test your own packages with TrustShell.
 
-* NewCLI search *
+### NewCLI search
 
-'''
+```bash
 $ newcli -e pypi pypdf -vv
 ai-inference-server-3.2	pkg:oci/docling-cuda-rhel9?repository_url=registry.redhat.io/rhai/docling-cuda-rhel9	(pypdfium2-4.30.0, pypi)
 ...
@@ -144,10 +144,11 @@ rhel-ai-3.0	pkg:oci/disk-image-cuda-rhel9?repository_url=registry.redhat.io/rhel
 rhoai-2.25	pkg:oci/odh-llama-stack-core-rhel9?repository_url=registry.redhat.io/rhoai/odh-llama-stack-core-rhel9	(pypdf-6.0.0, pypi)
 rhoai-3.0	pkg:oci/odh-llama-stack-core-rhel9?repository_url=registry.redhat.io/rhoai/odh-llama-stack-core-rhel9	(pypdf-6.1.3, pypi)
 services-ansible-lightspeed-chatbot	pkg:github/ansible/ansible-chatbot-service@1767349999	(pypdf-6.1.3, pypi)
-'''
+```
 
-* Trustify Search *
+### TrustShell search
 
+```bash
 $ uv run trust-products pkg:pypi/pypdf
 Retrieved 1 items out of 1 total for pkg:pypi/pypdf
 [12:59:45] INFO     [12:59:45] trustshell.rhel_releases INFO Found 3 files matching pattern '*-releases.yml': ['rhel10-releases.yml', 'rhel8-releases.yml', 'rhel9-releases.yml']                                                                                      rhel_releases.py:229
@@ -158,8 +159,9 @@ pkg:pypi/pypdf
 └── pkg:oci/lightspeed-ocp-rag-rhel9?repository_url=registry.redhat.io/openshift-lightspeed/lightspeed-ocp-rag-rhel9&tag=1.0.9-1770087050
     └── ols-1
         └── ols-1
+```
 
-** Notes: 
+**Notes:** 
 1. We have a match on only one container from ols-1
 2. The quay product stream are missing from this TrustShell example (testing setup)
 3. The rhel-ai and rhoai results are missing from this TrustShell examples  (testing setup)
