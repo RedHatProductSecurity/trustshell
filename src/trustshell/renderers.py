@@ -40,6 +40,7 @@ def _render_result_tree(
 ) -> str:
     """Build and return tree as string from result rows. Root is matched_component."""
     root = Node(root_name)
+    # Group rows by dedup_key and aggregate sbom_ids
     groups: dict[tuple[str, ...], list[ProductResultRow]] = {}
     for row in rows:
         if cpes:

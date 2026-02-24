@@ -5,7 +5,7 @@ import logging
 import sys
 from typing import Any, Optional
 
-from anytree import Node, NodeMixin, PreOrderIter
+from anytree import NodeMixin, PreOrderIter
 from anytree.walker import Walker, WalkError
 from packageurl import PackageURL
 from rich.console import Console
@@ -238,7 +238,7 @@ def _format_affect_purl(
 
 
 def build_product_search_result(
-    ancestor_trees: list[Node],
+    ancestor_trees: list[ComponentNode],
     prod_defs: ProdDefs,
     searched_purl: str,
     cpes: bool = False,
@@ -313,7 +313,7 @@ def build_product_search_result(
     )
 
 
-def extract_affects(ancestor_trees: list[Node]) -> set[tuple[str, str]]:
+def extract_affects(ancestor_trees: list[ComponentNode]) -> set[tuple[str, str]]:
     """Collect all the leaf and root node tuples for OSIDB affects.
 
     Extracts (ps_update_stream, purl) tuples where:
@@ -378,7 +378,7 @@ def _get_roots(
     latest: bool = True,
     show_versions: bool = False,
     include_rpm_containers: bool = False,
-) -> list[Node]:
+) -> list[ComponentNode]:
     """Look up base_purl ancestors in Trustify
 
     Uses purl~ query which Trustify automatically translates into optimized
@@ -406,7 +406,7 @@ def _get_roots(
 
 
 def build_ancestor_tree(
-    parent: Node, ancestors: list[dict[str, Any]], show_versions: bool
+    parent: ComponentNode, ancestors: list[dict[str, Any]], show_versions: bool
 ) -> None:
     """
     Recursive function to build an ancestor tree from a nested set of purls, or CPEs.
@@ -423,15 +423,13 @@ def build_ancestor_tree(
             for cpe in cpes:
                 ComponentNode(cpe, parent=parent, sbom_id=sbom_id)
         else:
-            node = ComponentNode(
-                base_purl.to_string(), parent=parent, sbom_id=sbom_id
-            )
+            node = ComponentNode(base_purl.to_string(), parent=parent, sbom_id=sbom_id)
             if "ancestors" in component:
                 build_ancestor_tree(node, component["ancestors"], show_versions)
             # else try the next ancestor
 
 
-def _remove_root_return_children(root: Node) -> list[Node]:
+def _remove_root_return_children(root: ComponentNode) -> list[ComponentNode]:
     """
     Removes the root node and returns a list of its direct children.
 
@@ -452,7 +450,7 @@ def _remove_root_return_children(root: Node) -> list[Node]:
     return children
 
 
-def _get_branch_signature(node: Node) -> str:
+def _get_branch_signature(node: ComponentNode) -> str:
     """
     Create a unique signature for a branch structure starting from the given node.
     The signature includes the root component to ensure different components
@@ -471,7 +469,7 @@ def _get_branch_signature(node: Node) -> str:
     # Use a list to collect branch elements in pre-order traversal
     elements = [f"ROOT:{root_component}"]
 
-    def traverse(current_node: Node, path: str = "") -> None:
+    def traverse(current_node: ComponentNode, path: str = "") -> None:
         # Add node name and its level in the path (skip root since it's already included)
         if current_node != node:
             node_sig = f"{path}{current_node.name}"
@@ -486,7 +484,7 @@ def _get_branch_signature(node: Node) -> str:
     return "|".join(elements)
 
 
-def _has_cpe_node(node: Node) -> bool:
+def _has_cpe_node(node: ComponentNode) -> bool:
     """
     Check if the node or any of its descendants have a name starting with "cpe:/".
 
@@ -508,7 +506,7 @@ def _has_cpe_node(node: Node) -> bool:
     return False
 
 
-def _remove_non_cpe_branches(root: Node) -> Node:
+def _remove_non_cpe_branches(root: ComponentNode) -> ComponentNode:
     # Inspect all the leaves for ones not starting with cpe:/
     leaves_to_remove = set()
     leaves_to_keep = set()
@@ -533,15 +531,19 @@ def _remove_non_cpe_branches(root: Node) -> Node:
     return root
 
 
-def _remove_duplicate_branches(root: Node) -> Node:
+def _merge_branch_sbom_ids(kept: ComponentNode, removed: ComponentNode) -> None:
+    """Merge sbom_ids from removed branch into kept branch (same structure)."""
+    kept.sbom_ids.update(removed.sbom_ids)
+    kept_children = sorted(kept.children, key=lambda x: x.name)
+    removed_children = sorted(removed.children, key=lambda x: x.name)
+    for k, r in zip(kept_children, removed_children):
+        _merge_branch_sbom_ids(k, r)  # type: ignore[arg-type]
+
+
+def _remove_duplicate_branches(root: ComponentNode) -> ComponentNode:
     """
-    Removes duplicate branch structures from an Anytree tree
-
-    Args:
-        root (Node): The root node of the tree
-
-    Returns:
-        Node: The root node of the modified tree with duplicate branches removed
+    Removes duplicate branch structures from an Anytree tree.
+    Merges sbom_ids from removed branches into the kept branch.
     """
 
     # Dictionary to store branches by their signatures
@@ -557,9 +559,10 @@ def _remove_duplicate_branches(root: Node) -> Node:
     # Remove duplicate branches
     for signature, nodes in branches_by_signature.items():
         if len(nodes) > 1:
-            # Keep the first occurrence of the branch
+            # Keep the first occurrence; merge sbom_ids from duplicates, then remove
+            kept = nodes[0]
             for node in nodes[1:]:
-                # Remove this duplicate branch
+                _merge_branch_sbom_ids(kept, node)
                 if node.parent:
                     node.parent = None
 
@@ -570,18 +573,18 @@ def _trees_with_cpes(
     ancestor_data: dict[str, Any],
     show_versions: bool,
     include_rpm_containers: bool = False,
-) -> list[Node]:
+) -> list[ComponentNode]:
     """Builds a tree of ancestors with a target component root"""
     if "items" not in ancestor_data or not ancestor_data["items"]:
         return []
-    base_node = Node("root")
+    base_node = ComponentNode("root")
     build_ancestor_tree(base_node, ancestor_data["items"], show_versions)
     _remove_duplicate_branches(base_node)
     _remove_duplicate_parent_nodes(base_node)
     # re-parenting the tree can introduce new duplicate branches
     _remove_duplicate_branches(base_node)
     first_children = _remove_root_return_children(base_node)
-    trees_with_cpes: list[Node] = []
+    trees_with_cpes: list[ComponentNode] = []
     for tree in first_children:
         # Remove this once https://issues.redhat.com/browse/TC-2659 is implemented
         if tree.name.startswith("pkg:rpm/") and not include_rpm_containers:
@@ -598,7 +601,7 @@ def _trees_with_cpes(
     return trees_with_cpes
 
 
-def container_in_tree(root: Node) -> bool:
+def container_in_tree(root: ComponentNode) -> bool:
     """
     Returns true if containers exist in tree descendants
     """
@@ -608,16 +611,20 @@ def container_in_tree(root: Node) -> bool:
     return False
 
 
-def _remove_duplicate_parent_nodes(node: Node) -> None:
+def _remove_duplicate_parent_nodes(node: ComponentNode) -> None:
     """
     Removes nodes in an anytree tree that have the same name as their direct parent,
     and reparents their children to the remaining node.
-
-    :param node: The node to process.
+    Merges sbom_ids from the removed node into the parent.
     """
-    for descandant in node.descendants:
-        if descandant.name == descandant.parent.name:
-            new_children = list(descandant.siblings)
-            new_children.extend(descandant.children)
-            descandant.parent.children = new_children
-            descandant.parent = None
+    for descendant in node.descendants:
+        if descendant.name == descendant.parent.name:
+            # Merge sbom_ids before detaching (if both support it)
+            if hasattr(descendant, "sbom_ids") and hasattr(
+                descendant.parent, "sbom_ids"
+            ):
+                descendant.parent.sbom_ids.update(descendant.sbom_ids)
+            new_children = list(descendant.siblings)
+            new_children.extend(descendant.children)
+            descendant.parent.children = new_children
+            descendant.parent = None

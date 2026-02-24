@@ -7,6 +7,7 @@ from anytree import Node
 
 from trustshell import build_node_purl, render_tree
 from trustshell.products import (
+    ComponentNode,
     _get_branch_signature,
     _remove_duplicate_parent_nodes,
     _remove_non_cpe_branches,
@@ -84,6 +85,25 @@ class TestProducts(unittest.TestCase):
             "cpe:/a:redhat:rhel_eus:9.2:*:baseos:*",
         ]
         _check_node_names_at_depth(result[0], 1, expected_cpes)
+
+    def test_trees_with_cpes_sbom_ids(self):
+        """Verify sbom_ids are collected on nodes from API data."""
+        with open("tests/testdata/openssl.json", "r") as file:
+            data = json.load(file)
+        result = _trees_with_cpes(data, show_versions=True)
+        assert len(result) == 1
+        tree = result[0]
+        assert isinstance(tree, ComponentNode)
+        # openssl.json has sbom_id at component and product levels
+        for node in list(tree.descendants) + [tree]:
+            assert hasattr(node, "sbom_ids")
+        # Collect all sbom_ids from the tree (openssl has component + product levels)
+        all_sbom_ids = {
+            sid for node in list(tree.descendants) + [tree] for sid in node.sbom_ids
+        }
+        assert len(all_sbom_ids) >= 1
+        # RHEL 9.2 EUS product-level sbom_id from ancestor
+        assert "0195d531-b2ea-7031-af29-72de8330e51f" in all_sbom_ids
 
     def test_trees_with_cpes_binary_rpm(self):
         with open("tests/testdata/openssl-libs.json", "r") as file:
