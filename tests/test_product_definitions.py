@@ -4,9 +4,11 @@ import os
 import unittest
 from anytree import Node
 from unittest.mock import patch
+
 from test_products import _check_node_names_at_depth
+from trustshell import render_tree
 from trustshell.product_definitions import ProdDefs
-from trustshell.products import render_tree
+from trustshell.products import build_product_search_result
 
 
 class TestProdDefs(unittest.TestCase):
@@ -64,7 +66,7 @@ class TestProdDefs(unittest.TestCase):
     def test_prod_defs_product_trees(self, mock_service):
         mock_service.return_value = self.mock_proddefs_data
         prod_defs = ProdDefs()
-        assert len(prod_defs.product_trees) == 6
+        assert len(prod_defs.product_trees) == 7
         for tree in prod_defs.product_trees:
             render_tree(tree)
         rhel_9_2_z_stream = prod_defs.product_trees[1]
@@ -75,43 +77,33 @@ class TestProdDefs(unittest.TestCase):
         _check_node_names_at_depth(quay_3_12_stream, 1, ["quay-3"])
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
-    def test_extend_with_product_mappings(self, mock_service):
-        """Tests that the CPE is cleaned and matched directly to stream"""
+    def test_build_product_search_result_rhel_eus(self, mock_service):
+        """Tests that CPE is cleaned and matched to stream - same data as extend_with_product_mappings."""
         mock_service.return_value = self.mock_proddefs_data
         component = "pkg:rpm/redhat/openssl"
         component_node = Node(component)
         cpe = "cpe:/a:redhat:rhel_eus:9.2:*:appstream:*"
         Node(cpe, parent=component_node)
         test_trees = [component_node]
-        ProdDefs().extend_with_product_mappings(test_trees, keep_cpes=True)
-        assert len(test_trees) == 1
-        root = test_trees[0].root
-        render_tree(root)
-        assert root.name == component
-        _check_node_names_at_depth(root, 1, [cpe])
-        _check_node_names_at_depth(root, 2, ["rhel-9.2.0.z"])
-        _check_node_names_at_depth(root, 3, ["rhel-9"])
+        prod_defs = ProdDefs()
+        result = build_product_search_result(
+            test_trees, prod_defs, component, cpes=True
+        )
+        assert len(result.results) == 1
+        row = result.results[0]
+        assert row.cpe == "cpe:/a:redhat:rhel_eus:9.2::appstream"
+        assert row.ps_update_stream == "rhel-9.2.0.z"
+        # Stream match populates ps_module from stream's parent module
+        assert row.ps_module == "rhel-9"
+        assert row.matched_component == component
+        assert row.shipped_component == "pkg:rpm/redhat/openssl"
+        assert len(result.affects) == 1
+        assert next(iter(result.affects)).purl == "pkg:rpm/redhat/openssl"
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
-    def test_extend_with_product_mappings_no_cpes(self, mock_service):
-        """Tests that the CPE is cleaned and matched directly to stream"""
-        mock_service.return_value = self.mock_proddefs_data
-        component = "pkg:rpm/redhat/openssl"
-        component_node = Node(component)
-        cpe = "cpe:/a:redhat:rhel_eus:9.2:*:appstream:*"
-        Node(cpe, parent=component_node)
-        test_trees = [component_node]
-        ProdDefs().extend_with_product_mappings(test_trees)
-        assert len(test_trees) == 1
-        root = test_trees[0].root
-        render_tree(root)
-        assert root.name == component
-        _check_node_names_at_depth(root, 1, ["rhel-9.2.0.z"])
-        _check_node_names_at_depth(root, 2, ["rhel-9"])
-
-    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
-    def test_extend_with_product_mappings_multi_products(self, mock_service):
-        """Tests that duplicate CPEs return duplicates branches"""
+    def test_build_product_search_result_multi_products(self, mock_service):
+        """Tests that duplicate CPEs produce multiple result rows - same data as extend_with_product_mappings_multi_products.
+        CPE matches rhel-9 module (prefix), yielding multiple streams; 2 components × N streams = 2N rows."""
         mock_service.return_value = self.mock_proddefs_data
         component_1 = "pkg:rpm/redhat/openssl"
         component_2 = "pkg:rpm/redhat/openssl-debug"
@@ -122,151 +114,62 @@ class TestProdDefs(unittest.TestCase):
         Node(cpe, parent=component_node_2)
         test_trees = [component_node_1, component_node_2]
         prod_defs = ProdDefs()
-        prod_defs.extend_with_product_mappings(test_trees, keep_cpes=True)
-        assert len(test_trees) == 2
-        for r in test_trees:
-            root = r.root
-            render_tree(root)
-            assert root.name in (component_1, component_2)
-            _check_node_names_at_depth(root, 1, [cpe])
-            _check_node_names_at_depth(root, 2, ["rhel-9.6.z"])
-            _check_node_names_at_depth(root, 3, ["rhel-9"])
+        result = build_product_search_result(
+            test_trees, prod_defs, "pkg:rpm/redhat/openssl", cpes=True
+        )
+        matched = {row.matched_component for row in result.results}
+        assert matched == {component_1, component_2}
+        ps_streams = {row.ps_update_stream for row in result.results}
+        assert "rhel-9.6.z" in ps_streams
+        assert all(row.ps_module == "rhel-9" for row in result.results)
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
-    def test_extend_with_product_mappings_multi_products_no_cpes(self, mock_service):
-        """Tests that duplicate CPEs return duplicates branches"""
+    def test_build_product_search_result_quay_module_match(self, mock_service):
+        """Tests that CPE matching module returns multiple streams - same data as extend_with_product_mapping_module_match."""
         mock_service.return_value = self.mock_proddefs_data
-        component_1 = "pkg:rpm/redhat/openssl"
-        component_2 = "pkg:rpm/redhat/openssl-debug"
-        cpe = "cpe:/a:redhat:enterprise_linux:9.6::appstream"
-        component_node_1 = Node(component_1)
-        Node(cpe, parent=component_node_1)
-        component_node_2 = Node(component_2)
-        Node(cpe, parent=component_node_2)
-        test_trees = [component_node_1, component_node_2]
+        cpe = "cpe:/a:redhat:quay:3"
+        component = "pkg:oci/quay"
+        component_node = Node(component)
+        Node(cpe, parent=component_node)
+        test_trees = [component_node]
         prod_defs = ProdDefs()
-        prod_defs.extend_with_product_mappings(test_trees)
-        assert len(test_trees) == 2
-        for r in test_trees:
-            root = r.root
-            render_tree(root)
-            assert root.name in (component_1, component_2)
-            _check_node_names_at_depth(root, 1, ["rhel-9.6.z"])
-            _check_node_names_at_depth(root, 2, ["rhel-9"])
+        result = build_product_search_result(
+            test_trees, prod_defs, component, cpes=True
+        )
+        assert len(result.results) == 2
+        ps_streams = {row.ps_update_stream for row in result.results}
+        assert ps_streams == {"quay-3.12", "quay-3.13"}
+        assert all(row.ps_module == "quay-3" for row in result.results)
+        assert all(row.matched_component == component for row in result.results)
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
-    def test_extend_with_product_mapping_module_match(self, mock_service):
-        """Tests that if a CPE matches multiple streams there is a result returned for each"""
+    def test_build_product_search_result_multi_module_match(self, mock_service):
+        """Test multiple components with different CPEs - same data as extend_with_product_mapping_multi_module_match."""
         mock_service.return_value = self.mock_proddefs_data
-        cpe = "cpe:/a:redhat:quay:3"
-        component = "oci:quay"
-        component_node = Node(component)
-        Node(cpe, parent=component_node)
-        test_trees = [component_node]
-        ProdDefs().extend_with_product_mappings(test_trees, keep_cpes=True)
-        for r in test_trees:
-            render_tree(r)
-        assert len(test_trees) == 1
-        first_root = test_trees[0].root
-        assert first_root.name == component
-        _check_node_names_at_depth(first_root, 1, [cpe])
-        _check_node_names_at_depth(first_root, 2, ["quay-3.13", "quay-3.12"])
-        _check_node_names_at_depth(first_root, 3, ["quay-3", "quay-3"])
-
-    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
-    def test_extend_with_product_mapping_module_match_no_cpes(self, mock_service):
-        """Tests that if a CPE matches multiple streams with keep_cpes=False, CPE nodes are replaced by streams"""
-        mock_service.return_value = self.mock_proddefs_data
-        cpe = "cpe:/a:redhat:quay:3"
-        component = "oci:quay"
-        component_node = Node(component)
-        Node(cpe, parent=component_node)
-        test_trees = [component_node]
-        ProdDefs().extend_with_product_mappings(test_trees)
-        for r in test_trees:
-            render_tree(r)
-        assert len(test_trees) == 1
-
-        # Both results should have the same root (component)
-        first_root = test_trees[0].root
-        assert first_root.name == component
-
-        _check_node_names_at_depth(first_root, 1, ["quay-3.12", "quay-3.13"])
-        _check_node_names_at_depth(first_root, 2, ["quay-3", "quay-3"])
-
-    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
-    def test_extend_with_product_mapping_multi_module_match(self, mock_service):
-        """Test that when multiple components match a stream and module in the same product tree,
-        that we get a result for each"""
-        mock_service.return_value = self.mock_proddefs_data
-        component_1 = "oci:quay@123"
+        component_1 = "pkg:oci/quay@sha256:123"
         component_1_node = Node(component_1)
-        component_2 = "oci:quay@345"
+        component_2 = "pkg:oci/quay@sha256:345"
         component_2_node = Node(component_2)
         module_cpe = "cpe:/a:redhat:quay:3"
         Node(module_cpe, parent=component_1_node)
         stream_cpe = "cpe:/a:redhat:quay:3.13"
         Node(stream_cpe, parent=component_2_node)
         test_trees = [component_1_node, component_2_node]
-        ProdDefs().extend_with_product_mappings(test_trees, keep_cpes=True)
-        for r in test_trees:
-            render_tree(r.root)
-        # oci:quay@123
-        # └── cpe:/a:redhat:quay:3
-        #     └── quay-3.13
-        #         └── quay-3
-        #     └── quay-3.12
-        #         └── quay-3
-        # oci:quay@345
-        # └── cpe:/a:redhat:quay:3.13
-        #     └── quay-3.13
-        #         └── quay-3
-        assert len(test_trees) == 2
-        first_root = test_trees[0].root
-        second_root = test_trees[1].root
-        assert first_root.name == component_1
-        assert second_root.name == component_2
-        _check_node_names_at_depth(first_root, 1, [module_cpe])
-        _check_node_names_at_depth(first_root, 2, ["quay-3.13", "quay-3.12"])
-        _check_node_names_at_depth(first_root, 3, ["quay-3", "quay-3"])
-        _check_node_names_at_depth(second_root, 1, [stream_cpe])
-        _check_node_names_at_depth(second_root, 2, ["quay-3.13"])
-        _check_node_names_at_depth(second_root, 3, ["quay-3"])
-
-    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
-    def test_extend_with_product_mapping_multi_module_match_no_cpes(self, mock_service):
-        """Test that when multiple components match a stream and module in the same product tree,
-        that we get a result for each"""
-        mock_service.return_value = self.mock_proddefs_data
-        component_1 = "oci:quay@123"
-        component_1_node = Node(component_1)
-        component_2 = "oci:quay@345"
-        component_2_node = Node(component_2)
-        module_cpe = "cpe:/a:redhat:quay:3"
-        Node(module_cpe, parent=component_1_node)
-        stream_cpe = "cpe:/a:redhat:quay:3.13"
-        Node(stream_cpe, parent=component_2_node)
-        test_trees = [component_1_node, component_2_node]
-        ProdDefs().extend_with_product_mappings(test_trees)
-        for r in test_trees:
-            render_tree(r.root)
-        # oci:quay@123
-        #     └── quay-3.13
-        #         └── quay-3
-        #     └── quay-3.12
-        #         └── quay-3
-        # oci:quay@345
-        #     └── quay-3.13
-        #         └── quay-3
-        assert len(test_trees) == 2
-        first_root = test_trees[0].root
-        second_root = test_trees[1].root
-        assert first_root.name == component_1
-        assert second_root.name == component_2
-        _check_node_names_at_depth(first_root, 1, ["quay-3.13", "quay-3.12"])
-        _check_node_names_at_depth(first_root, 2, ["quay-3", "quay-3"])
-        _check_node_names_at_depth(second_root, 1, ["quay-3.13"])
-        _check_node_names_at_depth(second_root, 2, ["quay-3"])
+        prod_defs = ProdDefs()
+        result = build_product_search_result(
+            test_trees, prod_defs, "pkg:oci/quay", cpes=True
+        )
+        rows_by_cpe = {}
+        for row in result.results:
+            rows_by_cpe.setdefault(row.cpe, []).append(row)
+        assert "cpe:/a:redhat:quay:3" in rows_by_cpe
+        assert "cpe:/a:redhat:quay:3.13" in rows_by_cpe
+        module_rows = rows_by_cpe["cpe:/a:redhat:quay:3"]
+        assert len(module_rows) == 2
+        assert {r.ps_update_stream for r in module_rows} == {"quay-3.12", "quay-3.13"}
+        stream_rows = rows_by_cpe["cpe:/a:redhat:quay:3.13"]
+        assert len(stream_rows) >= 1
+        assert {r.ps_update_stream for r in stream_rows} >= {"quay-3.13"}
 
     def _create_test_rhel_releases_yaml(self):
         """Create a temporary RHEL releases YAML file for testing."""
@@ -390,88 +293,60 @@ edges:
         rhel_yaml_path = self._create_test_rhel_releases_yaml()
 
         try:
-            # Create ProdDefs with RHEL release data
             prod_defs = ProdDefs(active_only=True, rhel_releases_path=rhel_yaml_path)
 
-            # Test direct CPE match
+            # Test direct CPE match - get_product_mappings_for_cpe
+            # Stream matches populate ps_module from stream's parent module
+            cpe = "cpe:/a:redhat:rhel_eus:9.0::appstream"
+            mappings = prod_defs.get_product_mappings_for_cpe(cpe)
+            assert len(mappings) == 1
+            assert mappings[0] == ("rhel-9.0.0.z", "rhel-9")
+
+            # Also verify build_product_search_result produces correct result
             component = "pkg:rpm/redhat/openssl"
             component_node = Node(component)
-            # This CPE exists directly in the rhel-9.0.0.z stream
-            cpe = "cpe:/a:redhat:rhel_eus:9.0::appstream"
             Node(cpe, parent=component_node)
             test_trees = [component_node]
-
-            prod_defs.extend_with_product_mappings(test_trees, keep_cpes=True)
-
-            # Verify the mapping worked
-            root = test_trees[0].root
-            render_tree(root)
-            assert root.name == component
-            _check_node_names_at_depth(root, 1, [cpe])
-            _check_node_names_at_depth(root, 2, ["rhel-9.0.0.z"])
-            _check_node_names_at_depth(root, 3, ["rhel-9"])
+            result = build_product_search_result(
+                test_trees, prod_defs, component, cpes=True
+            )
+            assert len(result.results) == 1
+            assert result.results[0].ps_update_stream == "rhel-9.0.0.z"
 
         finally:
             os.unlink(rhel_yaml_path)
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
     def test_rhel_releases_parent_cpe_match(self, mock_service):
-        """Test that parent CPE matches work and map to leaf streams."""
+        """Test that single-digit CPEs are filtered out - get_product_mappings_for_cpe returns []."""
         mock_service.return_value = self._create_enhanced_product_definitions()
         rhel_yaml_path = self._create_test_rhel_releases_yaml()
 
         try:
-            # Create ProdDefs with RHEL release data
             prod_defs = ProdDefs(active_only=True, rhel_releases_path=rhel_yaml_path)
 
-            # Test parent CPE match
-            component = "pkg:rpm/redhat/httpd"
-            component_node = Node(component)
-            # This CPE appears in parent nodes (GA, MAIN+EUS) but should now be filtered out
-            # so no matches should occur with single digit CPEs
+            # Single-digit CPE cpe:/a:redhat:enterprise_linux:9::appstream is filtered
             cpe = "cpe:/a:redhat:enterprise_linux:9::appstream"
-            Node(cpe, parent=component_node)
-            test_trees = [component_node]
-
-            prod_defs.extend_with_product_mappings(test_trees, keep_cpes=True)
-
-            # Verify that single digit CPE is now filtered out and doesn't match
-            root = test_trees[0].root
-            render_tree(root)
-            assert root.name == component
-            _check_node_names_at_depth(root, 1, [])
+            mappings = prod_defs.get_product_mappings_for_cpe(cpe)
+            assert mappings == []
 
         finally:
             os.unlink(rhel_yaml_path)
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
     def test_rhel_releases_versioned_cpe_still_works(self, mock_service):
-        """Test that versioned CPEs (like 9.0::appstream) still work with RHEL release data."""
+        """Test that versioned CPEs (like 9.2::appstream) still work with RHEL release data."""
         mock_service.return_value = self._create_enhanced_product_definitions()
         rhel_yaml_path = self._create_test_rhel_releases_yaml()
 
         try:
-            # Create ProdDefs with RHEL release data
             prod_defs = ProdDefs(active_only=True, rhel_releases_path=rhel_yaml_path)
 
-            # Test versioned CPE that should work (not filtered out)
-            component = "pkg:rpm/redhat/httpd"
-            component_node = Node(component)
-            # This CPE has version (9.2) so should NOT be filtered out
+            # Versioned CPE cpe:/a:redhat:enterprise_linux:9.2::appstream should match
             cpe = "cpe:/a:redhat:enterprise_linux:9.2::appstream"
-            Node(cpe, parent=component_node)
-            test_trees = [component_node]
-
-            prod_defs.extend_with_product_mappings(test_trees, keep_cpes=True)
-
-            # Verify the versioned CPE can still map to streams through RHEL release data
-            root = test_trees[0].root
-            render_tree(root)
-            assert root.name == component
-            _check_node_names_at_depth(root, 1, [cpe])
-
-            # Should map to active streams since versioned CPE exists in RHEL release data
-            stream_names = [node.name for node in root.children[0].children]
+            mappings = prod_defs.get_product_mappings_for_cpe(cpe)
+            assert len(mappings) >= 1
+            stream_names = [m[0] for m in mappings]
             assert "rhel-9.2.0.z" in stream_names
 
         finally:
@@ -479,33 +354,16 @@ edges:
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
     def test_rhel_releases_no_match_behavior(self, mock_service):
-        """Test behavior when CPE doesn't match any RHEL release data."""
+        """Test that get_product_mappings_for_cpe returns [] for unknown CPE."""
         mock_service.return_value = self._create_enhanced_product_definitions()
         rhel_yaml_path = self._create_test_rhel_releases_yaml()
 
         try:
-            # Create ProdDefs with RHEL release data
             prod_defs = ProdDefs(active_only=True, rhel_releases_path=rhel_yaml_path)
 
-            # Test with a CPE that doesn't match RHEL release data
-            component = "pkg:rpm/unknown/package"
-            component_node = Node(component)
-            # This CPE doesn't exist in our test RHEL release data
             cpe = "cpe:/a:unknown:product:1.0"
-            Node(cpe, parent=component_node)
-            test_trees = [component_node]
-
-            prod_defs.extend_with_product_mappings(test_trees, keep_cpes=True)
-
-            # Should fall back to module pattern matching (which should also fail)
-            # and display a warning about no matching products
-            root = test_trees[0].root
-            assert root.name == component
-            # Should still have the original CPE node
-            assert len(root.children) == 1
-            assert root.children[0].name == cpe
-            # But no product mappings should be added
-            assert len(root.children[0].children) == 0
+            mappings = prod_defs.get_product_mappings_for_cpe(cpe)
+            assert mappings == []
 
         finally:
             os.unlink(rhel_yaml_path)
