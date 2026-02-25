@@ -3,9 +3,9 @@ import click
 import httpx
 import logging
 import sys
-from typing import Any
+from typing import Any, Optional
 
-from anytree import Node, PreOrderIter
+from anytree import NodeMixin, PreOrderIter
 from anytree.walker import Walker, WalkError
 from packageurl import PackageURL
 from rich.console import Console
@@ -18,9 +18,9 @@ from trustshell import (
     config_logging,
     print_version,
     purl_sans_version,
-    render_tree,
     paginated_trustify_query,
 )
+from trustshell.models import Affect, ProductResultRow, ProductSearchResult
 from trustshell.osidb import OSIDB
 from trustshell.product_definitions import ProdDefs, ProductModule, ProductStream
 
@@ -31,6 +31,22 @@ ANCESTOR_COUNT = 100
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
 console = Console(color_system="auto", theme=custom_theme)
 logger = logging.getLogger("trustshell")
+
+
+class ComponentNode(NodeMixin):
+    """Tree node with name and sbom_ids for component hierarchy from Trustify API."""
+
+    def __init__(
+        self,
+        name: str,
+        parent: Optional["ComponentNode"] = None,
+        sbom_id: Optional[str] = None,
+    ) -> None:
+        self.name = name
+        self.parent = parent
+        self.sbom_ids: set[str] = set()
+        if sbom_id:
+            self.sbom_ids.add(sbom_id)
 
 
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
@@ -113,6 +129,25 @@ def prime_cache(check: bool, debug: bool) -> None:
     help="Replace flaw affects. Requires --flaw to be set.",
     callback=lambda ctx, param, value: _check_flaw(ctx, param, value, "replace"),
 )
+@click.option(
+    "--output",
+    "-o",
+    type=click.Choice(["text", "json"]),
+    default="text",
+    help="Output format. Mutually exclusive with --flaw.",
+)
+@click.option(
+    "--show-module",
+    is_flag=True,
+    default=True,
+    help="Show ps_module in output (tree format).",
+)
+@click.option(
+    "--show-sbom-ids",
+    is_flag=True,
+    default=False,
+    help="Show sbom_ids in text output (tree format).",
+)
 @click.option("--debug", "-d", is_flag=True, help="Debug log level.")
 @click.argument(
     "purl",
@@ -120,8 +155,11 @@ def prime_cache(check: bool, debug: bool) -> None:
 )
 def search(
     purl: str,
-    flaw: str,
+    flaw: Optional[str],
     replace: bool,
+    output: str,
+    show_module: bool,
+    show_sbom_ids: bool,
     debug: bool,
     latest: bool,
     cpes: bool,
@@ -129,6 +167,9 @@ def search(
     include_rpm_containers: bool,
 ) -> None:
     """Relate a purl to products in Trustify"""
+    if flaw and output == "json":
+        raise click.UsageError("--flaw and --output are mutually exclusive.")
+
     if not debug:
         config_logging(level="INFO")
     else:
@@ -151,23 +192,19 @@ def search(
         return
 
     prod_defs = ProdDefs()
-    prod_defs.extend_with_product_mappings(ancestor_trees, keep_cpes=cpes)
+    result = build_product_search_result(ancestor_trees, prod_defs, purl, cpes=cpes)
 
-    seen_trees = set()
-    for tree in ancestor_trees:
-        _remove_duplicate_branches(tree)
-        tree_signature = _get_branch_signature(tree.root)
-        if tree_signature in seen_trees:
-            continue
-        seen_trees.add(tree_signature)
-        render_tree(tree.root)
+    if flaw:
+        osidb = OSIDB()
+        osidb.edit_flaw_affects(flaw, result.affects, replace)
+        return
 
-    if not flaw:
-        exit(0)
-
-    osidb = OSIDB()
-    affects = extract_affects(ancestor_trees)
-    osidb.edit_flaw_affects(flaw, affects, replace)
+    result.render(
+        output=output,
+        include_modules=show_module,
+        cpes=cpes,
+        show_sbom_ids=show_sbom_ids,
+    )
 
 
 def _check_flaw(ctx: Any, param: Any, value: Any, dependent_option_name: str) -> Any:
@@ -181,7 +218,102 @@ def _check_flaw(ctx: Any, param: Any, value: Any, dependent_option_name: str) ->
     return value
 
 
-def extract_affects(ancestor_trees: list[Node]) -> set[tuple[str, str]]:
+def _format_affect_purl(
+    purl: PackageURL, root_name: str, root_is_maven: bool = False
+) -> str:
+    """Format purl for affects: OCI sans tag, maven/generic use root, else sans version."""
+    if purl.type == "oci" and purl.qualifiers and "tag" in purl.qualifiers:
+        purl = PackageURL(
+            type=purl.type,
+            namespace=purl.namespace,
+            name=purl.name,
+            version=purl.version,
+            qualifiers={k: v for k, v in purl.qualifiers.items() if k != "tag"},
+        )
+    elif purl.type == "maven" or (purl.type == "generic" and root_is_maven):
+        purl = PackageURL.from_string(root_name)
+    else:
+        purl = purl_sans_version(purl)
+    return purl.to_string()
+
+
+def build_product_search_result(
+    ancestor_trees: list[ComponentNode],
+    prod_defs: ProdDefs,
+    searched_purl: str,
+    cpes: bool = False,
+) -> ProductSearchResult:
+    """Build flat ProductSearchResult from component trees.
+
+    Does not mutate trees. Uses get_product_mappings_for_cpe for product matching.
+    """
+    results: list[ProductResultRow] = []
+    for tree in ancestor_trees:
+        root_name = tree.root.name
+        try:
+            root_purl = PackageURL.from_string(root_name)
+            root_is_maven = root_purl.type == "maven"
+        except ValueError:
+            root_is_maven = False
+        for leaf in tree.leaves:
+            if not leaf.name.startswith("cpe:/"):
+                continue
+            cpe = leaf.name
+            mappings = prod_defs.get_product_mappings_for_cpe(cpe)
+            if not mappings:
+                continue
+            pkg_ancestors = [a for a in leaf.ancestors if a.name.startswith("pkg:")]
+            if not pkg_ancestors:
+                continue
+            shipped_purl_node = None
+            for a in pkg_ancestors:
+                try:
+                    if PackageURL.from_string(a.name).type in ("rpm", "oci", "maven"):
+                        shipped_purl_node = a
+                        break
+                except ValueError:
+                    continue
+            if shipped_purl_node is None:
+                continue
+            shipped_purl = PackageURL.from_string(shipped_purl_node.name)
+            shipped_component = _format_affect_purl(
+                shipped_purl, root_name, root_is_maven
+            )
+            matched_component = root_name
+            cleaned_cpe = prod_defs._clean_cpe(cpe)
+            # Collect sbom_ids from path (root to leaf)
+            path_sbom_ids: set[str] = set()
+            for node in list(leaf.ancestors) + [leaf]:
+                if hasattr(node, "sbom_ids"):
+                    path_sbom_ids.update(node.sbom_ids)
+            sbom_ids_list = sorted(path_sbom_ids)
+            for ps_update_stream, ps_module in mappings:
+                results.append(
+                    ProductResultRow(
+                        cpe=cleaned_cpe,
+                        ps_update_stream=ps_update_stream,
+                        ps_module=ps_module,
+                        matched_component=matched_component,
+                        shipped_component=shipped_component,
+                        sbom_ids=sbom_ids_list,
+                    )
+                )
+    affects_unique = {
+        Affect(ps_update_stream=row.ps_update_stream, purl=row.shipped_component)
+        for row in results
+    }
+    results_sorted = sorted(
+        results, key=lambda r: (r.ps_update_stream, r.shipped_component)
+    )
+    affects_sorted = sorted(affects_unique, key=lambda a: (a.ps_update_stream, a.purl))
+    return ProductSearchResult(
+        results=results_sorted,
+        affects=affects_sorted,
+        searched_purl=searched_purl,
+    )
+
+
+def extract_affects(ancestor_trees: list[ComponentNode]) -> set[tuple[str, str]]:
     """Collect all the leaf and root node tuples for OSIDB affects.
 
     Extracts (ps_update_stream, purl) tuples where:
@@ -246,7 +378,7 @@ def _get_roots(
     latest: bool = True,
     show_versions: bool = False,
     include_rpm_containers: bool = False,
-) -> list[Node]:
+) -> list[ComponentNode]:
     """Look up base_purl ancestors in Trustify
 
     Uses purl~ query which Trustify automatically translates into optimized
@@ -274,12 +406,14 @@ def _get_roots(
 
 
 def build_ancestor_tree(
-    parent: Node, ancestors: list[dict[str, Any]], show_versions: bool
+    parent: ComponentNode, ancestors: list[dict[str, Any]], show_versions: bool
 ) -> None:
     """
     Recursive function to build an ancestor tree from a nested set of purls, or CPEs.
+    Records sbom_id from each component on the corresponding node.
     """
     for component in ancestors:
+        sbom_id = component.get("sbom_id")
         base_purl = build_node_purl(component["purl"], show_versions)
         if not base_purl:
             cpes = component["cpe"]
@@ -287,15 +421,15 @@ def build_ancestor_tree(
                 # Try the next ancestor
                 continue
             for cpe in cpes:
-                Node(cpe, parent=parent)
+                ComponentNode(cpe, parent=parent, sbom_id=sbom_id)
         else:
-            node = Node(base_purl.to_string(), parent=parent)
+            node = ComponentNode(base_purl.to_string(), parent=parent, sbom_id=sbom_id)
             if "ancestors" in component:
                 build_ancestor_tree(node, component["ancestors"], show_versions)
             # else try the next ancestor
 
 
-def _remove_root_return_children(root: Node) -> list[Node]:
+def _remove_root_return_children(root: ComponentNode) -> list[ComponentNode]:
     """
     Removes the root node and returns a list of its direct children.
 
@@ -316,7 +450,7 @@ def _remove_root_return_children(root: Node) -> list[Node]:
     return children
 
 
-def _get_branch_signature(node: Node) -> str:
+def _get_branch_signature(node: ComponentNode) -> str:
     """
     Create a unique signature for a branch structure starting from the given node.
     The signature includes the root component to ensure different components
@@ -335,7 +469,7 @@ def _get_branch_signature(node: Node) -> str:
     # Use a list to collect branch elements in pre-order traversal
     elements = [f"ROOT:{root_component}"]
 
-    def traverse(current_node: Node, path: str = "") -> None:
+    def traverse(current_node: ComponentNode, path: str = "") -> None:
         # Add node name and its level in the path (skip root since it's already included)
         if current_node != node:
             node_sig = f"{path}{current_node.name}"
@@ -350,7 +484,7 @@ def _get_branch_signature(node: Node) -> str:
     return "|".join(elements)
 
 
-def _has_cpe_node(node: Node) -> bool:
+def _has_cpe_node(node: ComponentNode) -> bool:
     """
     Check if the node or any of its descendants have a name starting with "cpe:/".
 
@@ -372,7 +506,7 @@ def _has_cpe_node(node: Node) -> bool:
     return False
 
 
-def _remove_non_cpe_branches(root: Node) -> Node:
+def _remove_non_cpe_branches(root: ComponentNode) -> ComponentNode:
     # Inspect all the leaves for ones not starting with cpe:/
     leaves_to_remove = set()
     leaves_to_keep = set()
@@ -397,15 +531,19 @@ def _remove_non_cpe_branches(root: Node) -> Node:
     return root
 
 
-def _remove_duplicate_branches(root: Node) -> Node:
+def _merge_branch_sbom_ids(kept: ComponentNode, removed: ComponentNode) -> None:
+    """Merge sbom_ids from removed branch into kept branch (same structure)."""
+    kept.sbom_ids.update(removed.sbom_ids)
+    kept_children = sorted(kept.children, key=lambda x: x.name)
+    removed_children = sorted(removed.children, key=lambda x: x.name)
+    for k, r in zip(kept_children, removed_children):
+        _merge_branch_sbom_ids(k, r)  # type: ignore[arg-type]
+
+
+def _remove_duplicate_branches(root: ComponentNode) -> ComponentNode:
     """
-    Removes duplicate branch structures from an Anytree tree
-
-    Args:
-        root (Node): The root node of the tree
-
-    Returns:
-        Node: The root node of the modified tree with duplicate branches removed
+    Removes duplicate branch structures from an Anytree tree.
+    Merges sbom_ids from removed branches into the kept branch.
     """
 
     # Dictionary to store branches by their signatures
@@ -421,9 +559,10 @@ def _remove_duplicate_branches(root: Node) -> Node:
     # Remove duplicate branches
     for signature, nodes in branches_by_signature.items():
         if len(nodes) > 1:
-            # Keep the first occurrence of the branch
+            # Keep the first occurrence; merge sbom_ids from duplicates, then remove
+            kept = nodes[0]
             for node in nodes[1:]:
-                # Remove this duplicate branch
+                _merge_branch_sbom_ids(kept, node)
                 if node.parent:
                     node.parent = None
 
@@ -434,18 +573,18 @@ def _trees_with_cpes(
     ancestor_data: dict[str, Any],
     show_versions: bool,
     include_rpm_containers: bool = False,
-) -> list[Node]:
+) -> list[ComponentNode]:
     """Builds a tree of ancestors with a target component root"""
     if "items" not in ancestor_data or not ancestor_data["items"]:
         return []
-    base_node = Node("root")
+    base_node = ComponentNode("root")
     build_ancestor_tree(base_node, ancestor_data["items"], show_versions)
     _remove_duplicate_branches(base_node)
     _remove_duplicate_parent_nodes(base_node)
     # re-parenting the tree can introduce new duplicate branches
     _remove_duplicate_branches(base_node)
     first_children = _remove_root_return_children(base_node)
-    trees_with_cpes: list[Node] = []
+    trees_with_cpes: list[ComponentNode] = []
     for tree in first_children:
         # Remove this once https://issues.redhat.com/browse/TC-2659 is implemented
         if tree.name.startswith("pkg:rpm/") and not include_rpm_containers:
@@ -462,7 +601,7 @@ def _trees_with_cpes(
     return trees_with_cpes
 
 
-def container_in_tree(root: Node) -> bool:
+def container_in_tree(root: ComponentNode) -> bool:
     """
     Returns true if containers exist in tree descendants
     """
@@ -472,16 +611,20 @@ def container_in_tree(root: Node) -> bool:
     return False
 
 
-def _remove_duplicate_parent_nodes(node: Node) -> None:
+def _remove_duplicate_parent_nodes(node: ComponentNode) -> None:
     """
     Removes nodes in an anytree tree that have the same name as their direct parent,
     and reparents their children to the remaining node.
-
-    :param node: The node to process.
+    Merges sbom_ids from the removed node into the parent.
     """
-    for descandant in node.descendants:
-        if descandant.name == descandant.parent.name:
-            new_children = list(descandant.siblings)
-            new_children.extend(descandant.children)
-            descandant.parent.children = new_children
-            descandant.parent = None
+    for descendant in node.descendants:
+        if descendant.name == descendant.parent.name:
+            # Merge sbom_ids before detaching (if both support it)
+            if hasattr(descendant, "sbom_ids") and hasattr(
+                descendant.parent, "sbom_ids"
+            ):
+                descendant.parent.sbom_ids.update(descendant.sbom_ids)
+            new_children = list(descendant.siblings)
+            new_children.extend(descendant.children)
+            descendant.parent.children = new_children
+            descendant.parent = None

@@ -5,16 +5,16 @@ from unittest.mock import patch
 
 from anytree import Node
 
-from trustshell import build_node_purl
+from trustshell import build_node_purl, render_tree
 from trustshell.products import (
+    ComponentNode,
     _get_branch_signature,
     _remove_duplicate_parent_nodes,
     _remove_non_cpe_branches,
     _trees_with_cpes,
-    render_tree,
     _has_cpe_node,
     container_in_tree,
-    extract_affects,
+    build_product_search_result,
 )
 from trustshell.product_definitions import ProdDefs
 
@@ -85,6 +85,25 @@ class TestProducts(unittest.TestCase):
             "cpe:/a:redhat:rhel_eus:9.2:*:baseos:*",
         ]
         _check_node_names_at_depth(result[0], 1, expected_cpes)
+
+    def test_trees_with_cpes_sbom_ids(self):
+        """Verify sbom_ids are collected on nodes from API data."""
+        with open("tests/testdata/openssl.json", "r") as file:
+            data = json.load(file)
+        result = _trees_with_cpes(data, show_versions=True)
+        assert len(result) == 1
+        tree = result[0]
+        assert isinstance(tree, ComponentNode)
+        # openssl.json has sbom_id at component and product levels
+        for node in list(tree.descendants) + [tree]:
+            assert hasattr(node, "sbom_ids")
+        # Collect all sbom_ids from the tree (openssl has component + product levels)
+        all_sbom_ids = {
+            sid for node in list(tree.descendants) + [tree] for sid in node.sbom_ids
+        }
+        assert len(all_sbom_ids) >= 1
+        # RHEL 9.2 EUS product-level sbom_id from ancestor
+        assert "0195d531-b2ea-7031-af29-72de8330e51f" in all_sbom_ids
 
     def test_trees_with_cpes_binary_rpm(self):
         with open("tests/testdata/openssl-libs.json", "r") as file:
@@ -400,119 +419,167 @@ class TestProducts(unittest.TestCase):
         assert container_in_tree(root)
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
+    def test_build_product_search_result_go_crypto_shipped_components(
+        self, mock_service
+    ):
+        mock_service.return_value = self.mock_proddefs_data
+        """Test PSDEVOPS-4563: affects use shipped components, not searched dependency."""
+        with open("tests/testdata/go-crypto.json") as file:
+            data = json.load(file)
+        ancestor_trees = _trees_with_cpes(data, show_versions=True)
+        prod_defs = ProdDefs()
+        result = build_product_search_result(
+            ancestor_trees, prod_defs, "pkg:golang/golang.org/x/crypto"
+        )
+        assert len(result.affects) > 0
+        for affect in result.affects:
+            assert affect.purl.startswith("pkg:rpm/") or affect.purl.startswith(
+                "pkg:oci/"
+            ), (
+                f"Affect should be shipped component (rpm/oci), not dependency: {affect.purl}"
+            )
+
+    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
+    def test_build_product_search_result_quay(self, mock_service):
+        mock_service.return_value = self.mock_proddefs_data
+        """Test build_product_search_result with quay data - shipped_component is root when top-level."""
+        with open("tests/testdata/quay-builder-qemu-rhcos-rhel-8.json") as file:
+            data = json.load(file)
+        ancestor_trees = _trees_with_cpes(data, show_versions=True)
+        prod_defs = ProdDefs()
+        result = build_product_search_result(
+            ancestor_trees, prod_defs, "pkg:oci/quay-builder-qemu-rhcos-rhel8"
+        )
+        assert len(result.results) >= 1
+        assert len(result.affects) >= 1
+        for affect in result.affects:
+            assert affect.purl.startswith("pkg:oci/")
+            assert "quay" in affect.purl.lower()
+
+    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
+    def test_build_product_search_result_sbom_ids(self, mock_service):
+        """Verify result rows include sbom_ids when built from API data."""
+        mock_service.return_value = self.mock_proddefs_data
+        with open("tests/testdata/openssl.json", "r") as file:
+            data = json.load(file)
+        ancestor_trees = _trees_with_cpes(data, show_versions=True)
+        prod_defs = ProdDefs()
+        result = build_product_search_result(
+            ancestor_trees, prod_defs, "pkg:rpm/redhat/openssl@3.0.7-18.el9_2"
+        )
+        assert len(result.results) >= 1
+        # All rows should have sbom_ids list
+        for row in result.results:
+            assert hasattr(row, "sbom_ids")
+            assert isinstance(row.sbom_ids, list)
+            assert len(row.sbom_ids) >= 1
+
+    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
+    @patch("trustshell.console")
+    def test_render_json_includes_sbom_ids(self, mock_console, mock_service):
+        """Verify JSON output includes sbom_ids per result row."""
+        mock_service.return_value = self.mock_proddefs_data
+        with open("tests/testdata/openssl.json", "r") as file:
+            data = json.load(file)
+        ancestor_trees = _trees_with_cpes(data, show_versions=True)
+        prod_defs = ProdDefs()
+        result = build_product_search_result(
+            ancestor_trees, prod_defs, "pkg:rpm/redhat/openssl@3.0.7-18.el9_2"
+        )
+        result.render(output="json", include_modules=True)
+        call_args = mock_console.print_json.call_args[0][0]
+        output = json.loads(call_args)
+        assert "results" in output
+        assert len(output["results"]) >= 1
+        for row_out in output["results"]:
+            assert "sbom_ids" in row_out
+            assert isinstance(row_out["sbom_ids"], list)
+            assert len(row_out["sbom_ids"]) >= 1
+
+    @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
     def test_extract_affects_container_cdx(self, mock_service):
         mock_service.return_value = self.mock_proddefs_data
-        """Test extract_affects using quay-builder-qemu-rhcos-rhel-8.json data"""
+        """Test build_product_search_result affects using quay-builder-qemu-rhcos-rhel-8.json data"""
         with open("tests/testdata/quay-builder-qemu-rhcos-rhel-8.json") as file:
             data = json.load(file)
 
-        # Build the initial trees
         ancestor_trees = _trees_with_cpes(data, show_versions=True)
-
-        # Extend with product mappings to add ProductModule nodes
         prod_defs = ProdDefs()
-        prod_defs.extend_with_product_mappings(ancestor_trees, keep_cpes=True)
+        result = build_product_search_result(
+            ancestor_trees, prod_defs, "pkg:oci/quay-builder-qemu-rhcos-rhel8"
+        )
 
-        # Print the tree structure for debugging
-        for i, tree in enumerate(ancestor_trees):
-            print(f"\n--- Tree {i} ---")
-            render_tree(tree.root)
-
-        # Call extract_affects and print the result
-        affects = extract_affects(ancestor_trees)
-        print(f"\nExtracted affects: {affects}")
-
-        assert len(affects) == 2
-        for affect in affects:
-            assert affect[0] in ["quay-3.12", "quay-3.13"]
+        assert len(result.affects) == 2
+        for affect in result.affects:
+            assert affect.ps_update_stream in ["quay-3.12", "quay-3.13"]
             assert (
-                affect[1]
+                affect.purl
                 == "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8"
             )
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
     def test_extract_affects_container_cdx_no_cpes(self, mock_service):
         mock_service.return_value = self.mock_proddefs_data
-        """Test extract_affects using quay-builder-qemu-rhcos-rhel-8.json data"""
+        """Test build_product_search_result affects (no cpes flag) using quay-builder-qemu-rhcos-rhel-8.json"""
         with open("tests/testdata/quay-builder-qemu-rhcos-rhel-8.json") as file:
             data = json.load(file)
 
-        # Build the initial trees
         ancestor_trees = _trees_with_cpes(data, show_versions=True)
-
-        # Extend with product mappings to add ProductModule nodes
         prod_defs = ProdDefs()
-        prod_defs.extend_with_product_mappings(ancestor_trees)
+        result = build_product_search_result(
+            ancestor_trees,
+            prod_defs,
+            "pkg:oci/quay-builder-qemu-rhcos-rhel8",
+            cpes=False,
+        )
 
-        # Print the tree structure for debugging
-        for i, tree in enumerate(ancestor_trees):
-            print(f"\n--- Tree {i} ---")
-            render_tree(tree.root)
-
-        # Call extract_affects and print the result
-        affects = extract_affects(ancestor_trees)
-        print(f"\nExtracted affects: {affects}")
-
-        assert len(affects) == 2
-        for affect in affects:
-            assert affect[0] in ["quay-3.12", "quay-3.13"]
+        assert len(result.affects) == 2
+        for affect in result.affects:
+            assert affect.ps_update_stream in ["quay-3.12", "quay-3.13"]
             assert (
-                affect[1]
+                affect.purl
                 == "pkg:oci/quay-builder-qemu-rhcos-rhel8?repository_url=registry.access.redhat.com/quay/quay-builder-qemu-rhcos-rhel8"
             )
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
     def test_extract_affects_maven(self, mock_service):
         mock_service.return_value = self.mock_proddefs_data
-        """Test extract_affects maven special handling"""
+        """Test build_product_search_result maven special handling - root maven PURL in affects"""
         with open("tests/testdata/maven-special-handling.json") as file:
             data = json.load(file)
 
-        # Build the initial trees
         ancestor_trees = _trees_with_cpes(data, show_versions=True)
-
-        # Extend with product mappings to add ProductModule nodes
         prod_defs = ProdDefs()
-        prod_defs.extend_with_product_mappings(ancestor_trees)
+        # Maven root - use the root component from the tree
+        result = build_product_search_result(
+            ancestor_trees, prod_defs, "pkg:maven/io.quay/hey", cpes=False
+        )
 
-        # Print the tree structure for debugging
-        for i, tree in enumerate(ancestor_trees):
-            print(f"\n--- Tree {i} ---")
-            render_tree(tree.root)
-
-        # Call extract_affects and print the result
-        affects = extract_affects(ancestor_trees)
-        print(f"\nExtracted affects: {affects}")
-
-        # We expect the root level maven PURL, not the generic one
-        assert len(affects) == 2
-        for affect in affects:
-            assert affect[0] in ["quay-3.12", "quay-3.13"]  # ps_update_stream
-            assert affect[1] == "pkg:maven/io.quay/hey@1.2.3.redhat-00001?type=jar"
+        assert len(result.affects) == 2
+        for affect in result.affects:
+            assert affect.ps_update_stream in ["quay-3.12", "quay-3.13"]
+            assert affect.purl == "pkg:maven/io.quay/hey@1.2.3.redhat-00001?type=jar"
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
     def test_no_duplicates_from_product_mappings(self, mock_service):
         mock_service.return_value = self.mock_proddefs_data
-        """Test that the product mappings does not create duplicates"""
+        """Test that build_product_search_result produces unique affects (no duplicate stream+purl)"""
         with open("tests/testdata/libxml2.json") as file:
             data = json.load(file)
 
-        # Build the initial trees
         ancestor_trees = _trees_with_cpes(data, show_versions=True)
-        original_len = len(ancestor_trees)
-
-        # Extend with product mappings to add ProductModule nodes
         prod_defs = ProdDefs()
-        prod_defs.extend_with_product_mappings(ancestor_trees)
+        result = build_product_search_result(
+            ancestor_trees, prod_defs, "pkg:rpm/redhat/libxml2"
+        )
 
-        # Print the tree structure for debugging
-        for i, tree in enumerate(ancestor_trees):
-            print(f"\n--- Tree {i} ---")
-            render_tree(tree.root)
-
-        # We expect that the number of the trees
-        # will not be changed by the product mappings
-        assert len(ancestor_trees) == original_len
+        # affects is a set - no duplicates by design
+        assert len(result.affects) > 0
+        seen = set()
+        for affect in result.affects:
+            key = (affect.ps_update_stream, affect.purl)
+            assert key not in seen, f"Duplicate affect: {key}"
+            seen.add(key)
 
     @patch("trustshell.product_definitions.ProdDefs.get_product_definitions_service")
     def test_no_duplicates_from_unsorted_branches(self, mock_service):

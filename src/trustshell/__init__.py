@@ -389,7 +389,11 @@ def paginated_trustify_query(
         return {"items": all_items, "total": total_available}
 
 
+def render_tree_to_string(root: Node) -> str:
+    """Return tree as string (for testing and composition)."""
+    return "\n".join(f"{pre}{node.name}" for pre, _, node in RenderTree(root))
+
+
 def render_tree(root: Node) -> None:
     """Pretty print a tree using name only"""
-    for pre, _, node in RenderTree(root):
-        console.print("%s%s" % (pre, node.name))
+    console.print(render_tree_to_string(root))

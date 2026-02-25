@@ -8,7 +8,7 @@ import re
 from typing import Any, Optional
 import httpx
 
-from anytree import Node, NodeMixin, LevelOrderGroupIter
+from anytree import NodeMixin, LevelOrderGroupIter
 from trustshell import CONFIG_DIR, console
 from trustshell.rhel_releases import EnhancedProdDefs
 
@@ -133,6 +133,7 @@ class ProdDefs:
     ) -> None:
         self.stream_nodes_by_cpe: dict[str, list[ProductStream]] = defaultdict(list)
         product_streams_by_name: dict[str, list[ProductStream]] = defaultdict(list)
+        self.stream_to_module: dict[str, str] = {}  # stream_name -> ps_module
         self.product_trees: list[NodeMixin] = []
 
         # Initialize enhanced RHEL release data
@@ -195,6 +196,7 @@ class ProdDefs:
             active_streams: set[str] = set()
             active_streams.update(module_data.get("active_ps_update_streams", []))
             for stream in module_data.get("ps_update_streams"):
+                self.stream_to_module.setdefault(stream, ps_module)
                 for stream_node in product_streams_by_name[stream]:
                     if stream in active_streams:
                         stream_node.set_active(True)
@@ -268,65 +270,41 @@ class ProdDefs:
         # Remove trailing ':' characters
         return cleaned_cpe.rstrip(":")
 
-    def extend_with_product_mappings(
-        self, ancestor_trees: list[Node], keep_cpes: bool = False
-    ) -> None:
-        """Update the ancestor_trees with any matching streams or module as descendants
+    def get_product_mappings_for_cpe(self, cpe: str) -> list[tuple[str, Optional[str]]]:
+        """Return (ps_update_stream, ps_module) for each product matching the CPE.
 
-        Args:
-            ancestor_trees: List of Node trees to extend with product mappings
-            keep_cpes: If False, replace CPE leaf nodes with product streams. If True, keep CPE nodes as parents of streams.
+        Tries ps_update_stream direct CPE match first, then falls back to ps_module
+        pattern match. Populates ps_module from stream's parent module when matching
+        via stream.
         """
         if not self.product_trees:
-            # ProdDefs service is unavailable, don't attempt any product mapping
-            return None
-
-        for tree in ancestor_trees:
-            for leaf in tree.leaves:
-                cleaned_leaf_name = self._clean_cpe(leaf.name)
-                # Don't try and match single digit enterprise_linux CPEs
-                if re.search(r":redhat:enterprise_linux:\d:", cleaned_leaf_name):
-                    leaf.parent = None
-                    continue
-                leaf_with_products = self._check_streams(
-                    leaf, cleaned_leaf_name, keep_cpes
-                )
-                if not leaf_with_products:
-                    leaf_with_products = self._check_modules(
-                        leaf, cleaned_leaf_name, keep_cpes
-                    )
-                if not leaf_with_products:
-                    console.print(
-                        f"Warning, didn't find any products matching {cleaned_leaf_name}",
-                        style="warning",
-                    )
-                else:
-                    # When keep_cpes=False, we need to remove the CPE leaf from the tree
-                    # since it's been replaced by the product streams
-                    if not keep_cpes:
-                        # Remove the CPE leaf node from its parent
-                        leaf.parent = None
-
-    def _check_streams(self, leaf: Node, cpe: str, keep_cpes: bool) -> list[Node]:
-        """Check if cpe matches exactly to any ProductStreams, if it does add the CPE as a parent
-        of the stream. If more than one stream matches, create copies of the stream and leaf"""
-        # First try enhanced matching if RHEL release data is available
-        enhanced_streams = self._check_enhanced_streams(cpe)
-        if enhanced_streams:
-            return self._duplicate_leaves_and_set_parents(
-                leaf, enhanced_streams, keep_cpes
-            )
-        # Fallback to original direct matching
-        if cpe not in self.stream_nodes_by_cpe:
             return []
-        stream_nodes = self.stream_nodes_by_cpe[cpe]
-        # Create a copy so that pop in the _duplicate_leaves_and_set_parent function doesn't modify
-        # the original stream_nodes_by_cpe map which should be preserved incase we encounter the
-        # same CPE twice
-        copy_of_stream_nodes = copy.deepcopy(stream_nodes)
-        return self._duplicate_leaves_and_set_parents(
-            leaf, copy_of_stream_nodes, keep_cpes
-        )
+
+        cleaned_cpe = self._clean_cpe(cpe)
+        if re.search(r":redhat:enterprise_linux:\d:", cleaned_cpe):
+            return []
+
+        mappings: list[tuple[str, Optional[str]]] = []
+
+        # Try stream matches first (direct CPE match or enhanced)
+        enhanced_streams = self._check_enhanced_streams(cleaned_cpe)
+        if enhanced_streams:
+            for stream in enhanced_streams:
+                ps_module = self.stream_to_module.get(stream.name)
+                mappings.append((stream.name, ps_module))
+        elif cleaned_cpe in self.stream_nodes_by_cpe:
+            for stream in self.stream_nodes_by_cpe[cleaned_cpe]:
+                ps_module = self.stream_to_module.get(stream.name)
+                mappings.append((stream.name, ps_module))
+
+        # Fall back to module matches only if no stream match
+        if not mappings:
+            module_matches = self.match_module_pattern(cleaned_cpe)
+            for module in module_matches:
+                if module.parent and isinstance(module.parent, ProductStream):
+                    mappings.append((module.parent.name, module.name))
+
+        return mappings
 
     def _check_enhanced_streams(self, cpe: str) -> list[ProductStream]:
         """Check if CPE matches using enhanced RHEL release data logic."""
@@ -361,71 +339,6 @@ class ProdDefs:
 
         return result_streams
 
-    def _check_modules(self, leaf: Node, cpe: str, keep_cpes: bool) -> list[Node]:
-        """Check if the cpe matches any ProductModule"""
-        module_nodes = self.match_module_pattern(cpe)
-        return self._duplicate_leaves_and_set_parents(leaf, module_nodes, keep_cpes)
-
-    def _duplicate_leaves_and_set_parents(
-        self, leaf: Node, product_nodes: list[Any], keep_cpes: bool
-    ) -> list[Node]:
-        """Convert product modules to their parent streams and attach all streams as children of the leaf.
-        Deduplicates streams to avoid multiple identical children.
-
-        Args:
-            leaf: The leaf node to process
-            product_nodes: List of product nodes (modules or streams)
-            keep_cpes: If False, replace the leaf with streams in the tree. If True, set streams as children of the leaf.
-
-        Returns:
-            If keep_cpes=True: Returns the leaf in a list.
-            If keep_cpes=False: Returns the list of unique streams that replaced the leaf.
-        """
-        if not product_nodes:
-            if keep_cpes:
-                # Keep the CPE node even if no products match
-                return [leaf]
-            else:
-                return []
-
-        # Convert modules to their parent streams
-        streams_to_attach: list[Any] = []
-        for product in product_nodes:
-            if isinstance(product, ProductModule):
-                # For modules, find the stream that contains this module
-                if product.parent:
-                    streams_to_attach.append(product.parent)
-            else:
-                # For streams, use directly
-                streams_to_attach.append(product)
-
-        # Remove duplicates while preserving order
-        unique_streams: list[Any] = []
-        seen: set[Any] = set()
-        for stream in streams_to_attach:
-            if stream not in seen:
-                unique_streams.append(stream)
-                seen.add(stream)
-
-        if keep_cpes:
-            # Original behavior: set streams as children of the leaf
-            # Create copies to avoid modifying shared objects
-            stream_copies = []
-            for stream in unique_streams:
-                stream_copy = copy.deepcopy(stream)
-                stream_copy.parent = leaf
-                stream_copies.append(stream_copy)
-            return [leaf]
-        else:
-            # New behavior: replace the leaf with the streams in the tree
-            # Create copies to avoid modifying shared objects
-            stream_copies = []
-            for stream in unique_streams:
-                stream_copy = copy.deepcopy(stream)
-                stream_copy.parent = leaf.parent
-                stream_copies.append(stream_copy)
-            return stream_copies
-
     def get_all_cpes_for_rhel_stream(self, stream_name: str) -> set[str]:
         """
         Get all CPEs that should be associated with a given RHEL stream by traversing
@@ -456,9 +369,3 @@ class ProdDefs:
 
         # Use enhanced matching to get all related CPEs
         return self.enhanced_proddefs.get_all_cpes_for_stream(stream_name, stream_cpes)
-
-    def _add_ancestor(self, leaf: Node, product: Any) -> None:
-        if product.parent:
-            product.parent.parent = leaf
-        else:
-            product.parent = leaf

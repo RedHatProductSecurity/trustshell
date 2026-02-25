@@ -77,6 +77,13 @@
         "cpe:/a:redhat:quay:3"
       ],
       "manifest": true
+    },
+    "openshift-4.20": {
+      "public_description": "OpenShift 4.20",
+      "ps_update_streams": ["openshift-4.20"],
+      "active_ps_update_streams": ["openshift-4.20"],
+      "cpe": ["cpe:/a:redhat:openshift:4.20"],
+      "manifest": true
     }
   },
   "ps_update_streams": {
@@ -144,6 +151,14 @@
       "version": "quay-v3.13.0",
       "cpe": [
         "cpe:/a:redhat:quay:3.13"
+      ]
+    },
+    "openshift-4.20": {
+      "pp_label": "openshift-4.20",
+      "version": "4.20",
+      "cpe": [
+        "cpe:/a:redhat:openshift:4.20:*:el8:*",
+        "cpe:/a:redhat:openshift:4.20:*:el9:*"
       ]
     }
   }
