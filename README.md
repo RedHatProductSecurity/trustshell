@@ -116,7 +116,7 @@ pkg:oci/quay-builder-qemu-rhcos-rhel8
     └── cpe:/a:redhat:quay:3:*:el8:*
 ```
 
-Use the `--latest` flag to include non-latest results. The default is to filter to the latest root components in a CPE. 
+Use the `--latest` flag to include non-latest results. The default is to filter to the latest root components in a CPE.
 Latest is calculated by comparing the published date of the product SBOM.
 
 Sometimes you might find a purl which is returned by `trust-purl` but doesn't have results when using `trust-products`. In that case, it usually mean the purl was not in the set of latest SBOMs. However you can check that by doing the `trust-products` query again with `-l` flag to search the entire set of SBOMs, not filtered by latest eg:
@@ -130,6 +130,24 @@ Other times there might be no results because the purl is not linked to any prod
 ```console
 $ trust-products -d pkg:oci/quay-builder-qemu-rhcos-rhel8
 ```
+
+#### JSON output
+
+Use `--output json` (or `-o json`) for machine-readable output. The JSON includes `searched_purl`, `results` (with cpe, ps_update_stream, matched_component, shipped_component, sbom_ids, ps_module), and `affects`:
+
+```console
+$ trust-products -o json pkg:oci/quay-builder-qemu-rhcos-rhel8
+```
+
+#### SBOM IDs for TPA lookup
+
+Use `--show-sbom-ids` to include SBOM IDs in the text output. This helps with lookup in Trustify Product Analytics (TPA):
+
+```console
+$ trust-products --show-sbom-ids pkg:oci/quay-builder-qemu-rhcos-rhel8
+```
+
+JSON output always includes `sbom_ids` in each result.
 
 #### Including RPM packages in containers
 
