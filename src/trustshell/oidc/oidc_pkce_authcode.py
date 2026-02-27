@@ -12,7 +12,12 @@ import pkce
 import httpx
 
 logger = logging.getLogger("trustshell")
-CLIENT_ID = "atlas-frontend"
+# Client ID - Keycloak uses "atlas-frontend"; Cognito TPA uses a dedicated CLI client
+CLIENT_ID = os.getenv("OIDC_CLIENT_ID", "atlas-frontend")
+# Client secret - required for Cognito confidential clients during token exchange
+CLIENT_SECRET = os.getenv("OIDC_CLIENT_SECRET", "")
+# Auth path: Keycloak uses "auth", Amazon Cognito uses "authorize"
+OIDC_AUTH_PATH = os.getenv("OIDC_AUTH_PATH", "auth")
 # this script will spawn an HTTP server to capture the code your browser gets from the SSO server
 LOCAL_SERVER_PORT = 8650
 REDIRECT_URI = "http://localhost:" + str(LOCAL_SERVER_PORT) + "/index.html"
@@ -26,6 +31,33 @@ AUTH_ENDPOINT = os.getenv("AUTH_ENDPOINT", "")
 HEADLESS = "DISPLAY" not in os.environ
 
 token_endpoint = f"{AUTH_ENDPOINT}/token"
+
+
+def get_client_credentials_token() -> str | None:
+    """
+    Obtain an access token via OAuth2 client_credentials flow.
+    No browser or callback URL required - uses only client_id and client_secret.
+    Returns None if client credentials are not configured or the grant is unsupported.
+    """
+    if not CLIENT_SECRET or not AUTH_ENDPOINT:
+        return None
+    logger.debug("Fetching token via client_credentials flow")
+    data = {
+        "grant_type": "client_credentials",
+        "client_id": CLIENT_ID,
+        "client_secret": CLIENT_SECRET,
+    }
+    resp = httpx.post(url=token_endpoint, data=data)
+    if resp.is_error:
+        logger.debug(
+            "Client credentials flow failed: [%s] %s", resp.status_code, resp.text
+        )
+        return None
+    token_data = resp.json()
+    if "access_token" not in token_data:
+        logger.debug("No access_token in response: %s", token_data)
+        return None
+    return str(token_data["access_token"])
 
 
 def gen_things() -> tuple[str, str, str]:
@@ -49,9 +81,8 @@ def build_url(code_challenge: str, state: str, auth_server: str = "") -> str:
         "state": state,
     }
     encoded_params = urllib.parse.urlencode(params)
-    authz_endpoint = f"{AUTH_ENDPOINT}/auth"
-    if auth_server:
-        authz_endpoint = f"{auth_server}/auth"
+    base = auth_server if auth_server else AUTH_ENDPOINT
+    authz_endpoint = f"{base}/{OIDC_AUTH_PATH}"
     url = f"{authz_endpoint}?{encoded_params}"
     return url
 
@@ -60,13 +91,15 @@ def code_to_token(code: str, code_verifier: str) -> tuple[str, str, str]:
     logger.debug(
         "Exchanging the code for a token via http calls inside of this script."
     )
-    data = {
+    data: dict[str, str] = {
         "grant_type": GRANT_TYPE,
         "client_id": CLIENT_ID,
         "code_verifier": code_verifier,
         "code": code,
         "redirect_uri": REDIRECT_URI,
     }
+    if CLIENT_SECRET:
+        data["client_secret"] = CLIENT_SECRET
     c2t = httpx.post(url=token_endpoint, data=data)
     c2t_json = json.loads(c2t.text)
     access_token = c2t_json["access_token"]
@@ -107,11 +140,13 @@ def get_fresh_token(refresh_token: str) -> tuple[str, str]:
     logger.debug(
         "Exchange the refresh token for a new access token via http calls inside of this script."
     )
-    data = {
+    data: dict[str, str] = {
         "grant_type": "refresh_token",
         "client_id": CLIENT_ID,
         "refresh_token": refresh_token,
     }
+    if CLIENT_SECRET:
+        data["client_secret"] = CLIENT_SECRET
     r2a = httpx.post(url=token_endpoint, data=data)
     r2a_json = json.loads(r2a.text)
     access_token = r2a_json["access_token"]

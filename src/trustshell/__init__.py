@@ -24,6 +24,7 @@ from trustshell.oidc.oidc_pkce_authcode import (
     build_url,
     code_to_token,
     gen_things,
+    get_client_credentials_token,
 )
 
 CONFIG_DIR = os.path.expanduser(
@@ -270,6 +271,9 @@ def local_http_server(code_challenge: str, state: str) -> str:
 
 
 def get_access_token() -> str:
+    # Client credentials flow: no browser or callback URL required
+    if cc_token := get_client_credentials_token():
+        return cc_token
     if HEADLESS or LOCAL_AUTH_SERVER_PORT:
         logger.debug(
             f"Running in HEADLESS mode, trying OIDC PKCE flow with {REDIRECT_URI}"

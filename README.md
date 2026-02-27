@@ -37,6 +37,23 @@ export TRUSTIFY_URL="https://atlas.release.stage.devshift.net"
 export AUTH_ENDPOINT="https://auth.stage.redhat.com/auth/realms/EmployeeIDP/protocol/openid-connect"
 ```
 
+TPA / Amazon Cognito (e.g. Red Hat Trusted Profile Analyzer):
+
+Use your Cognito domain, CLI client ID, and client secret. The **client credentials** flow requires no browser or callback URL (unlike the authorization code flow):
+
+```bash
+export TRUSTIFY_URL="https://server-tpa221on420.apps.ps420.tpa.rhocf-dev.net"
+export AUTH_ENDPOINT="https://tpa221on420.auth.eu-west-1.amazoncognito.com/oauth2"
+export OIDC_CLIENT_ID="1g3hp92dqfrjph3om08g2is0bo"
+export OIDC_CLIENT_SECRET="your-client-secret"
+```
+
+The Cognito app client must have the **client credentials** grant enabled (not authorization code). Run `trust-purl` or `trust-products`; authentication happens automatically via `client_id` and `client_secret`.
+
+**Security:** Don't commit or share `OIDC_CLIENT_SECRET`. Use environment variables or a secrets manager.
+
+If the app client uses the authorization code flow instead (e.g. browser login), add `export OIDC_AUTH_PATH="authorize"` (and have the admin add `http://localhost:8650/index.html` to Cognito's allowed callbacks).
+
 For local or public Trustify instances without authentication, simply omit `AUTH_ENDPOINT`:
 
 ```bash
@@ -55,6 +72,11 @@ Optional Configuration:
 ```bash
 # Set custom configuration directory (defaults to ~/.config/trustshell/)
 export TRUSTSHELL_SCRATCH="/path/to/custom/config/dir"
+
+# OIDC overrides for non-Keycloak providers (e.g. Amazon Cognito):
+# OIDC_CLIENT_ID - app client ID
+# OIDC_CLIENT_SECRET - enables client_credentials flow (no browser/callback) when set
+# OIDC_AUTH_PATH - auth path for PKCE (Keycloak: "auth", Cognito: "authorize")
 ```
 
 ### Running in a container
