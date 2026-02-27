@@ -3,7 +3,7 @@ import importlib.metadata
 import logging
 import os
 import sys
-from urllib.parse import urlparse, urlunparse, quote, parse_qs
+from urllib.parse import urlparse, urlunparse, quote, parse_qs, urlencode
 from typing import Optional, Any
 
 import httpx
@@ -333,6 +333,12 @@ def paginated_trustify_query(
         client: httpx.Client, query_params: dict[str, Any], headers: dict[str, str]
     ) -> httpx.Response:
         """Make HTTP request with 401 retry logic"""
+        if logger.isEnabledFor(logging.DEBUG):
+            full_url = (
+                f"{endpoint}?{urlencode(query_params)}" if query_params else endpoint
+            )
+            logger.debug(f"Request URL: {full_url}")
+
         try:
             response = client.get(
                 endpoint, params=query_params, headers=headers, timeout=2400
@@ -366,17 +372,35 @@ def paginated_trustify_query(
             return {"items": [], "total": 0}
 
         all_items = first_result.get("items", [])
+        total_pages = (total_available + limit - 1) // limit
+
+        if logger.isEnabledFor(logging.DEBUG):
+            logger.debug(
+                f"Paginated request: {total_available} total items, "
+                f"{total_pages} page(s), page 1/{total_pages} complete"
+            )
 
         # Fetch remaining pages sequentially
         offset = limit
+        page_num = 2
         while offset < total_available:
             page_params = {**base_params, "limit": limit, "offset": offset}
+            if logger.isEnabledFor(logging.DEBUG):
+                logger.debug(
+                    f"Fetching page {page_num}/{total_pages} (offset {offset})..."
+                )
             try:
                 response = make_request_with_retry(client, page_params, auth_header)
                 result = response.json()
                 page_items = result.get("items", [])
                 all_items.extend(page_items)
+                if logger.isEnabledFor(logging.DEBUG):
+                    logger.debug(
+                        f"Page {page_num}/{total_pages} complete "
+                        f"({len(all_items)}/{total_available} items)"
+                    )
                 offset += limit
+                page_num += 1
             except Exception as e:
                 logger.error(f"Error fetching page at offset {offset}: {e}")
                 break
