@@ -148,6 +148,13 @@ def prime_cache(check: bool, debug: bool) -> None:
     default=False,
     help="Show sbom_ids in text output (tree format).",
 )
+@click.option(
+    "--strict",
+    "-s",
+    is_flag=True,
+    default=False,
+    help="Use strict purl matching (append '@' to the searched purl).",
+)
 @click.option("--debug", "-d", is_flag=True, help="Debug log level.")
 @click.argument(
     "purl",
@@ -160,6 +167,7 @@ def search(
     output: str,
     show_module: bool,
     show_sbom_ids: bool,
+    strict: bool,
     debug: bool,
     latest: bool,
     cpes: bool,
@@ -186,6 +194,7 @@ def search(
         latest,
         show_versions=versions,
         include_rpm_containers=include_rpm_containers,
+        strict=strict,
     )
     if not ancestor_trees or len(ancestor_trees) == 0:
         console.print("No results")
@@ -378,11 +387,13 @@ def _get_roots(
     latest: bool = True,
     show_versions: bool = False,
     include_rpm_containers: bool = False,
+    strict: bool = False,
 ) -> list[ComponentNode]:
     """Look up base_purl ancestors in Trustify
 
     Uses purl~ query which Trustify automatically translates into optimized
     field-specific queries (purl:ty, purl:name, purl:namespace, etc.)
+    When strict=True, appends '@' to the searched purl for stricter matching.
     """
 
     auth_header = {}
@@ -395,9 +406,10 @@ def _get_roots(
     else:
         endpoint = ANALYSIS_ENDPOINT
 
+    search_purl = f"{base_purl}@" if strict else base_purl
     # purl~ is automatically translated by Trustify to field-specific queries
     # e.g., purl~pkg:npm/foo becomes purl:ty=npm&purl:name=foo
-    base_params = {"ancestors": ANCESTOR_COUNT, "q": f"purl~{base_purl}"}
+    base_params = {"ancestors": ANCESTOR_COUNT, "q": f"purl~{search_purl}"}
     ancestors = paginated_trustify_query(
         endpoint, base_params, auth_header, component_name=base_purl
     )
