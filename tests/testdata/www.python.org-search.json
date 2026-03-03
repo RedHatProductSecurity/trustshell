@@ -1,0 +1,32 @@
+{
+  "items": [
+  {
+    "sbom_id": "019cb365-97d8-75e3-9947-60ff8b33cec6",
+    "node_id": "pkg:generic/Python@3.12.9?download_url=https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tar.xz&checksum=SHA-256:7220835d9f90b37c006e9842a8dff4580aaca4318674f947302b8d28f3f81112",
+    "purl": [
+      "pkg:generic/Python@3.12.9?checksum=SHA-256:7220835d9f90b37c006e9842a8dff4580aaca4318674f947302b8d28f3f81112&download_url=https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tar.xz"
+    ],
+    "cpe": [],
+    "name": "Python",
+    "version": "3.12.9",
+    "published": "2025-02-11 00:19:34+00",
+    "document_id": "urn:uuid:6c113a71-21ac-4a39-b428-af3766230d69/1",
+    "product_name": "python3.12",
+    "product_version": "3.12.9-1.el9"
+  },
+  {
+    "sbom_id": "019cb365-97d8-75e3-9947-60ff8b33cec6",
+    "node_id": "pkg:generic/Python@3.12.9?download_url=https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tar.xz.asc&checksum=SHA-256:5ec436571ef013ef774145f4dff424109c13fc0bfe45542e6ae0871e369ed7d9",
+    "purl": [
+      "pkg:generic/Python@3.12.9?checksum=SHA-256:5ec436571ef013ef774145f4dff424109c13fc0bfe45542e6ae0871e369ed7d9&download_url=https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tar.xz.asc"
+    ],
+    "cpe": [],
+    "name": "Python",
+    "version": "3.12.9",
+    "published": "2025-02-11 00:19:34+00",
+    "document_id": "urn:uuid:6c113a71-21ac-4a39-b428-af3766230d69/1",
+    "product_name": "python3.12",
+    "product_version": "3.12.9-1.el9"
+  }
+  ]
+}

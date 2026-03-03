@@ -5,12 +5,16 @@ from unittest.mock import patch
 
 from anytree import Node
 
-from trustshell import build_node_purl, render_tree
+from packageurl import PackageURL
+
+from trustshell import build_node_purl, purl_to_bare, render_tree
 from trustshell.products import (
     ComponentNode,
     _get_branch_signature,
     _remove_duplicate_parent_nodes,
     _remove_non_cpe_branches,
+    get_generic_purl_from_search_term,
+    get_redhat_purl_from_generic,
     _trees_with_cpes,
     _has_cpe_node,
     container_in_tree,
@@ -645,6 +649,104 @@ class TestProducts(unittest.TestCase):
             "cpe:/a:redhat:rhel_eus:9.2:*:baseos:*",
         ]
         _check_node_names_at_depth(result[0], 1, expected_cpes)
+
+    def test_purl_to_bare(self):
+        """purl_to_bare strips version and qualifiers."""
+        full = "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-s390x-appstream-source-rpms__9"
+        assert purl_to_bare(full) == "pkg:rpm/redhat/python3.12"
+        assert purl_to_bare("pkg:pypi/chardet@3.0.4") == "pkg:pypi/chardet"
+        assert purl_to_bare("pkg:generic/Python@3.12.9?checksum=SHA-256:abc") == "pkg:generic/Python"
+
+    @parameterized.expand(
+        [
+            (
+                "www.python.org",
+                "www.python.org-search.json",
+                "pkg:generic/Python",
+            ),
+            (
+                "Python",
+                "www.python.org-search.json",
+                "pkg:generic/Python",
+            ),
+            (
+                "nonexistent",
+                None,
+                None,
+            ),
+        ]
+    )
+    @patch("trustshell.products.httpx.get")
+    def test_get_generic_purl_from_search_term(
+        self, search_term, data_file, expected, mock_get
+    ):
+        """get_generic_purl_from_search_term returns first result's purl stripped to bare or None."""
+        if data_file is None:
+            mock_get.return_value.json.return_value = {"items": []}
+        else:
+            with open(f"tests/testdata/{data_file}") as f:
+                mock_get.return_value.json.return_value = json.load(f)
+        mock_get.return_value.raise_for_status = lambda: None
+        result = get_generic_purl_from_search_term(search_term, latest=True)
+        assert result == expected
+        mock_get.assert_called_once()
+        if expected is not None:
+            assert mock_get.call_args.kwargs["params"]["q"] == search_term
+
+    @patch("trustshell.products.httpx.get")
+    def test_get_redhat_purl_from_generic(self, mock_get):
+        """purl~pkg:generic/Python with descendants returns items[0].descendants[0].purl[0] stripped to bare."""
+        with open("tests/testdata/pkg-generic-python-descendants.json") as f:
+            data = json.load(f)
+        mock_get.return_value.json.return_value = data
+        mock_get.return_value.raise_for_status = lambda: None
+        result = get_redhat_purl_from_generic("pkg:generic/Python", latest=True)
+        assert result == "pkg:rpm/redhat/python3.12"
+        mock_get.assert_called_once()
+        call_args = mock_get.call_args
+        assert call_args.kwargs["params"]["q"] == "purl~pkg:generic/Python"
+        assert call_args.kwargs["params"]["descendants"] == 10
+        assert call_args.kwargs["params"]["relationships"] == "ancestor_of"
+
+    @patch("trustshell.products.httpx.get")
+    def test_get_redhat_purl_from_generic_empty_descendants_returns_none(
+        self, mock_get
+    ):
+        """When items[0] has no descendants, get_redhat_purl_from_generic returns None."""
+        mock_get.return_value.json.return_value = {
+            "items": [{"purl": ["pkg:generic/Python@3.12.9"], "descendants": []}]
+        }
+        mock_get.return_value.raise_for_status = lambda: None
+        result = get_redhat_purl_from_generic("pkg:generic/Python", latest=True)
+        assert result is None
+
+    @patch("trustshell.products.httpx.get")
+    def test_search_term_www_python_org_resolves_to_redhat_purl(self, mock_get):
+        """Search 'www.python.org' -> generic then redhat PURL (same as trust-products input)."""
+        with open("tests/testdata/www.python.org-search.json") as f:
+            search_data = json.load(f)
+        with open("tests/testdata/pkg-generic-python-descendants.json") as f:
+            descendants_data = json.load(f)
+        mock_get.return_value.raise_for_status = lambda: None
+        mock_get.return_value.json.side_effect = [search_data, descendants_data]
+        generic = get_generic_purl_from_search_term("www.python.org", latest=True)
+        assert generic == "pkg:generic/Python"
+        redhat = get_redhat_purl_from_generic(generic, latest=True)
+        assert redhat == "pkg:rpm/redhat/python3.12"
+
+    @patch("trustshell.products.httpx.get")
+    def test_search_term_python_resolves_to_same_redhat_purl(self, mock_get):
+        """Search 'Python' -> same generic then redhat PURL as www.python.org."""
+        with open("tests/testdata/www.python.org-search.json") as f:
+            search_data = json.load(f)
+        with open("tests/testdata/pkg-generic-python-descendants.json") as f:
+            descendants_data = json.load(f)
+        mock_get.return_value.raise_for_status = lambda: None
+        mock_get.return_value.json.side_effect = [search_data, descendants_data]
+        generic = get_generic_purl_from_search_term("Python", latest=True)
+        assert generic == "pkg:generic/Python"
+        redhat = get_redhat_purl_from_generic(generic, latest=True)
+        assert redhat == "pkg:rpm/redhat/python3.12"
 
 
 def _check_node_names_at_depth(result, depth, expected):

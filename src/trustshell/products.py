@@ -18,6 +18,7 @@ from trustshell import (
     config_logging,
     print_version,
     purl_sans_version,
+    purl_to_bare,
     paginated_trustify_query,
 )
 from trustshell.models import Affect, ProductResultRow, ProductSearchResult
@@ -174,7 +175,10 @@ def search(
     versions: bool,
     include_rpm_containers: bool,
 ) -> None:
-    """Relate a purl to products in Trustify"""
+    """Relate a PURL or search term to products in Trustify.
+    If the argument is a valid PURL, it is used as-is. Otherwise it is treated
+    as a search term and resolved via the analysis/latest component API.
+    """
     if flaw and output == "json":
         raise click.UsageError("--flaw and --output are mutually exclusive.")
 
@@ -185,12 +189,28 @@ def search(
 
     try:
         PackageURL.from_string(purl)
+        resolved_purl = purl
     except ValueError:
-        console.print(f"{purl} is not a valid Package URL", style="error")
+        generic_purl = get_generic_purl_from_search_term(purl, latest)
+        if generic_purl is None:
+            console.print("No results", style="error")
+            sys.exit(1)
+        resolved_purl = get_redhat_purl_from_generic(generic_purl, latest)
+        if resolved_purl is None:
+            console.print("No results", style="error")
+            sys.exit(1)
+
+    try:
+        PackageURL.from_string(resolved_purl)
+    except ValueError:
+        console.print(
+            f"Resolved {resolved_purl!r} is not a valid Package URL",
+            style="error",
+        )
         sys.exit(1)
 
     ancestor_trees = _get_roots(
-        purl,
+        resolved_purl,
         latest,
         show_versions=versions,
         include_rpm_containers=include_rpm_containers,
@@ -201,7 +221,7 @@ def search(
         return
 
     prod_defs = ProdDefs()
-    result = build_product_search_result(ancestor_trees, prod_defs, purl, cpes=cpes)
+    result = build_product_search_result(ancestor_trees, prod_defs, resolved_purl, cpes=cpes)
 
     if flaw:
         osidb = OSIDB()
@@ -380,6 +400,77 @@ def extract_affects(ancestor_trees: list[ComponentNode]) -> set[tuple[str, str]]
                     )
                 )
     return affects
+
+
+def get_generic_purl_from_search_term(
+    search_term: str, latest: bool
+) -> Optional[str]:
+    """Query endpoint with q=<search_term>, get first result's purl, strip to bare (no version, no qualifiers)."""
+    auth_header = {}
+    if AUTH_ENABLED:
+        access_token = check_or_get_access_token()
+        auth_header = {"Authorization": f"Bearer {access_token}"}
+
+    endpoint = LATEST_ENDPOINT if latest else ANALYSIS_ENDPOINT
+    params = {"q": search_term}
+    try:
+        response = httpx.get(
+            endpoint, params=params, headers=auth_header, timeout=300
+        )
+        response.raise_for_status()
+        data = response.json()
+    except (httpx.HTTPStatusError, httpx.RequestError) as e:
+        logger.debug(f"Search term query failed: {e}")
+        return None
+
+    items = data.get("items", [])
+    if not items:
+        return None
+    first = items[0]
+    purls = first.get("purl") or []
+    if not purls:
+        return None
+    return purl_to_bare(purls[0])
+
+
+def get_redhat_purl_from_generic(
+    generic_purl: str, latest: bool
+) -> Optional[str]:
+    """Query endpoint with q=purl~<generic_purl>, descendants=10, relationships=ancestor_of;
+    get redhat PURL from items[0].descendants[0].purl[0] and strip to bare.
+    """
+    auth_header = {}
+    if AUTH_ENABLED:
+        access_token = check_or_get_access_token()
+        auth_header = {"Authorization": f"Bearer {access_token}"}
+
+    endpoint = LATEST_ENDPOINT if latest else ANALYSIS_ENDPOINT
+    params = {
+        "q": f"purl~{generic_purl}",
+        "descendants": 10,
+        "relationships": "ancestor_of",
+    }
+    try:
+        response = httpx.get(
+            endpoint, params=params, headers=auth_header, timeout=300
+        )
+        response.raise_for_status()
+        data = response.json()
+    except (httpx.HTTPStatusError, httpx.RequestError) as e:
+        logger.debug(f"Generic purl query failed: {e}")
+        return None
+
+    items = data.get("items", [])
+    if not items:
+        return None
+    first = items[0]
+    descendants = first.get("descendants") or []
+    if not descendants:
+        return None
+    purls = descendants[0].get("purl") or []
+    if not purls:
+        return None
+    return purl_to_bare(purls[0])
 
 
 def _get_roots(
