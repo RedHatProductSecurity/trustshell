@@ -1,0 +1,226 @@
+{
+  "items": [
+    {
+      "sbom_id": "019cb365-97d8-75e3-9947-60ff8b33cec6",
+      "node_id": "pkg:generic/Python@3.12.9?download_url=https://pkgs.devel.redhat.com/repo/python3.12/Python-3.12.9.tar.xz.asc/sha512/b59251ca3a0a17c06ff7d165f6c025eb91127c80be0782642590f5c922297e0710544ac5a9ae977378e393f1c4861149576a0515af5ec0e54e6827c4010d544f/Python-3.12.9.tar.xz.asc&checksum=SHA-512:b59251ca3a0a17c06ff7d165f6c025eb91127c80be0782642590f5c922297e0710544ac5a9ae977378e393f1c4861149576a0515af5ec0e54e6827c4010d544f",
+      "purl": [
+        "pkg:generic/Python@3.12.9?checksum=SHA-512:b59251ca3a0a17c06ff7d165f6c025eb91127c80be0782642590f5c922297e0710544ac5a9ae977378e393f1c4861149576a0515af5ec0e54e6827c4010d544f&download_url=https://pkgs.devel.redhat.com/repo/python3.12/Python-3.12.9.tar.xz.asc/sha512/b59251ca3a0a17c06ff7d165f6c025eb91127c80be0782642590f5c922297e0710544ac5a9ae977378e393f1c4861149576a0515af5ec0e54e6827c4010d544f/Python-3.12.9.tar.xz.asc"
+      ],
+      "cpe": [],
+      "name": "Python",
+      "version": "3.12.9",
+      "published": "2025-02-11 00:19:34+00",
+      "document_id": "urn:uuid:6c113a71-21ac-4a39-b428-af3766230d69/1",
+      "product_name": "python3.12",
+      "product_version": "3.12.9-1.el9",
+      "descendants": [
+        {
+          "sbom_id": "019cb365-97d8-75e3-9947-60ff8b33cec6",
+          "node_id": "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src",
+          "purl": [
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-s390x-appstream-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstream-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstream-source-rpms__9_DOT_6",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-appstream-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-s390x-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-source-rpms__9_DOT_6",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-s390x-source-rpms__9_DOT_6",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-x86_64-source-rpms__9_DOT_6",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-appstream-source-rpms__9_DOT_6",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream-source-rpms__9_DOT_6",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-s390x-appstream-source-rpms__9_DOT_6",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-x86_64-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-source-rpms__9_DOT_6"
+          ],
+          "cpe": [],
+          "name": "python3.12",
+          "version": "3.12.9-1.el9",
+          "published": "2025-02-11 00:19:34+00",
+          "document_id": "urn:uuid:6c113a71-21ac-4a39-b428-af3766230d69/1",
+          "product_name": "python3.12",
+          "product_version": "3.12.9-1.el9",
+          "relationship": "ancestor_of",
+          "descendants": []
+        }
+      ]
+    },
+    {
+      "sbom_id": "019cb365-97d8-75e3-9947-60ff8b33cec6",
+      "node_id": "pkg:generic/Python@3.12.9?download_url=https://pkgs.devel.redhat.com/repo/python3.12/Python-3.12.9.tar.xz/sha512/c840b14aa21e6a963d18c06ebaafb551d9c9a101b3866417e762fc4a2fde071a7a25fa257faba2956c7344bbc2413ed61690a712d26fba4d0dbeaa50e49b2574/Python-3.12.9.tar.xz&checksum=SHA-512:c840b14aa21e6a963d18c06ebaafb551d9c9a101b3866417e762fc4a2fde071a7a25fa257faba2956c7344bbc2413ed61690a712d26fba4d0dbeaa50e49b2574",
+      "purl": [
+        "pkg:generic/Python@3.12.9?checksum=SHA-512:c840b14aa21e6a963d18c06ebaafb551d9c9a101b3866417e762fc4a2fde071a7a25fa257faba2956c7344bbc2413ed61690a712d26fba4d0dbeaa50e49b2574&download_url=https://pkgs.devel.redhat.com/repo/python3.12/Python-3.12.9.tar.xz/sha512/c840b14aa21e6a963d18c06ebaafb551d9c9a101b3866417e762fc4a2fde071a7a25fa257faba2956c7344bbc2413ed61690a712d26fba4d0dbeaa50e49b2574/Python-3.12.9.tar.xz"
+      ],
+      "cpe": [],
+      "name": "Python",
+      "version": "3.12.9",
+      "published": "2025-02-11 00:19:34+00",
+      "document_id": "urn:uuid:6c113a71-21ac-4a39-b428-af3766230d69/1",
+      "product_name": "python3.12",
+      "product_version": "3.12.9-1.el9",
+      "descendants": [
+        {
+          "sbom_id": "019cb365-97d8-75e3-9947-60ff8b33cec6",
+          "node_id": "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src",
+          "purl": [
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-s390x-appstream-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstream-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstream-source-rpms__9_DOT_6",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-appstream-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-s390x-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-source-rpms__9_DOT_6",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-s390x-source-rpms__9_DOT_6",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-x86_64-source-rpms__9_DOT_6",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-appstream-source-rpms__9_DOT_6",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream-source-rpms__9_DOT_6",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-s390x-appstream-source-rpms__9_DOT_6",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-x86_64-source-rpms__9",
+            "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-source-rpms__9_DOT_6"
+          ],
+          "cpe": [],
+          "name": "python3.12",
+          "version": "3.12.9-1.el9",
+          "published": "2025-02-11 00:19:34+00",
+          "document_id": "urn:uuid:6c113a71-21ac-4a39-b428-af3766230d69/1",
+          "product_name": "python3.12",
+          "product_version": "3.12.9-1.el9",
+          "relationship": "ancestor_of",
+          "descendants": []
+        }
+      ]
+    },
+    {
+      "sbom_id": "019cb365-97d8-75e3-9947-60ff8b33cec6",
+      "node_id": "pkg:generic/Python@3.12.9?download_url=https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tar.xz&checksum=SHA-256:7220835d9f90b37c006e9842a8dff4580aaca4318674f947302b8d28f3f81112",
+      "purl": [
+        "pkg:generic/Python@3.12.9?checksum=SHA-256:7220835d9f90b37c006e9842a8dff4580aaca4318674f947302b8d28f3f81112&download_url=https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tar.xz"
+      ],
+      "cpe": [],
+      "name": "Python",
+      "version": "3.12.9",
+      "published": "2025-02-11 00:19:34+00",
+      "document_id": "urn:uuid:6c113a71-21ac-4a39-b428-af3766230d69/1",
+      "product_name": "python3.12",
+      "product_version": "3.12.9-1.el9",
+      "descendants": [
+        {
+          "sbom_id": "019cb365-97d8-75e3-9947-60ff8b33cec6",
+          "node_id": "pkg:generic/Python@3.12.9?download_url=https://pkgs.devel.redhat.com/repo/python3.12/Python-3.12.9.tar.xz/sha512/c840b14aa21e6a963d18c06ebaafb551d9c9a101b3866417e762fc4a2fde071a7a25fa257faba2956c7344bbc2413ed61690a712d26fba4d0dbeaa50e49b2574/Python-3.12.9.tar.xz&checksum=SHA-512:c840b14aa21e6a963d18c06ebaafb551d9c9a101b3866417e762fc4a2fde071a7a25fa257faba2956c7344bbc2413ed61690a712d26fba4d0dbeaa50e49b2574",
+          "purl": [
+            "pkg:generic/Python@3.12.9?checksum=SHA-512:c840b14aa21e6a963d18c06ebaafb551d9c9a101b3866417e762fc4a2fde071a7a25fa257faba2956c7344bbc2413ed61690a712d26fba4d0dbeaa50e49b2574&download_url=https://pkgs.devel.redhat.com/repo/python3.12/Python-3.12.9.tar.xz/sha512/c840b14aa21e6a963d18c06ebaafb551d9c9a101b3866417e762fc4a2fde071a7a25fa257faba2956c7344bbc2413ed61690a712d26fba4d0dbeaa50e49b2574/Python-3.12.9.tar.xz"
+          ],
+          "cpe": [],
+          "name": "Python",
+          "version": "3.12.9",
+          "published": "2025-02-11 00:19:34+00",
+          "document_id": "urn:uuid:6c113a71-21ac-4a39-b428-af3766230d69/1",
+          "product_name": "python3.12",
+          "product_version": "3.12.9-1.el9",
+          "relationship": "ancestor_of",
+          "descendants": [
+            {
+              "sbom_id": "019cb365-97d8-75e3-9947-60ff8b33cec6",
+              "node_id": "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src",
+              "purl": [
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-s390x-appstream-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstream-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstream-source-rpms__9_DOT_6",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-appstream-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-s390x-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-source-rpms__9_DOT_6",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-s390x-source-rpms__9_DOT_6",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-x86_64-source-rpms__9_DOT_6",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-appstream-source-rpms__9_DOT_6",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream-source-rpms__9_DOT_6",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-s390x-appstream-source-rpms__9_DOT_6",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-x86_64-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-source-rpms__9_DOT_6"
+              ],
+              "cpe": [],
+              "name": "python3.12",
+              "version": "3.12.9-1.el9",
+              "published": "2025-02-11 00:19:34+00",
+              "document_id": "urn:uuid:6c113a71-21ac-4a39-b428-af3766230d69/1",
+              "product_name": "python3.12",
+              "product_version": "3.12.9-1.el9",
+              "relationship": "ancestor_of",
+              "descendants": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sbom_id": "019cb365-97d8-75e3-9947-60ff8b33cec6",
+      "node_id": "pkg:generic/Python@3.12.9?download_url=https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tar.xz.asc&checksum=SHA-256:5ec436571ef013ef774145f4dff424109c13fc0bfe45542e6ae0871e369ed7d9",
+      "purl": [
+        "pkg:generic/Python@3.12.9?checksum=SHA-256:5ec436571ef013ef774145f4dff424109c13fc0bfe45542e6ae0871e369ed7d9&download_url=https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tar.xz.asc"
+      ],
+      "cpe": [],
+      "name": "Python",
+      "version": "3.12.9",
+      "published": "2025-02-11 00:19:34+00",
+      "document_id": "urn:uuid:6c113a71-21ac-4a39-b428-af3766230d69/1",
+      "product_name": "python3.12",
+      "product_version": "3.12.9-1.el9",
+      "descendants": [
+        {
+          "sbom_id": "019cb365-97d8-75e3-9947-60ff8b33cec6",
+          "node_id": "pkg:generic/Python@3.12.9?download_url=https://pkgs.devel.redhat.com/repo/python3.12/Python-3.12.9.tar.xz.asc/sha512/b59251ca3a0a17c06ff7d165f6c025eb91127c80be0782642590f5c922297e0710544ac5a9ae977378e393f1c4861149576a0515af5ec0e54e6827c4010d544f/Python-3.12.9.tar.xz.asc&checksum=SHA-512:b59251ca3a0a17c06ff7d165f6c025eb91127c80be0782642590f5c922297e0710544ac5a9ae977378e393f1c4861149576a0515af5ec0e54e6827c4010d544f",
+          "purl": [
+            "pkg:generic/Python@3.12.9?checksum=SHA-512:b59251ca3a0a17c06ff7d165f6c025eb91127c80be0782642590f5c922297e0710544ac5a9ae977378e393f1c4861149576a0515af5ec0e54e6827c4010d544f&download_url=https://pkgs.devel.redhat.com/repo/python3.12/Python-3.12.9.tar.xz.asc/sha512/b59251ca3a0a17c06ff7d165f6c025eb91127c80be0782642590f5c922297e0710544ac5a9ae977378e393f1c4861149576a0515af5ec0e54e6827c4010d544f/Python-3.12.9.tar.xz.asc"
+          ],
+          "cpe": [],
+          "name": "Python",
+          "version": "3.12.9",
+          "published": "2025-02-11 00:19:34+00",
+          "document_id": "urn:uuid:6c113a71-21ac-4a39-b428-af3766230d69/1",
+          "product_name": "python3.12",
+          "product_version": "3.12.9-1.el9",
+          "relationship": "ancestor_of",
+          "descendants": [
+            {
+              "sbom_id": "019cb365-97d8-75e3-9947-60ff8b33cec6",
+              "node_id": "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src",
+              "purl": [
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-s390x-appstream-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstream-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstream-source-rpms__9_DOT_6",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-appstream-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-s390x-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-source-rpms__9_DOT_6",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-s390x-source-rpms__9_DOT_6",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-x86_64-source-rpms__9_DOT_6",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-appstream-source-rpms__9_DOT_6",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream-source-rpms__9_DOT_6",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=rhel-9-for-s390x-appstream-source-rpms__9_DOT_6",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-ppc64le-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-x86_64-source-rpms__9",
+                "pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=codeready-builder-for-rhel-9-aarch64-source-rpms__9_DOT_6"
+              ],
+              "cpe": [],
+              "name": "python3.12",
+              "version": "3.12.9-1.el9",
+              "published": "2025-02-11 00:19:34+00",
+              "document_id": "urn:uuid:6c113a71-21ac-4a39-b428-af3766230d69/1",
+              "product_name": "python3.12",
+              "product_version": "3.12.9-1.el9",
+              "relationship": "ancestor_of",
+              "descendants": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

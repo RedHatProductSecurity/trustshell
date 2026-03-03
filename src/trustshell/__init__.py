@@ -192,6 +192,20 @@ def purl_sans_version(purl: PackageURL) -> PackageURL:
     return purl_sans_version
 
 
+def purl_to_bare(purl: str) -> str:
+    """Strip a PURL to type/namespace/name only (no version, no qualifiers).
+    e.g. pkg:rpm/redhat/python3.12@3.12.9-1.el9?arch=src&repository_id=... -> pkg:rpm/redhat/python3.12
+    """
+    purl_obj = PackageURL.from_string(purl)
+    return PackageURL(
+        type=purl_obj.type,
+        namespace=purl_obj.namespace,
+        name=purl_obj.name,
+        version="",
+        qualifiers={},
+    ).to_string()
+
+
 def check_or_get_access_token() -> str:
     if not os.path.exists(TOKEN_FILE):
         logger.debug("Access token not found. Getting a new one...")
