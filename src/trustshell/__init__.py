@@ -38,7 +38,8 @@ if "LOCAL_AUTH_SERVER_PORT" in os.environ:
     LOCAL_AUTH_SERVER_PORT = os.getenv("LOCAL_AUTH_SERVER_PORT", "")
 
 
-TRUSTIFY_URL_PATH = "/api/v2/"
+TRUSTIFY_API_VERSION = os.getenv("TRUSTIFY_API_VERSION", "v3")
+TRUSTIFY_URL_PATH = f"/api/{TRUSTIFY_API_VERSION}/"
 if "TRUSTIFY_URL" in os.environ:
     url_env = os.getenv("TRUSTIFY_URL", "")
     parsed_url = urlparse(url_env)
@@ -48,10 +49,9 @@ if "TRUSTIFY_URL" in os.environ:
         )
     else:
         TRUSTIFY_URL = url_env
-    # Only enable authentication if AUTH_ENDPOINT is also set
     AUTH_ENABLED = bool(os.getenv("AUTH_ENDPOINT"))
 else:
-    TRUSTIFY_URL = "http://localhost:8080/api/v2/"
+    TRUSTIFY_URL = f"http://localhost:8080/api/{TRUSTIFY_API_VERSION}/"
     AUTH_ENABLED = False
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
@@ -369,13 +369,13 @@ def paginated_trustify_query(
         first_response = make_request_with_retry(client, query_params, auth_header)
         first_result = first_response.json()
 
-        total_available = first_result.get("total", 0)
+        all_items = first_result.get("items", [])
+        total_available = first_result.get("total") or len(all_items)
         if total_available == 0:
             if component_name:
                 console.print(f"No items found for {component_name}")
             return {"items": [], "total": 0}
 
-        all_items = first_result.get("items", [])
         total_pages = (total_available + limit - 1) // limit
 
         if logger.isEnabledFor(logging.DEBUG):
