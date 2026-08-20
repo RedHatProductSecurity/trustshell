@@ -38,7 +38,8 @@ if "LOCAL_AUTH_SERVER_PORT" in os.environ:
     LOCAL_AUTH_SERVER_PORT = os.getenv("LOCAL_AUTH_SERVER_PORT", "")
 
 
-TRUSTIFY_URL_PATH = "/api/v2/"
+TRUSTIFY_API_VERSION = os.getenv("TRUSTIFY_API_VERSION", "v3")
+TRUSTIFY_URL_PATH = f"/api/{TRUSTIFY_API_VERSION}/"
 if "TRUSTIFY_URL" in os.environ:
     url_env = os.getenv("TRUSTIFY_URL", "")
     parsed_url = urlparse(url_env)
@@ -48,10 +49,9 @@ if "TRUSTIFY_URL" in os.environ:
         )
     else:
         TRUSTIFY_URL = url_env
-    # Only enable authentication if AUTH_ENDPOINT is also set
     AUTH_ENABLED = bool(os.getenv("AUTH_ENDPOINT"))
 else:
-    TRUSTIFY_URL = "http://localhost:8080/api/v2/"
+    TRUSTIFY_URL = f"http://localhost:8080/api/{TRUSTIFY_API_VERSION}/"
     AUTH_ENABLED = False
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
@@ -363,36 +363,58 @@ def paginated_trustify_query(
                     return response
             raise
 
+    page_params_base = dict(base_params)
+    if TRUSTIFY_API_VERSION == "v3" and "total" not in page_params_base:
+        page_params_base["total"] = True
+
     with httpx.Client() as client:
         # First request to get total count
-        query_params = {**base_params, "limit": limit, "offset": 0}
+        query_params = {**page_params_base, "limit": limit, "offset": 0}
         first_response = make_request_with_retry(client, query_params, auth_header)
         first_result = first_response.json()
 
-        total_available = first_result.get("total", 0)
-        if total_available == 0:
+        all_items = first_result.get("items", [])
+        total_available = first_result.get("total")
+        total_known = total_available is not None
+
+        if not all_items and (not total_known or total_available == 0):
             if component_name:
                 console.print(f"No items found for {component_name}")
             return {"items": [], "total": 0}
 
-        all_items = first_result.get("items", [])
-        total_pages = (total_available + limit - 1) // limit
-
-        if logger.isEnabledFor(logging.DEBUG):
-            logger.debug(
-                f"Paginated request: {total_available} total items, "
-                f"{total_pages} page(s), page 1/{total_pages} complete"
-            )
-
-        # Fetch remaining pages sequentially
-        offset = limit
-        page_num = 2
-        while offset < total_available:
-            page_params = {**base_params, "limit": limit, "offset": offset}
+        if total_known:
+            total_pages = (total_available + limit - 1) // limit
             if logger.isEnabledFor(logging.DEBUG):
                 logger.debug(
-                    f"Fetching page {page_num}/{total_pages} (offset {offset})..."
+                    f"Paginated request: {total_available} total items, "
+                    f"{total_pages} page(s), page 1/{total_pages} complete"
                 )
+        else:
+            if logger.isEnabledFor(logging.DEBUG):
+                logger.debug(
+                    f"Paginated request: total unknown, "
+                    f"page 1 returned {len(all_items)} items"
+                )
+
+        offset = limit
+        page_num = 2
+        while True:
+            if total_known and offset >= total_available:
+                break
+            if not total_known and len(all_items) - (offset - limit) < limit:
+                break
+
+            page_params = {**page_params_base, "limit": limit, "offset": offset}
+            if logger.isEnabledFor(logging.DEBUG):
+                if total_known:
+                    total_pages = (total_available + limit - 1) // limit
+                    logger.debug(
+                        f"Fetching page {page_num}/{total_pages} (offset {offset})..."
+                    )
+                else:
+                    logger.debug(
+                        f"Fetching page {page_num} (offset {offset})..."
+                    )
             try:
                 response = make_request_with_retry(client, page_params, auth_header)
                 result = response.json()
@@ -400,21 +422,24 @@ def paginated_trustify_query(
                 all_items.extend(page_items)
                 if logger.isEnabledFor(logging.DEBUG):
                     logger.debug(
-                        f"Page {page_num}/{total_pages} complete "
-                        f"({len(all_items)}/{total_available} items)"
+                        f"Page {page_num} complete "
+                        f"({len(all_items)} items so far)"
                     )
+                if not page_items or len(page_items) < limit:
+                    break
                 offset += limit
                 page_num += 1
             except Exception as e:
                 logger.error(f"Error fetching page at offset {offset}: {e}")
                 break
 
+        total_count = total_available if total_known else len(all_items)
         if component_name:
             console.print(
-                f"Retrieved {len(all_items)} items out of {total_available} total for {component_name}"
+                f"Retrieved {len(all_items)} items out of {total_count} total for {component_name}"
             )
 
-        return {"items": all_items, "total": total_available}
+        return {"items": all_items, "total": total_count}
 
 
 def render_tree_to_string(root: Node) -> str:
