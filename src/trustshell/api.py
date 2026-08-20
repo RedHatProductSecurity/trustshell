@@ -1,9 +1,9 @@
-import click
-import httpx
 import json
 import logging
 from urllib.parse import quote
 
+import click
+import httpx
 from rich.console import Console
 from rich.theme import Theme
 
@@ -78,9 +78,7 @@ def api(endpoint: str, subpath: str, params: tuple[str], debug: bool) -> None:
             f"HTTP error {exc.response.status_code}: {exc.response.text}", style="error"
         )
     except httpx.RequestError as exc:
-        console.print(f"Request error: {str(exc)}", style="error")
+        console.print(f"Request error: {exc!s}", style="error")
     except json.JSONDecodeError as exc:
         console.print("Response is not valid JSON:", style="warning")
-        console.print(f"JSON decode error: {str(exc)}")
-    except Exception as exc:
-        console.print(f"Unexpected error: {str(exc)}", style="error")
+        console.print(f"JSON decode error: {exc!s}")

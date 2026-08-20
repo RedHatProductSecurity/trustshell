@@ -1,15 +1,12 @@
-#!/usr/bin/env python
-
 import json
 import logging
 import os
 import secrets
-
 import urllib.parse
 
+import httpx
 import jwt
 import pkce
-import httpx
 
 logger = logging.getLogger("trustshell")
 # Client ID - Keycloak uses "atlas-frontend"; Cognito TPA uses a dedicated CLI client
@@ -61,7 +58,7 @@ def get_client_credentials_token() -> str | None:
 
 
 def gen_things() -> tuple[str, str, str]:
-    logging.debug("Generating verifier, challenge, state")
+    logger.debug("Generating verifier, challenge, state")
     code_verifier, code_challenge = pkce.generate_pkce_pair()
     state = secrets.token_urlsafe(16)
     logger.debug(f"Code Verifier: {code_verifier}")
@@ -155,6 +152,5 @@ def get_fresh_token(refresh_token: str) -> tuple[str, str]:
     logger.debug("Each raw part of the response body:")
     for k, v in r2a_json.items():
         logger.debug(f"{k}:{v}")
-    else:
-        logger.debug(f"Access Token: {access_token}")
+    logger.debug(f"Access Token: {access_token}")
     return access_token, refresh_token

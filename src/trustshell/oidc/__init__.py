@@ -4,23 +4,23 @@ This module provides OIDC authentication functionality using PKCE flow.
 """
 
 from .oidc_pkce_authcode import (
-    gen_things,
-    build_url,
-    code_to_token,
-    get_fresh_token,
-    get_client_credentials_token,
+    AUTH_ENDPOINT,
     LOCAL_SERVER_PORT,
     REDIRECT_URI,
-    AUTH_ENDPOINT,
+    build_url,
+    code_to_token,
+    gen_things,
+    get_client_credentials_token,
+    get_fresh_token,
 )
 
 __all__ = [
-    "gen_things",
-    "build_url",
-    "code_to_token",
-    "get_fresh_token",
-    "get_client_credentials_token",
+    "AUTH_ENDPOINT",
     "LOCAL_SERVER_PORT",
     "REDIRECT_URI",
-    "AUTH_ENDPOINT",
+    "build_url",
+    "code_to_token",
+    "gen_things",
+    "get_client_credentials_token",
+    "get_fresh_token",
 ]

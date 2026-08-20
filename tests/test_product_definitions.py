@@ -1,11 +1,12 @@
 import json
-import tempfile
 import os
+import tempfile
 import unittest
-from anytree import Node
 from unittest.mock import patch
 
+from anytree import Node
 from test_products import _check_node_names_at_depth
+
 from trustshell import render_tree
 from trustshell.product_definitions import ProdDefs
 from trustshell.products import build_product_search_result
@@ -241,11 +242,12 @@ edges:
         - RHEL-9.2.0.Z.EUS
         - RHEL-9.3.0.GA
 """
-        temp_file = tempfile.NamedTemporaryFile(mode="w", suffix=".yml", delete=False)
-        temp_file.write(test_data)
-        temp_file.flush()
-        temp_file.close()
-        return temp_file.name
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".yml", delete=False
+        ) as temp_file:
+            temp_file.write(test_data)
+            temp_file.flush()
+            return temp_file.name
 
     def _create_enhanced_product_definitions(self):
         """Create product definitions with enhanced RHEL streams for testing."""

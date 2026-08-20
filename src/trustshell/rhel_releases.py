@@ -6,12 +6,14 @@ functionality to match CPEs from SBOMs with active ps_update_streams based
 on release hierarchy and relationships.
 """
 
-from collections import defaultdict, deque
 import fnmatch
+import json
 import logging
 import os
 import re
-from typing import Any, Dict, List, Set, Optional
+from collections import defaultdict, deque
+from typing import Any
+
 import httpx
 import yaml
 
@@ -27,8 +29,8 @@ class RHELReleaseNode:
         self,
         name: str,
         node_type: str,
-        cpes: List[str],
-        ps_update_stream: Optional[str] = None,
+        cpes: list[str],
+        ps_update_stream: str | None = None,
     ):
         self.name = name
         self.node_type = node_type  # main, eus, aus, e4s
@@ -39,8 +41,8 @@ class RHELReleaseNode:
         self.ps_update_stream = (
             ps_update_stream  # The ps_update_stream associated with this node
         )
-        self.children: Set[str] = set()
-        self.parents: Set[str] = set()
+        self.children: set[str] = set()
+        self.parents: set[str] = set()
 
     def __repr__(self) -> str:
         return f"RHELReleaseNode({self.name}, {self.node_type}, {len(self.cpes)} CPEs)"
@@ -92,8 +94,8 @@ class RHELReleaseData:
         self.git_branch = git_branch
         self.yaml_file_path = yaml_file_path  # Only for testing
 
-        self.nodes: Dict[str, RHELReleaseNode] = {}
-        self.cpe_to_nodes: Dict[str, List[RHELReleaseNode]] = defaultdict(list)
+        self.nodes: dict[str, RHELReleaseNode] = {}
+        self.cpe_to_nodes: dict[str, list[RHELReleaseNode]] = defaultdict(list)
 
         # Ensure cache directory exists
         os.makedirs(self.CACHE_DIR, exist_ok=True)
@@ -115,10 +117,10 @@ class RHELReleaseData:
 
             self._parse_yaml_data(data)
 
-        except Exception as e:
+        except (OSError, yaml.YAMLError, httpx.HTTPError, ValueError, TypeError) as e:
             logger.error(f"Error loading RHEL release data: {e}")
 
-    def _load_from_local_file(self) -> Optional[Dict[str, Any]]:
+    def _load_from_local_file(self) -> dict[str, Any] | None:
         """Load YAML data from local file (for testing)."""
         if not os.path.exists(self.yaml_file_path):
             logger.warning(f"RHEL release data file not found: {self.yaml_file_path}")
@@ -138,7 +140,7 @@ class RHELReleaseData:
             logger.error(f"Failed to parse YAML file {self.yaml_file_path}: {e}")
             return None
 
-    def _fetch_from_gitlab(self) -> Optional[Dict[str, Any]]:
+    def _fetch_from_gitlab(self) -> dict[str, Any] | None:
         """Fetch YAML data from GitLab repository with caching.
 
         Supports loading from multiple files matching the *-releases.yml glob pattern.
@@ -187,11 +189,17 @@ class RHELReleaseData:
             logger.error(f"Network error fetching RHEL release data: {e}")
             # Try to use cached data as fallback
             return self._load_cached_data(cache_file)
-        except Exception as e:
+        except (
+            json.JSONDecodeError,
+            KeyError,
+            TypeError,
+            ValueError,
+            yaml.YAMLError,
+        ) as e:
             logger.error(f"Error fetching RHEL release data: {e}")
             return self._load_cached_data(cache_file)
 
-    def _list_matching_files(self, pattern: str) -> List[str]:
+    def _list_matching_files(self, pattern: str) -> list[str]:
         """List files in the repository that match the given glob pattern."""
         try:
             # Build GitLab API URL for listing repository tree
@@ -234,11 +242,11 @@ class RHELReleaseData:
         except httpx.RequestError as e:
             logger.error(f"Network error listing repository files: {e}")
             return []
-        except Exception as e:
+        except (json.JSONDecodeError, KeyError, TypeError, ValueError) as e:
             logger.error(f"Error listing repository files: {e}")
             return []
 
-    def _get_latest_commit_hash(self) -> Optional[str]:
+    def _get_latest_commit_hash(self) -> str | None:
         """Get the latest commit hash for the branch to use as cache invalidation."""
         try:
             # Build GitLab API URL for getting latest commit
@@ -269,17 +277,15 @@ class RHELReleaseData:
 
         except httpx.RequestError as e:
             logger.error(f"Network error getting latest commit: {e}")
-        except Exception as e:
+        except (json.JSONDecodeError, KeyError, TypeError, ValueError) as e:
             logger.error(f"Error getting latest commit: {e}")
 
         return None
 
-    def _fetch_and_combine_files(
-        self, file_paths: List[str]
-    ) -> Optional[Dict[str, Any]]:
+    def _fetch_and_combine_files(self, file_paths: list[str]) -> dict[str, Any] | None:
         """Fetch multiple YAML files and combine their data."""
-        combined_nodes: Dict[str, Any] = {}
-        combined_edges: Dict[str, Any] = {}
+        combined_nodes: dict[str, Any] = {}
+        combined_edges: dict[str, Any] = {}
 
         # SSL certificate path can be set via SSL_CERT_FILE environment variable
         ssl_cert_file = os.environ.get("SSL_CERT_FILE")
@@ -353,7 +359,7 @@ class RHELReleaseData:
             except httpx.RequestError as e:
                 logger.error(f"Network error fetching {file_path}: {e}")
                 continue
-            except Exception as e:
+            except (KeyError, TypeError, ValueError) as e:
                 logger.error(f"Error processing {file_path}: {e}")
                 continue
 
@@ -374,13 +380,13 @@ class RHELReleaseData:
 
         return result
 
-    def _load_cached_commit_hash(self, commit_hash_file: str) -> Optional[str]:
+    def _load_cached_commit_hash(self, commit_hash_file: str) -> str | None:
         """Load cached commit hash value."""
         try:
             if os.path.exists(commit_hash_file):
                 with open(commit_hash_file, "r") as f:
                     return f.read().strip()
-        except Exception as e:
+        except OSError as e:
             logger.debug(f"Could not load cached commit hash: {e}")
         return None
 
@@ -389,10 +395,10 @@ class RHELReleaseData:
         try:
             with open(commit_hash_file, "w") as f:
                 f.write(commit_hash)
-        except Exception as e:
+        except OSError as e:
             logger.debug(f"Could not cache commit hash: {e}")
 
-    def _load_cached_data(self, cache_file: str) -> Optional[Dict[str, Any]]:
+    def _load_cached_data(self, cache_file: str) -> dict[str, Any] | None:
         """Load cached YAML data."""
         try:
             if os.path.exists(cache_file):
@@ -402,7 +408,7 @@ class RHELReleaseData:
                         return data
                     else:
                         logger.debug(f"Cached data in {cache_file} is not a dictionary")
-        except Exception as e:
+        except OSError as e:
             logger.debug(f"Could not load cached data: {e}")
         return None
 
@@ -411,10 +417,10 @@ class RHELReleaseData:
         try:
             with open(cache_file, "w") as f:
                 f.write(content)
-        except Exception as e:
+        except OSError as e:
             logger.debug(f"Could not cache data: {e}")
 
-    def _parse_yaml_data(self, data: Dict[str, Any]) -> None:
+    def _parse_yaml_data(self, data: dict[str, Any]) -> None:
         """Parse YAML data and build node structures."""
         # Load nodes
         if "nodes" in data:
@@ -444,11 +450,11 @@ class RHELReleaseData:
 
         logger.info(f"Loaded {len(self.nodes)} RHEL release nodes")
 
-    def get_leaf_nodes(self) -> List[RHELReleaseNode]:
+    def get_leaf_nodes(self) -> list[RHELReleaseNode]:
         """Get all leaf nodes (nodes with no children)."""
         return [node for node in self.nodes.values() if not node.children]
 
-    def get_descendants(self, node_name: str) -> Set[str]:
+    def get_descendants(self, node_name: str) -> set[str]:
         """Get all descendants (children, grandchildren, etc.) of a node."""
         if node_name not in self.nodes:
             return set()
@@ -466,7 +472,7 @@ class RHELReleaseData:
 
         return descendants
 
-    def get_ancestors(self, node_name: str) -> Set[str]:
+    def get_ancestors(self, node_name: str) -> set[str]:
         """Get all ancestors (parents, grandparents, etc.) of a node."""
         if node_name not in self.nodes:
             return set()
@@ -484,13 +490,13 @@ class RHELReleaseData:
 
         return ancestors
 
-    def find_matching_nodes_for_cpe(self, cpe: str) -> List[RHELReleaseNode]:
+    def find_matching_nodes_for_cpe(self, cpe: str) -> list[RHELReleaseNode]:
         """Find all RHEL release nodes that contain the given CPE."""
         return self.cpe_to_nodes.get(cpe, [])
 
     def find_active_streams_for_cpe(
-        self, cpe: str, active_streams: Set[str], stream_cpes: Dict[str, List[str]]
-    ) -> Set[str]:
+        self, cpe: str, active_streams: set[str], stream_cpes: dict[str, list[str]]
+    ) -> set[str]:
         """
         Find active ps_update_streams that should be associated with a given CPE.
 
@@ -521,9 +527,8 @@ class RHELReleaseData:
         if not has_active_rhel_streams:
             # For non-RHEL 9 streams, use direct matching first
             for stream_name in active_streams:
-                if stream_name in stream_cpes:
-                    if cpe in stream_cpes[stream_name]:
-                        result_streams.add(stream_name)
+                if stream_name in stream_cpes and cpe in stream_cpes[stream_name]:
+                    result_streams.add(stream_name)
 
             # If we found direct matches for non-RHEL streams, return them
             if result_streams:
@@ -546,15 +551,17 @@ class RHELReleaseData:
 
                     # Check if this node's ps_update_stream matches any active stream
                     # This avoids relying on CPE matching between product-definitions and rhel_releases
-                    if candidate_node.ps_update_stream:
-                        if candidate_node.ps_update_stream in active_streams:
-                            result_streams.add(candidate_node.ps_update_stream)
+                    if (
+                        candidate_node.ps_update_stream
+                        and candidate_node.ps_update_stream in active_streams
+                    ):
+                        result_streams.add(candidate_node.ps_update_stream)
 
         return result_streams
 
     def get_all_cpes_for_stream(
-        self, stream_name: str, stream_cpes: Dict[str, List[str]]
-    ) -> Set[str]:
+        self, stream_name: str, stream_cpes: dict[str, list[str]]
+    ) -> set[str]:
         """
         Get all CPEs that should be associated with a given RHEL stream by traversing
         the release graph to find related nodes using ps_update_stream attribute matching.
@@ -630,7 +637,7 @@ class EnhancedProdDefs:
             git_branch: Git branch to use for RHEL release data
             rhel_releases_path: Local file path (for testing only)
         """
-        self.rhel_releases: Optional[RHELReleaseData] = None
+        self.rhel_releases: RHELReleaseData | None = None
 
         try:
             # Only try to load if we have a valid file path that exists
@@ -644,13 +651,13 @@ class EnhancedProdDefs:
             else:
                 logger.warning(f"RHEL release file not found: {rhel_releases_path}")
                 self.rhel_releases = None
-        except Exception as e:
+        except (OSError, ValueError, TypeError, httpx.HTTPError, yaml.YAMLError) as e:
             logger.warning(f"Could not load RHEL release data: {e}")
             self.rhel_releases = None
 
     def enhance_cpe_matching(
-        self, cpe: str, active_streams: Set[str], stream_cpes: Dict[str, List[str]]
-    ) -> Set[str]:
+        self, cpe: str, active_streams: set[str], stream_cpes: dict[str, list[str]]
+    ) -> set[str]:
         """
         Enhance CPE matching using RHEL release hierarchy data.
 
@@ -670,8 +677,8 @@ class EnhancedProdDefs:
         return result if result is not None else set()
 
     def get_all_cpes_for_stream(
-        self, stream_name: str, stream_cpes: Dict[str, List[str]]
-    ) -> Set[str]:
+        self, stream_name: str, stream_cpes: dict[str, list[str]]
+    ) -> set[str]:
         """
         Get all CPEs that should be associated with a given RHEL stream.
 

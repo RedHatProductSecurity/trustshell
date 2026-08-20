@@ -1,28 +1,29 @@
-from collections import defaultdict
 import copy
-from datetime import datetime
 import json
 import logging
 import os
 import re
-from typing import Any, Optional
-import httpx
+from collections import defaultdict
+from datetime import UTC, date, datetime
+from typing import Any
 
-from anytree import NodeMixin, LevelOrderGroupIter
+import httpx
+from anytree import LevelOrderGroupIter, NodeMixin
+
 from trustshell import CONFIG_DIR, console
 from trustshell.rhel_releases import EnhancedProdDefs
 
 logger = logging.getLogger(__name__)
 
 
-class ProductBase(object):
+class ProductBase:
     def __init__(self, name: str) -> None:
         self.name = name
 
     def __hash__(self) -> int:
         return hash(self.name)
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, ProductBase) and type(self) is type(other):
             return self.name == other.name
         return False
@@ -46,7 +47,11 @@ class ProductModule(ProductBase, NodeMixin):
 
 
 class ProductStream(ProductBase, NodeMixin):
-    def __init__(self, name: str, cpes: list[str] = [], active: bool = False) -> None:
+    def __init__(
+        self, name: str, cpes: list[str] | None = None, active: bool = False
+    ) -> None:
+        if cpes is None:
+            cpes = []
         super().__init__(name)
         # In rhel 10 we don't use mainline CPEs, so we need to filter them out
         if name.startswith("rhel-"):
@@ -69,7 +74,7 @@ class ProdDefs:
     PRODUCT_FILE = os.path.join(CONFIG_DIR, "products.json")
 
     @classmethod
-    def get_etag(cls, url: str) -> Optional[str]:
+    def get_etag(cls, url: str) -> str | None:
         response = httpx.head(url)
         etag = response.headers.get("etag")
         return str(etag) if etag is not None else None
@@ -82,7 +87,7 @@ class ProdDefs:
 
     # Assisted by watsonx Code Assistant
     @classmethod
-    def load_etag(cls, file_path: str) -> Optional[str]:
+    def load_etag(cls, file_path: str) -> str | None:
         if os.path.exists(file_path):
             with open(file_path, "r") as f:
                 return f.read().strip()
@@ -97,7 +102,7 @@ class ProdDefs:
 
     @classmethod
     def get_product_definitions_service(cls) -> dict[str, Any]:
-        proddefs_url: Optional[str] = None
+        proddefs_url: str | None = None
         if "PRODDEFS_URL" not in os.environ:
             console.print(
                 "PRODDEFS_URL not set, not product mappings will be available",
@@ -137,14 +142,14 @@ class ProdDefs:
         self.product_trees: list[NodeMixin] = []
 
         # Initialize enhanced RHEL release data
-        self.enhanced_proddefs: Optional[EnhancedProdDefs] = None
+        self.enhanced_proddefs: EnhancedProdDefs | None = None
         if rhel_releases_path:
             # Use local file for testing
             try:
                 self.enhanced_proddefs = EnhancedProdDefs(
                     git_branch=rhel_git_branch, rhel_releases_path=rhel_releases_path
                 )
-            except Exception as e:
+            except (OSError, ValueError, TypeError, httpx.HTTPError) as e:
                 logger.warning(
                     f"Could not initialize enhanced product definitions: {e}"
                 )
@@ -178,10 +183,8 @@ class ProdDefs:
                     supported_from = lifecycle.get("supported_from")
                     if supported_from:
                         try:
-                            supported_from_date = datetime.strptime(
-                                supported_from, "%Y-%m-%d"
-                            ).date()
-                            current_date = datetime.now().date()
+                            supported_from_date = date.fromisoformat(supported_from)
+                            current_date = datetime.now(tz=UTC).date()
                             # Module is only active if supported_from date is today or in the past
                             module_is_active = supported_from_date <= current_date
                         except ValueError as e:
@@ -233,7 +236,7 @@ class ProdDefs:
 
     def _load_rhel_release_data(
         self, git_branch: str = "main", rhel_releases_path: str = ""
-    ) -> Optional[EnhancedProdDefs]:
+    ) -> EnhancedProdDefs | None:
         """
         Load RHEL release data from GitLab repository or local file.
 
@@ -257,7 +260,7 @@ class ProdDefs:
                     f"Loaded RHEL release data from GitLab (branch: {git_branch})"
                 )
             return enhanced_proddefs
-        except Exception as e:
+        except (OSError, ValueError, TypeError, httpx.HTTPError) as e:
             logger.error(f"Could not load RHEL release data: {e}")
             return None
 
@@ -270,7 +273,7 @@ class ProdDefs:
         # Remove trailing ':' characters
         return cleaned_cpe.rstrip(":")
 
-    def get_product_mappings_for_cpe(self, cpe: str) -> list[tuple[str, Optional[str]]]:
+    def get_product_mappings_for_cpe(self, cpe: str) -> list[tuple[str, str | None]]:
         """Return (ps_update_stream, ps_module) for each product matching the CPE.
 
         Tries ps_update_stream direct CPE match first, then falls back to ps_module
@@ -284,7 +287,7 @@ class ProdDefs:
         if re.search(r":redhat:enterprise_linux:\d:", cleaned_cpe):
             return []
 
-        mappings: list[tuple[str, Optional[str]]] = []
+        mappings: list[tuple[str, str | None]] = []
 
         # Try stream matches first (direct CPE match or enhanced)
         enhanced_streams = self._check_enhanced_streams(cleaned_cpe)

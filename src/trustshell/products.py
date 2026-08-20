@@ -1,24 +1,25 @@
-from collections import defaultdict
-import click
-import httpx
 import logging
 import sys
+from collections import defaultdict
 from typing import Any, Optional
 
+import click
+import httpx
 from anytree import NodeMixin, PreOrderIter
 from anytree.walker import Walker, WalkError
 from packageurl import PackageURL
 from rich.console import Console
 from rich.theme import Theme
+
 from trustshell import (
     AUTH_ENABLED,
     TRUSTIFY_URL,
     build_node_purl,
     check_or_get_access_token,
     config_logging,
+    paginated_trustify_query,
     print_version,
     purl_sans_version,
-    paginated_trustify_query,
 )
 from trustshell.models import Affect, ProductResultRow, ProductSearchResult
 from trustshell.osidb import OSIDB
@@ -40,7 +41,7 @@ class ComponentNode(NodeMixin):
         self,
         name: str,
         parent: Optional["ComponentNode"] = None,
-        sbom_id: Optional[str] = None,
+        sbom_id: str | None = None,
     ) -> None:
         self.name = name
         self.parent = parent
@@ -95,7 +96,7 @@ def prime_cache(check: bool, debug: bool) -> None:
         except httpx.HTTPStatusError as e:
             console.print(f"HTTP error occurred: {e}", style="error")
             sys.exit(1)
-        except Exception as e:
+        except httpx.RequestError as e:
             console.print(f"An error occurred: {e}", style="error")
             sys.exit(1)
 
@@ -162,7 +163,7 @@ def prime_cache(check: bool, debug: bool) -> None:
 )
 def search(
     purl: str,
-    flaw: Optional[str],
+    flaw: str | None,
     replace: bool,
     output: str,
     show_module: bool,
@@ -599,9 +600,12 @@ def _trees_with_cpes(
     trees_with_cpes: list[ComponentNode] = []
     for tree in first_children:
         # Remove this once https://issues.redhat.com/browse/TC-2659 is implemented
-        if tree.name.startswith("pkg:rpm/") and not include_rpm_containers:
-            if container_in_tree(tree):
-                continue
+        if (
+            tree.name.startswith("pkg:rpm/")
+            and not include_rpm_containers
+            and container_in_tree(tree)
+        ):
+            continue
         _remove_non_cpe_branches(tree)
         if not _has_cpe_node(tree):
             for leaf in tree.leaves:

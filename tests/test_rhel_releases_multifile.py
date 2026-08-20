@@ -1,8 +1,9 @@
 """Tests for RHEL release data parsing with multiple files."""
 
-import tempfile
 import os
-from unittest.mock import patch, MagicMock
+import tempfile
+from unittest.mock import MagicMock, patch
+
 import yaml
 
 from trustshell.rhel_releases import RHELReleaseData
@@ -167,44 +168,45 @@ edges: {}
 
         try:
             # Set environment variable for GitLab URL
-            with patch.dict(
-                os.environ,
-                {"RHEL_RELEASE_GRAPH_URL": "https://example.com/api/v4/projects/123"},
-            ):
-                # Create RHELReleaseData and force it to use the GitLab URL and temp cache dir
-                with patch.object(
+            with (
+                patch.dict(
+                    os.environ,
+                    {
+                        "RHEL_RELEASE_GRAPH_URL": "https://example.com/api/v4/projects/123"
+                    },
+                ),
+                patch.object(
                     RHELReleaseData,
                     "RHEL_RELEASE_GRAPH_BASE",
                     "https://example.com/api/v4/projects/123",
-                ):
-                    with patch.object(RHELReleaseData, "CACHE_DIR", temp_cache_dir):
-                        rhel_data = RHELReleaseData()
+                ),
+                patch.object(RHELReleaseData, "CACHE_DIR", temp_cache_dir),
+            ):
+                rhel_data = RHELReleaseData()
 
-                        # Verify that all files were processed
-                        assert (
-                            len(rhel_data.nodes) == 5
-                        )  # 2 from rhel8 + 2 from rhel9 + 1 from rhel10
-                        assert "RHEL-8.0.0.GA" in rhel_data.nodes
-                        assert "RHEL-9.0.0.GA" in rhel_data.nodes
-                        assert "RHEL-10.0.0.GA" in rhel_data.nodes
+                # Verify that all files were processed
+                assert (
+                    len(rhel_data.nodes) == 5
+                )  # 2 from rhel8 + 2 from rhel9 + 1 from rhel10
+                assert "RHEL-8.0.0.GA" in rhel_data.nodes
+                assert "RHEL-9.0.0.GA" in rhel_data.nodes
+                assert "RHEL-10.0.0.GA" in rhel_data.nodes
 
-                        # Verify the listing call was made
-                        tree_calls = [
-                            call
-                            for call in mock_get.call_args_list
-                            if "/repository/tree" in str(call)
-                        ]
-                        assert len(tree_calls) == 1
+                # Verify the listing call was made
+                tree_calls = [
+                    call
+                    for call in mock_get.call_args_list
+                    if "/repository/tree" in str(call)
+                ]
+                assert len(tree_calls) == 1
 
-                        # Verify file fetching calls were made
-                        file_calls = [
-                            call
-                            for call in mock_get.call_args_list
-                            if "/repository/files/" in str(call)
-                        ]
-                        assert (
-                            len(file_calls) == 3
-                        )  # Should fetch 3 *-releases.yml files
+                # Verify file fetching calls were made
+                file_calls = [
+                    call
+                    for call in mock_get.call_args_list
+                    if "/repository/files/" in str(call)
+                ]
+                assert len(file_calls) == 3  # Should fetch 3 *-releases.yml files
 
         finally:
             # Clean up temp directory

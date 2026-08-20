@@ -1,22 +1,21 @@
-import time
 import importlib.metadata
 import logging
 import os
 import sys
-from urllib.parse import urlparse, urlunparse, quote, parse_qs, urlencode
-from typing import Optional, Any
+import time
+import webbrowser
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from typing import Any
+from urllib.parse import parse_qs, quote, urlencode, urlparse, urlunparse
 
 import httpx
 import jwt
+from anytree import Node, RenderTree
 from packageurl import PackageURL
 from rich.console import Console
 from rich.logging import RichHandler
 from rich.theme import Theme
-import webbrowser
 from univers.versions import RpmVersion
-from anytree import Node, RenderTree
-
-from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from trustshell.oidc.oidc_pkce_authcode import (
     LOCAL_SERVER_PORT,
@@ -105,9 +104,7 @@ def get_tag_from_purl(purl: PackageURL) -> str:
     return tag
 
 
-def build_node_purl(
-    purls: list[str], show_versions: bool = False
-) -> Optional[PackageURL]:
+def build_node_purl(purls: list[str], show_versions: bool = False) -> PackageURL | None:
     """
     Generate a base purl with a version or tag qualifier from a list of purls with homogenous
     type/namespace, and name
@@ -220,7 +217,7 @@ def check_or_get_access_token() -> str:
         console.print(
             "Unable to authenticate to Atlas, please try again after authenticating in the browser."
         )
-        exit(0)
+        sys.exit(0)
     return access_token
 
 
@@ -412,9 +409,7 @@ def paginated_trustify_query(
                         f"Fetching page {page_num}/{total_pages} (offset {offset})..."
                     )
                 else:
-                    logger.debug(
-                        f"Fetching page {page_num} (offset {offset})..."
-                    )
+                    logger.debug(f"Fetching page {page_num} (offset {offset})...")
             try:
                 response = make_request_with_retry(client, page_params, auth_header)
                 result = response.json()
@@ -422,14 +417,13 @@ def paginated_trustify_query(
                 all_items.extend(page_items)
                 if logger.isEnabledFor(logging.DEBUG):
                     logger.debug(
-                        f"Page {page_num} complete "
-                        f"({len(all_items)} items so far)"
+                        f"Page {page_num} complete ({len(all_items)} items so far)"
                     )
                 if not page_items or len(page_items) < limit:
                     break
                 offset += limit
                 page_num += 1
-            except Exception as e:
+            except httpx.HTTPError as e:
                 logger.error(f"Error fetching page at offset {offset}: {e}")
                 break
 
