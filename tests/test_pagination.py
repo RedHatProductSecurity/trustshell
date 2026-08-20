@@ -15,12 +15,11 @@ def _item(n: int) -> dict[str, int]:
 
 
 @patch("trustshell.AUTH_ENABLED", False)
-@patch("trustshell.TRUSTIFY_API_VERSION", "v3")
 @patch("trustshell.httpx.Client")
 class TestPaginatedTrustifyQuery:
-    endpoint = "http://localhost:8080/api/v3/analysis/latest/component"
+    endpoint = "http://localhost:8080/api/v2/analysis/latest/component"
 
-    def test_v3_requests_total_param(self, mock_client_cls: MagicMock) -> None:
+    def test_does_not_add_total_by_default(self, mock_client_cls: MagicMock) -> None:
         mock_client = MagicMock()
         mock_client_cls.return_value.__enter__.return_value = mock_client
         mock_client.get.return_value = _mock_response({"items": [_item(1)], "total": 1})
@@ -28,7 +27,7 @@ class TestPaginatedTrustifyQuery:
         paginated_trustify_query(self.endpoint, {"q": "purl~foo"}, {}, limit=100)
 
         first_call_params = mock_client.get.call_args_list[0].kwargs["params"]
-        assert first_call_params["total"] is True
+        assert "total" not in first_call_params
         assert first_call_params["limit"] == 100
         assert first_call_params["offset"] == 0
 
@@ -88,30 +87,16 @@ class TestPaginatedTrustifyQuery:
         mock_client.get.return_value = _mock_response({"items": [_item(1)], "total": 1})
 
         paginated_trustify_query(
-            self.endpoint, {"q": "purl~foo", "total": False}, {}, limit=100
+            self.endpoint,
+            {"q": "purl~foo", "total": True},
+            {},
+            limit=100,
         )
 
         first_call_params = mock_client.get.call_args_list[0].kwargs["params"]
-        assert first_call_params["total"] is False
+        assert first_call_params["total"] is True
 
-
-@patch("trustshell.AUTH_ENABLED", False)
-@patch("trustshell.TRUSTIFY_API_VERSION", "v2")
-@patch("trustshell.httpx.Client")
-class TestPaginatedTrustifyQueryV2:
-    endpoint = "http://localhost:8080/api/v2/analysis/latest/component"
-
-    def test_v2_does_not_add_total_param(self, mock_client_cls: MagicMock) -> None:
-        mock_client = MagicMock()
-        mock_client_cls.return_value.__enter__.return_value = mock_client
-        mock_client.get.return_value = _mock_response({"items": [_item(1)], "total": 1})
-
-        paginated_trustify_query(self.endpoint, {"q": "purl~foo"}, {}, limit=100)
-
-        first_call_params = mock_client.get.call_args_list[0].kwargs["params"]
-        assert "total" not in first_call_params
-
-    def test_v2_numeric_total_pagination(self, mock_client_cls: MagicMock) -> None:
+    def test_numeric_total_pagination(self, mock_client_cls: MagicMock) -> None:
         mock_client = MagicMock()
         mock_client_cls.return_value.__enter__.return_value = mock_client
         mock_client.get.side_effect = [

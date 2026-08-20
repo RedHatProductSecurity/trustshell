@@ -21,6 +21,12 @@ Set `TRUSTIFY_URL` to point to your Trustify instance:
 export TRUSTIFY_URL="https://trustify.example.com"
 ```
 
+When the URL has no API path, `/api/v2/` is appended. To use another API version, include the full path:
+
+```bash
+export TRUSTIFY_URL="https://atlas.release.devshift.net/api/v3/"
+```
+
 ### Authentication (Optional)
 
 If your Trustify instance requires authentication, also set `AUTH_ENDPOINT`:
@@ -70,9 +76,6 @@ export SSL_CERT_FILE=/etc/pki/tls/certs/ca-bundle.crt
 
 Optional Configuration:
 ```bash
-# Trustify API version (defaults to v3; set to v2 for legacy deployments)
-export TRUSTIFY_API_VERSION=v3
-
 # Set custom configuration directory (defaults to ~/.config/trustshell/)
 export TRUSTSHELL_SCRATCH="/path/to/custom/config/dir"
 

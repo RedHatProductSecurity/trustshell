@@ -37,12 +37,11 @@ if "LOCAL_AUTH_SERVER_PORT" in os.environ:
     LOCAL_AUTH_SERVER_PORT = os.getenv("LOCAL_AUTH_SERVER_PORT", "")
 
 
-TRUSTIFY_API_VERSION = os.getenv("TRUSTIFY_API_VERSION", "v3")
-TRUSTIFY_URL_PATH = f"/api/{TRUSTIFY_API_VERSION}/"
+TRUSTIFY_URL_PATH = "/api/v2/"
 if "TRUSTIFY_URL" in os.environ:
     url_env = os.getenv("TRUSTIFY_URL", "")
     parsed_url = urlparse(url_env)
-    if not parsed_url.path or parsed_url.path != TRUSTIFY_URL_PATH:
+    if not parsed_url.path or parsed_url.path == "/":
         TRUSTIFY_URL = urlunparse(
             (parsed_url.scheme, parsed_url.netloc, TRUSTIFY_URL_PATH, "", "", "")
         )
@@ -50,7 +49,7 @@ if "TRUSTIFY_URL" in os.environ:
         TRUSTIFY_URL = url_env
     AUTH_ENABLED = bool(os.getenv("AUTH_ENDPOINT"))
 else:
-    TRUSTIFY_URL = f"http://localhost:8080/api/{TRUSTIFY_API_VERSION}/"
+    TRUSTIFY_URL = "http://localhost:8080/api/v2/"
     AUTH_ENABLED = False
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red"})
@@ -360,13 +359,9 @@ def paginated_trustify_query(
                     return response
             raise
 
-    page_params_base = dict(base_params)
-    if TRUSTIFY_API_VERSION == "v3" and "total" not in page_params_base:
-        page_params_base["total"] = True
-
     with httpx.Client() as client:
         # First request to get total count
-        query_params = {**page_params_base, "limit": limit, "offset": 0}
+        query_params = {**base_params, "limit": limit, "offset": 0}
         first_response = make_request_with_retry(client, query_params, auth_header)
         first_result = first_response.json()
 
@@ -401,7 +396,7 @@ def paginated_trustify_query(
             if not total_known and len(all_items) - (offset - limit) < limit:
                 break
 
-            page_params = {**page_params_base, "limit": limit, "offset": offset}
+            page_params = {**base_params, "limit": limit, "offset": offset}
             if logger.isEnabledFor(logging.DEBUG):
                 if total_known:
                     total_pages = (total_available + limit - 1) // limit
