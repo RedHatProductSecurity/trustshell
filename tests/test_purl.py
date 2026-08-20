@@ -1,4 +1,5 @@
 from unittest.mock import Mock, patch
+
 from packageurl import PackageURL
 
 from trustshell.purl import _query_trustify_packages_base_purl

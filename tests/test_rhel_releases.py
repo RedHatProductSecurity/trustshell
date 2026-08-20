@@ -1,11 +1,11 @@
 """Tests for RHEL release data parsing and CPE matching functionality."""
 
-import tempfile
 import os
+import tempfile
 from unittest.mock import patch
 
-from trustshell.rhel_releases import RHELReleaseData, EnhancedProdDefs
 from trustshell.product_definitions import ProdDefs
+from trustshell.rhel_releases import EnhancedProdDefs, RHELReleaseData
 
 
 def create_test_rhel_data():

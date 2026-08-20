@@ -2,8 +2,8 @@
 
 import json
 import os
-from http.server import SimpleHTTPRequestHandler
 import socketserver
+from http.server import SimpleHTTPRequestHandler
 from typing import Any
 from urllib.parse import (
     parse_qs,
@@ -13,18 +13,18 @@ from urllib.parse import (
 try:
     # When run as part of the trustshell package
     from .oidc_pkce_authcode import (
+        AUTH_ENDPOINT,
         code_to_token,
         gen_things,
         get_fresh_token,
-        AUTH_ENDPOINT,
     )
 except ImportError:
     # When run as a standalone script
     from oidc_pkce_authcode import (  # type: ignore[import-not-found,no-redef]
+        AUTH_ENDPOINT,
         code_to_token,
         gen_things,
         get_fresh_token,
-        AUTH_ENDPOINT,
     )
 
 PORT: int = int(os.getenv("LISTEN_PORT", "8080"))

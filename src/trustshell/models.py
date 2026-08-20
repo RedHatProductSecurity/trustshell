@@ -1,7 +1,6 @@
 """Data models for trust-products search results."""
 
 from dataclasses import dataclass, field
-from typing import Optional
 
 
 @dataclass(frozen=True)
@@ -18,7 +17,7 @@ class ProductResultRow:
 
     cpe: str
     ps_update_stream: str
-    ps_module: Optional[str]
+    ps_module: str | None
     matched_component: str  # PURL that matched (important for wildcard search)
     shipped_component: (
         str  # PURL for affects: image-index/arch-specific OCI, or SRPM/binary RPM

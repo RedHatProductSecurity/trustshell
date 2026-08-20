@@ -21,6 +21,12 @@ Set `TRUSTIFY_URL` to point to your Trustify instance:
 export TRUSTIFY_URL="https://trustify.example.com"
 ```
 
+When the URL has no API path, `/api/v2/` is appended. To use another API version, include the full path:
+
+```bash
+export TRUSTIFY_URL="https://atlas.release.devshift.net/api/v3/"
+```
+
 ### Authentication (Optional)
 
 If your Trustify instance requires authentication, also set `AUTH_ENDPOINT`:

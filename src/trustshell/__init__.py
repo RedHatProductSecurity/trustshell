@@ -1,22 +1,21 @@
-import time
 import importlib.metadata
 import logging
 import os
 import sys
-from urllib.parse import urlparse, urlunparse, quote, parse_qs, urlencode
-from typing import Optional, Any
+import time
+import webbrowser
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from typing import Any
+from urllib.parse import parse_qs, quote, urlencode, urlparse, urlunparse
 
 import httpx
 import jwt
+from anytree import Node, RenderTree
 from packageurl import PackageURL
 from rich.console import Console
 from rich.logging import RichHandler
 from rich.theme import Theme
-import webbrowser
 from univers.versions import RpmVersion
-from anytree import Node, RenderTree
-
-from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from trustshell.oidc.oidc_pkce_authcode import (
     LOCAL_SERVER_PORT,
@@ -42,13 +41,12 @@ TRUSTIFY_URL_PATH = "/api/v2/"
 if "TRUSTIFY_URL" in os.environ:
     url_env = os.getenv("TRUSTIFY_URL", "")
     parsed_url = urlparse(url_env)
-    if not parsed_url.path or parsed_url.path != TRUSTIFY_URL_PATH:
+    if not parsed_url.path or parsed_url.path == "/":
         TRUSTIFY_URL = urlunparse(
             (parsed_url.scheme, parsed_url.netloc, TRUSTIFY_URL_PATH, "", "", "")
         )
     else:
         TRUSTIFY_URL = url_env
-    # Only enable authentication if AUTH_ENDPOINT is also set
     AUTH_ENABLED = bool(os.getenv("AUTH_ENDPOINT"))
 else:
     TRUSTIFY_URL = "http://localhost:8080/api/v2/"
@@ -105,9 +103,7 @@ def get_tag_from_purl(purl: PackageURL) -> str:
     return tag
 
 
-def build_node_purl(
-    purls: list[str], show_versions: bool = False
-) -> Optional[PackageURL]:
+def build_node_purl(purls: list[str], show_versions: bool = False) -> PackageURL | None:
     """
     Generate a base purl with a version or tag qualifier from a list of purls with homogenous
     type/namespace, and name
@@ -220,7 +216,7 @@ def check_or_get_access_token() -> str:
         console.print(
             "Unable to authenticate to Atlas, please try again after authenticating in the browser."
         )
-        exit(0)
+        sys.exit(0)
     return access_token
 
 
@@ -369,30 +365,46 @@ def paginated_trustify_query(
         first_response = make_request_with_retry(client, query_params, auth_header)
         first_result = first_response.json()
 
-        total_available = first_result.get("total", 0)
-        if total_available == 0:
+        all_items = first_result.get("items", [])
+        total_available = first_result.get("total")
+        total_known = total_available is not None
+
+        if not all_items and (not total_known or total_available == 0):
             if component_name:
                 console.print(f"No items found for {component_name}")
             return {"items": [], "total": 0}
 
-        all_items = first_result.get("items", [])
-        total_pages = (total_available + limit - 1) // limit
-
-        if logger.isEnabledFor(logging.DEBUG):
-            logger.debug(
-                f"Paginated request: {total_available} total items, "
-                f"{total_pages} page(s), page 1/{total_pages} complete"
-            )
-
-        # Fetch remaining pages sequentially
-        offset = limit
-        page_num = 2
-        while offset < total_available:
-            page_params = {**base_params, "limit": limit, "offset": offset}
+        if total_known:
+            total_pages = (total_available + limit - 1) // limit
             if logger.isEnabledFor(logging.DEBUG):
                 logger.debug(
-                    f"Fetching page {page_num}/{total_pages} (offset {offset})..."
+                    f"Paginated request: {total_available} total items, "
+                    f"{total_pages} page(s), page 1/{total_pages} complete"
                 )
+        else:
+            if logger.isEnabledFor(logging.DEBUG):
+                logger.debug(
+                    f"Paginated request: total unknown, "
+                    f"page 1 returned {len(all_items)} items"
+                )
+
+        offset = limit
+        page_num = 2
+        while True:
+            if total_known and offset >= total_available:
+                break
+            if not total_known and len(all_items) - (offset - limit) < limit:
+                break
+
+            page_params = {**base_params, "limit": limit, "offset": offset}
+            if logger.isEnabledFor(logging.DEBUG):
+                if total_known:
+                    total_pages = (total_available + limit - 1) // limit
+                    logger.debug(
+                        f"Fetching page {page_num}/{total_pages} (offset {offset})..."
+                    )
+                else:
+                    logger.debug(f"Fetching page {page_num} (offset {offset})...")
             try:
                 response = make_request_with_retry(client, page_params, auth_header)
                 result = response.json()
@@ -400,21 +412,23 @@ def paginated_trustify_query(
                 all_items.extend(page_items)
                 if logger.isEnabledFor(logging.DEBUG):
                     logger.debug(
-                        f"Page {page_num}/{total_pages} complete "
-                        f"({len(all_items)}/{total_available} items)"
+                        f"Page {page_num} complete ({len(all_items)} items so far)"
                     )
+                if not page_items or len(page_items) < limit:
+                    break
                 offset += limit
                 page_num += 1
-            except Exception as e:
+            except httpx.HTTPError as e:
                 logger.error(f"Error fetching page at offset {offset}: {e}")
                 break
 
+        total_count = total_available if total_known else len(all_items)
         if component_name:
             console.print(
-                f"Retrieved {len(all_items)} items out of {total_available} total for {component_name}"
+                f"Retrieved {len(all_items)} items out of {total_count} total for {component_name}"
             )
 
-        return {"items": all_items, "total": total_available}
+        return {"items": all_items, "total": total_count}
 
 
 def render_tree_to_string(root: Node) -> str:

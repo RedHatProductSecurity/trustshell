@@ -1,22 +1,22 @@
 import json
 import unittest
-from parameterized import parameterized
 from unittest.mock import patch
 
 from anytree import Node
+from parameterized import parameterized
 
 from trustshell import build_node_purl, render_tree
+from trustshell.product_definitions import ProdDefs
 from trustshell.products import (
     ComponentNode,
     _get_branch_signature,
+    _has_cpe_node,
     _remove_duplicate_parent_nodes,
     _remove_non_cpe_branches,
     _trees_with_cpes,
-    _has_cpe_node,
-    container_in_tree,
     build_product_search_result,
+    container_in_tree,
 )
-from trustshell.product_definitions import ProdDefs
 
 
 class TestProducts(unittest.TestCase):
@@ -32,14 +32,14 @@ class TestProducts(unittest.TestCase):
     )
     def test_build_node_purl_rpm(self, show_versions, expected_purl):
         purls = [
-            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstrea"
-            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-appstrea"
-            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstrea"
-            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-s390x-appstream-"
-            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-s390x-appstream-"
-            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-appstrea"
-            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream"
-            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream"
+            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstrea",
+            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-appstrea",
+            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-aarch64-appstrea",
+            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-s390x-appstream-",
+            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-s390x-appstream-",
+            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-ppc64le-appstrea",
+            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream",
+            "pkg:rpm/redhat/webkit2gtk3@2.42.5-1.el9?arch=src&repository_id=rhel-9-for-x86_64-appstream",
         ]
         result = build_node_purl(purls, show_versions=show_versions).to_string()
         assert result == expected_purl
@@ -66,8 +66,10 @@ class TestProducts(unittest.TestCase):
     )
     def test_build_node_purl_maven_type(self, show_versions, expected_purl):
         purls = [
-            "pkg:maven/io.agroal/agroal-api@1.3.0.redhat-00001?repository_url=https%3A%2F%2Fmaven.repository.redhat.com%2Fga%2F&type=jar"
-            "pkg:maven/io.agroal/agroal-api@1.3.0.redhat-00001?repository_url=https%3A%2F%2Fmaven.repository.redhat.com%2Fga%2F&type=jar&hash=sha256:1234567890"
+            (
+                "pkg:maven/io.agroal/agroal-api@1.3.0.redhat-00001?repository_url=https%3A%2F%2Fmaven.repository.redhat.com%2Fga%2F&type=jar"
+                "pkg:maven/io.agroal/agroal-api@1.3.0.redhat-00001?repository_url=https%3A%2F%2Fmaven.repository.redhat.com%2Fga%2F&type=jar&hash=sha256:1234567890"
+            )
         ]
         result = build_node_purl(purls, show_versions=show_versions).to_string()
         print(result)

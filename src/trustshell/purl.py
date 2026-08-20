@@ -1,28 +1,27 @@
-import click
 import logging
 from collections import defaultdict
 from typing import Any
 
+import click
 import httpx
 from anytree import Node
+from packageurl import PackageURL
 from rich.console import Console
 from rich.theme import Theme
-from packageurl import PackageURL
 
 from trustshell import (
     AUTH_ENABLED,
     TRUSTIFY_URL,
     build_node_purl,
     check_or_get_access_token,
-    print_version,
     config_logging,
     get_tag_from_purl,
-    render_tree,
     paginated_trustify_query,
+    print_version,
+    render_tree,
     urlencoded,
 )
 from trustshell.products import ANALYSIS_ENDPOINT, LATEST_ENDPOINT
-
 
 custom_theme = Theme({"warning": "magenta", "error": "bold red", "info": "cyan"})
 console = Console(color_system="auto", theme=custom_theme)
@@ -258,7 +257,7 @@ def _query_trustify_packages_base_purl(
                     try:
                         purl_obj = PackageURL.from_string(base_purl_str)
                         results.append(purl_obj)
-                    except Exception as e:
+                    except ValueError as e:
                         logger.debug(f"Failed to parse PURL '{base_purl_str}': {e}")
         else:
             # Enhanced behavior: lookup version details for each base PURL
@@ -281,7 +280,7 @@ def _query_trustify_packages_base_purl(
                                         version_purl_str
                                     )
                                     results.append(version_purl_obj)
-                                except Exception as e:
+                                except ValueError as e:
                                     logger.debug(
                                         f"Failed to parse version PURL '{version_purl_str}': {e}"
                                     )
@@ -296,12 +295,12 @@ def _query_trustify_packages_base_purl(
                                             individual_purl_str
                                         )
                                         results.append(individual_purl_obj)
-                                    except Exception as e:
+                                    except ValueError as e:
                                         logger.debug(
                                             f"Failed to parse individual PURL '{individual_purl_str}': {e}"
                                         )
 
-                    except Exception as e:
+                    except httpx.HTTPError as e:
                         logger.debug(
                             f"Failed to lookup base PURL '{base_purl_str}': {e}"
                         )
@@ -309,7 +308,7 @@ def _query_trustify_packages_base_purl(
                         try:
                             purl_obj = PackageURL.from_string(base_purl_str)
                             results.append(purl_obj)
-                        except Exception as parse_e:
+                        except ValueError as parse_e:
                             logger.debug(
                                 f"Failed to parse base PURL '{base_purl_str}': {parse_e}"
                             )
@@ -322,7 +321,7 @@ def _query_trustify_packages_base_purl(
     except httpx.HTTPStatusError as e:
         console.print(f"HTTP error querying base purls: {e}", style="error")
         return []
-    except Exception as e:
+    except httpx.RequestError as e:
         console.print(f"Error querying base purls: {e}", style="error")
         return []
 

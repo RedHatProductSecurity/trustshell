@@ -1,18 +1,18 @@
-from collections import defaultdict
 import logging
 import os
 import subprocess
 import sys
 import tempfile
-from typing import Any, Union
+from collections import defaultdict
+from typing import Any
 
 import click
-
-from trustshell.models import Affect
-from requests import HTTPError
-from trustshell import console
 import osidb_bindings
 from osidb_bindings.bindings.python_client.models import Flaw
+from requests import HTTPError
+
+from trustshell import console
+from trustshell.models import Affect
 
 logger = logging.getLogger(__name__)
 
@@ -21,9 +21,7 @@ class OSIDB:
     def __init__(self) -> None:
         endpoint = os.getenv("OSIDB_ENDPOINT")
         if endpoint is None:
-            raise EnvironmentError(
-                "The environment variable 'OSIDB_ENDPOINT' is not set."
-            )
+            raise OSError("The environment variable 'OSIDB_ENDPOINT' is not set.")
         self.session = osidb_bindings.new_session(osidb_server_uri=endpoint)  # type: ignore[attr-defined]
 
     @staticmethod
@@ -52,7 +50,7 @@ class OSIDB:
 
     @staticmethod
     def edit_tuples_in_editor(
-        current_tuples: Union[list[tuple[str, str]], set[tuple[str, str]]],
+        current_tuples: list[tuple[str, str]] | set[tuple[str, str]],
     ) -> list[tuple[str, str]]:
         """
         Opens the default text editor for the user to modify the ps_update_stream/purl tuples.
@@ -78,13 +76,13 @@ class OSIDB:
                 f"Error: Editor '{editor}' not found. Please set your EDITOR environment variable.",
                 style="error",
             )
-            exit(1)
+            sys.exit(1)
         except subprocess.CalledProcessError:
             console.print(
                 "Editor exited with an error. Changes might not be saved.",
                 style="error",
             )
-            exit(1)
+            sys.exit(1)
 
         with open(temp_filepath, "r") as file:
             modified_content = file.read()
@@ -121,7 +119,7 @@ class OSIDB:
         except HTTPError as e:
             msg = e.response.text
             console.print(f"Failed to update flaw: {e}: {msg}")
-            exit(1)
+            sys.exit(1)
         console.print(f"Added {len(bulk_create_response.results)} new affects")
 
     def edit_flaw_affects(
@@ -139,7 +137,7 @@ class OSIDB:
 
         try:
             flaw = self.session.flaws.retrieve(id=flaw_id)
-        except Exception as e:
+        except (OSError, RuntimeError, ValueError, TypeError, KeyError) as e:
             console.print(f"Could not retrieve flaw {flaw_id}: {e}")
             return
 
@@ -251,7 +249,7 @@ class OSIDB:
                             f"Failed to delete flaw affect {existing_key}: {e}: {msg}",
                             style="error",
                         )
-                        exit(1)
+                        sys.exit(1)
 
             # Add any new affects not already on the flaw in NEW state
             ps_stream_purls_as_affects = [
