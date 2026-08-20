@@ -70,6 +70,9 @@ export SSL_CERT_FILE=/etc/pki/tls/certs/ca-bundle.crt
 
 Optional Configuration:
 ```bash
+# Trustify API version (defaults to v3; set to v2 for legacy deployments)
+export TRUSTIFY_API_VERSION=v3
+
 # Set custom configuration directory (defaults to ~/.config/trustshell/)
 export TRUSTSHELL_SCRATCH="/path/to/custom/config/dir"
 
